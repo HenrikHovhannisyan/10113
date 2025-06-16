@@ -14,9 +14,8 @@
                         </div>
                     @endif
                     @auth
-                        @if($user->role === 'admin') {
+                        @if($user->role === 'admin')
                             <h2>Admin</h2>
-                        }
                         @elseif($user->role === 'user')
                             <h2>User</h2>
                         @endif
