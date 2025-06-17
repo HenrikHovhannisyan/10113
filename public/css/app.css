@@ -5,12 +5,22 @@
     padding: 0;
 }
 
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 a {
     text-decoration: none;
 }
 
 p {
     margin-bottom: 0;
+}
+
+.section_mb {
+    margin-bottom: 160px;
 }
 
 .navbar_link {
@@ -112,11 +122,6 @@ footer a:hover {
     margin-bottom: 40px;
 }
 
-#home_info {
-    margin-top: 160px;
-    margin-bottom: 160px;
-}
-
 #home_info .home_info_box {
     margin-bottom: 32px;
     border: 1px solid #15a1b7;
@@ -159,7 +164,6 @@ footer a:hover {
 }
 
 #how_it_works {
-    margin-bottom: 160px;
     text-align: center;
 }
 
@@ -184,6 +188,58 @@ footer a:hover {
 }
 
 #how_it_works > .container p {
+    font-family: DM Sans;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #1e3751;
+}
+
+#happens .title {
+    font-family: DM Sans;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 48px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #15a1b7;
+    margin-bottom: 40px;
+}
+
+#happens .happens_box {
+    border: 1px solid #15a1b7;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+#happens .happens_box > span {
+    font-family: DM Sans;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 40px;
+    letter-spacing: 0.1px;
+    text-align: center;
+    vertical-align: middle;
+    color: #15a1b7;
+}
+
+#happens .happens_box h3 {
+    font-family: DM Sans;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #15a1b7;
+}
+
+#happens .happens_box p {
     font-family: DM Sans;
     font-weight: 600;
     font-size: 16px;

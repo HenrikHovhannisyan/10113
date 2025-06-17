@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<section id="home_banner">
+<section id="home_banner" class="section_mb">
     <div class="container">
         <div class="col-md-6">
             <h1>Lodge Your Income Tax Return the Smart, Easy Way</h1>
@@ -10,7 +10,7 @@
         </div>
     </div>
 </section>
-<section id="home_info">
+<section id="home_info" class="section_mb">
     <div class="container">
         <div class="row">
             <div class="col-md-4">
@@ -52,7 +52,7 @@
         </div>
     </div>
 </section>
-<section id="how_it_works">
+<section id="how_it_works" class="section_mb">
     <h2 class="title">How It Works</h2>
     <div class="container">
         <div class="row">
@@ -73,6 +73,52 @@
                 <img src="{{ asset('img/how_it_works/3.png') }}" class="img-fluid mb-3" alt="how_it_works">
                 <h2>We Lodge Your Return</h2>
                 <p>You sit back. We lodge and notify you once it's done.</p>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="happens" class="section_mb">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+            <h2 class="title">What Happens After You Submit</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="happens_box">
+                            <span>1</span>
+                            <div class="">
+                                <h3>We Double-Check Everything</h3>
+                                <p>A registered Tax Agent reviews your return for accuracy and compliance.</p>
+                            </div>
+                        </div>
+                        <div class="happens_box">
+                            <span>3</span>
+                            <div class="">
+                                <h3>We Lodge with the ATO</h3>
+                                <p>We lodge your return with the ATO securely and on time.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="happens_box">
+                            <span>2</span>
+                            <div class="">
+                                <h3>We Maximise Your Refund</h3>
+                                <p>We scan for extra deductions to help you claim everything you’re owed.</p>
+                            </div>
+                        </div>
+                        <div class="happens_box">
+                            <span>4</span>
+                            <div class="">
+                                <h3>You Get Paid</h3>
+                                <p>our refund (if any) is on its way — usually within 7–14 days.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <img src="{{ asset('img/happens.png') }}" class="img-fluid" alt="happens">
             </div>
         </div>
     </div>
