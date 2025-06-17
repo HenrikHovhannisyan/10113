@@ -1,4 +1,4 @@
-<footer class="py-5">
+<footer>
     <div class="container-fluid p-0" style="background: #FAFAFA; border-top: 1px solid #EEEEEE">
       <div class="container py-5">
         <div class="row">

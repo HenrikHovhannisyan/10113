@@ -304,3 +304,33 @@ footer a:hover {
 #testimonials .owl-carousel .owl-stage-outer {
     padding: 40px 0;
 }
+
+#faq .title {
+    font-family: DM Sans;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 64px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    text-transform: capitalize;
+    color: #15a1b7;
+    max-width: 600px;
+    margin: 0 auto 40px;
+    text-align: center;
+}
+
+#faq .accordion-item {
+    margin-bottom: 24px;
+}
+
+#faq .accordion-button {
+    border: 1px solid #d4f3f8;
+    border-radius: 8px;
+    box-shadow: 0px 1px 2px 0px #0000004d;
+    font-family: DM Sans;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    color: #49454f;
+}
