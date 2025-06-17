@@ -50,3 +50,24 @@ a {
 .navbar_btn:hover {
     background-color: #148192;
 }
+
+.soc_links {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    display: flex;
+    gap: 24px;
+}
+
+footer a {
+    font-family: DM Sans;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #1e3751;
+}
+
+footer a:hover {
+    color: #1b3046;
+}
