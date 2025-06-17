@@ -71,3 +71,38 @@ footer a {
 footer a:hover {
     color: #1b3046;
 }
+
+#home_banner {
+    background-image: url("../img/banners/home.png");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 140px;
+    padding-bottom: 170px;
+}
+
+#home_banner .col-md-6 {
+    max-width: 600px;
+}
+
+#home_banner .col-md-6 > h1 {
+    font-family: DM Sans;
+    font-weight: 700;
+    font-size: 64px;
+    line-height: 80px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #15a1b7;
+}
+
+#home_banner .col-md-6 > p {
+    font-family: DM Sans;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #ffffff;
+}
