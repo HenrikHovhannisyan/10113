@@ -52,4 +52,29 @@
         </div>
     </div>
 </section>
+<section id="how_it_works">
+    <h2 class="title">How It Works</h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h2>STEP 1</h2>
+                <img src="{{ asset('img/how_it_works/1.png') }}" class="img-fluid mb-3" alt="how_it_works">
+                <h2>Upload or Enter Your Info</h2>
+                <p>Provide only what’s necessary — securely and at your own pace.</p>
+            </div>
+            <div class="col-md-4">
+                <h2>STEP 2</h2>
+                <img src="{{ asset('img/how_it_works/2.png') }}" class="img-fluid mb-3" alt="how_it_works">
+                <h2>Answer Simple Questions</h2>
+                <p>We’ve broken down the ATO forms into an easy-to-follow questionnaire.</p>
+            </div>
+            <div class="col-md-4">
+                <h2>STEP 3</h2>
+                <img src="{{ asset('img/how_it_works/3.png') }}" class="img-fluid mb-3" alt="how_it_works">
+                <h2>We Lodge Your Return</h2>
+                <p>You sit back. We lodge and notify you once it's done.</p>
+            </div>
+        </div>
+    </div>
+</section>
 @endsection

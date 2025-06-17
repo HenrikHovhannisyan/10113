@@ -157,3 +157,38 @@ footer a:hover {
     display: block;
     border-radius: 2px;
 }
+
+#how_it_works {
+    margin-bottom: 160px;
+    text-align: center;
+}
+
+#how_it_works > .title {
+    font-family: DM Sans;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 64px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #15a1b7;
+}
+
+#how_it_works > .container h2 {
+    font-family: DM Sans;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #15a1b7;
+}
+
+#how_it_works > .container p {
+    font-family: DM Sans;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #1e3751;
+}
