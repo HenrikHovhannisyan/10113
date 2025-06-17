@@ -1,0 +1,52 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+.navbar_link {
+    font-family: DM Sans;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    text-align: center;
+    vertical-align: middle;
+    color: #15a1b7;
+}
+
+.navbar_link:hover {
+    color: #148192;
+}
+
+.navbar_link:active {
+    color: #148192 !important;
+}
+
+.navbar_link:focus {
+    color: #148192 !important;
+}
+
+.navbar_btn {
+    background-color: #15a1b7;
+    border-radius: 8px;
+    padding: 10px 24px;
+    font-family: DM Sans;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    text-align: center;
+    vertical-align: middle;
+    color: #ffffff;
+    display: inline-block;
+}
+
+.navbar_btn:hover {
+    background-color: #148192;
+}
