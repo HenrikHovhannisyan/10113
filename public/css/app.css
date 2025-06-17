@@ -9,6 +9,10 @@ a {
     text-decoration: none;
 }
 
+p {
+    margin-bottom: 0;
+}
+
 .navbar_link {
     font-family: DM Sans;
     font-weight: 600;
@@ -105,4 +109,51 @@ footer a:hover {
     letter-spacing: 0.1px;
     vertical-align: middle;
     color: #ffffff;
+    margin-bottom: 40px;
+}
+
+#home_info {
+    margin-top: 160px;
+    margin-bottom: 160px;
+}
+
+#home_info .home_info_box {
+    margin-bottom: 32px;
+    border: 1px solid #15a1b7;
+    border-radius: 12px;
+    padding: 24px;
+}
+#home_info .home_info_box > .title {
+    font-family: DM Sans;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 48px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #15a1b7;
+}
+
+#home_info .home_info_box > h2 {
+    font-family: DM Sans;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #1e3751;
+}
+
+#home_info .home_info_box > p {
+    font-family: DM Sans;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #1e3751;
+}
+#home_info .home_info_box > .hr {
+    margin: 24px 0;
+    display: block;
+    border-radius: 2px;
 }
