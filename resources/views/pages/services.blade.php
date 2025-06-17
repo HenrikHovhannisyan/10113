@@ -1,11 +1,51 @@
 @extends('layouts.app')
 
 @section('content')
-<section id="services_banner" class="section_py">
+<section id="services_banner" class="section_mb">
     <div class="container">
         <h2>
             Our Services – Stress-Free Tax Returns for Australians
         </h2>
+    </div>
+</section>
+<section id="accurate" class="section_mb">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>
+                    Fast, Accurate & Secure Online Tax Return Services
+                </h2>
+                <p>
+                    We simplify your tax obligations so you can get back to what matters. Whether you're employed, self-employed, or managing investments, our online tax form covers it all.
+                </p>
+            </div>
+            <div class="col-md-6">
+                <div class="accurate_item">
+                    <img src="{{ asset('img/accurate/1.png') }}" alt="">
+                    <h3>
+                        Lodge in as little as 15 minutes
+                    </h3>
+                </div>
+                <div class="accurate_item">
+                    <img src="{{ asset('img/accurate/2.png') }}" alt="">
+                    <h3>
+                        Handled by registered tax professionals
+                    </h3>
+                </div>
+                <div class="accurate_item">
+                    <img src="{{ asset('img/accurate/3.png') }}" alt="">
+                    <h3>
+                        Secure online forms and document uploads
+                    </h3>
+                </div>
+                <div class="accurate_item">
+                    <img src="{{ asset('img/accurate/4.png') }}" alt="">
+                    <h3>
+                        Appointments included if needed
+                    </h3>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 <section id="faq" class="section_mb py-5">

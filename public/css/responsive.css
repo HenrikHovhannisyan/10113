@@ -88,6 +88,25 @@
         line-height: 60px;
         max-width: 90%;
     }
+
+    #accurate h2 {
+        font-size: 40px;
+        line-height: 54px;
+    }
+
+    #accurate p {
+        font-size: 15px;
+        line-height: 22px;
+    }
+
+    #accurate .accurate_item {
+        padding: 20px;
+    }
+
+    #accurate .accurate_item > h3 {
+        font-size: 20px;
+        line-height: 28px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -213,6 +232,27 @@
         font-size: 36px;
         line-height: 48px;
     }
+
+    #accurate h2 {
+        font-size: 32px;
+        line-height: 44px;
+    }
+
+    #accurate p {
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    #accurate .accurate_item {
+        flex-direction: column;
+        text-align: center;
+        padding: 18px;
+    }
+
+    #accurate .accurate_item > h3 {
+        font-size: 18px;
+        line-height: 26px;
+    }
 }
 
 @media (max-width: 576px) {
@@ -329,5 +369,25 @@
     #services_banner h2 {
         font-size: 28px;
         line-height: 38px;
+    }
+
+    #accurate h2 {
+        font-size: 24px;
+        line-height: 32px;
+    }
+
+    #accurate p {
+        font-size: 13px;
+        line-height: 18px;
+    }
+
+    #accurate .accurate_item {
+        padding: 16px;
+        gap: 12px;
+    }
+
+    #accurate .accurate_item > h3 {
+        font-size: 16px;
+        line-height: 22px;
     }
 }
