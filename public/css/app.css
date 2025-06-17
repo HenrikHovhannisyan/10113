@@ -248,3 +248,59 @@ footer a:hover {
     vertical-align: middle;
     color: #1e3751;
 }
+
+#testimonials > .title {
+    font-family: DM Sans;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 64px;
+    letter-spacing: 0.1px;
+    text-align: center;
+    vertical-align: middle;
+    color: #15a1b7;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#testimonials .testimonials_box {
+    max-width: 316px;
+    box-shadow: 0px 1px 2px 0px #0000004d;
+    border-radius: 16px;
+    padding: 24px;
+    margin: auto;
+}
+
+#testimonials .testimonials_box .testimonials_author {
+    font-family: DM Sans;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #1e3751;
+}
+
+#testimonials .testimonials_box > .testimonials_text {
+    font-family: DM Sans;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #1e3751;
+    margin-bottom: 24px;
+}
+
+#testimonials .testimonials_box > .testimonials_loc {
+    font-family: DM Sans;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #15a1b7;
+}
+
+#testimonials .owl-carousel .owl-stage-outer {
+    padding: 40px 0;
+}
