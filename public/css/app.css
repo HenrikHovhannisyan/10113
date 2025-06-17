@@ -334,3 +334,41 @@ footer a:hover {
     letter-spacing: 0.1px;
     color: #49454f;
 }
+
+/* Start services page */
+#services_banner {
+    position: relative;
+    background-image: url("../img/banners/services.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding-top: 210px;
+    padding-bottom: 210px;
+}
+
+#services_banner::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #00000066;
+    z-index: 2;
+}
+
+#services_banner h2 {
+    font-family: DM Sans;
+    font-weight: 700;
+    font-size: 64px;
+    line-height: 80px;
+    letter-spacing: 0.1px;
+    text-align: center;
+    vertical-align: middle;
+    color: #ffffff;
+    max-width: 850px;
+    margin: auto;
+    position: relative;
+    z-index: 3;
+}
+/* End services page */

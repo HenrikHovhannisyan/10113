@@ -18,3 +18,4 @@ use App\Http\Controllers\HomeController;
 Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/services', [HomeController::class, 'services'])->name('services');

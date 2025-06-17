@@ -59,7 +59,7 @@
                   </a>
                 </li>
                 <li>
-                  <a href="{{ route('home') }}" class="navbar_link">
+                  <a href="{{ route('services') }}" class="navbar_link">
                     Services
                   </a>
                 </li>

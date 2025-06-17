@@ -77,6 +77,17 @@
     #faq .accordion-item {
         margin-bottom: 20px;
     }
+
+    #services_banner {
+        padding-top: 160px;
+        padding-bottom: 160px;
+    }
+
+    #services_banner h2 {
+        font-size: 48px;
+        line-height: 60px;
+        max-width: 90%;
+    }
 }
 
 @media (max-width: 768px) {
@@ -192,6 +203,16 @@
     #faq .accordion-item {
         margin-bottom: 18px;
     }
+
+    #services_banner {
+        padding-top: 120px;
+        padding-bottom: 120px;
+    }
+
+    #services_banner h2 {
+        font-size: 36px;
+        line-height: 48px;
+    }
 }
 
 @media (max-width: 576px) {
@@ -298,5 +319,15 @@
 
     #faq .accordion-item {
         margin-bottom: 16px;
+    }
+
+    #services_banner {
+        padding-top: 100px;
+        padding-bottom: 100px;
+    }
+
+    #services_banner h2 {
+        font-size: 28px;
+        line-height: 38px;
     }
 }

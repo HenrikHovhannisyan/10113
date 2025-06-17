@@ -27,4 +27,9 @@ class HomeController extends Controller
         $user = Auth::user();
         return view('index', compact('user'));
     }
+
+    public function services()
+    {
+        return view('pages.services');
+    }
 }
