@@ -201,4 +201,13 @@
         font-size: 15px;
         line-height: 22px;
     }
+
+    #ready {
+        padding: 48px 0;
+    }
+
+    #ready .title {
+        font-size: 32px;
+        line-height: 44px;
+    }
 }

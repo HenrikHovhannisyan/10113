@@ -607,4 +607,23 @@ footer a:hover {
     text-align: left;
 }
 
+#ready {
+    background-image: url("../img/ready_bg.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    padding: 80px 0;
+}
+
+#ready .title {
+    font-family: DM Sans;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 64px;
+    letter-spacing: 0.1px;
+    color: #ffffff;
+    margin: 0 auto 40px;
+    max-width: 664px;
+}
+
 /* End services page */

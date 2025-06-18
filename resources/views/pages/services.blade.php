@@ -255,6 +255,14 @@
         <img src="{{ asset('img/what_included.png') }}" class="img-fluid" alt="">
     </div>
 </section>
+<section id="ready" class="section_mb">
+    <div class="container text-center">
+        <div class="title">
+            Ready to Start Your Tax Return?
+        </div>
+        <a href="" class="navbar_btn">Start My Tax Return</a>
+    </div>
+</section>  
 <section id="faq" class="section_mb py-5">
     <h2 class="title">Frequently Asked Questions</h2>
     <div class="container">
