@@ -86,6 +86,17 @@
         </div>
     </div>
 </section>
+<section id="support" class="section_mb">
+    <div class="container support_box">
+        <span>
+            <p>
+                Need your Trust/Company Tax completed? Complete this form and we will contact you within 24 hours.
+            </p>
+            <a href="3" class="navbar_btn">Complete the Form</a>
+        </span>
+        <img src="{{ asset('img/support.png') }}" class="img-fluid" alt="support">
+    </div>
+</section>
 <section id="faq" class="section_mb py-5">
     <h2 class="title">Frequently Asked Questions</h2>
     <div class="container">

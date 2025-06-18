@@ -121,4 +121,14 @@
         font-size: 15px;
         line-height: 22px;
     }
+
+    #support p {
+        font-size: 28px;
+        line-height: 42px;
+        margin-bottom: 32px;
+    }
+
+    #support .support_box {
+        padding: 32px;
+    }
 }

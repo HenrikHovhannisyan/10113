@@ -156,4 +156,17 @@
         font-size: 14px;
         line-height: 20px;
     }
+
+    #support p {
+        font-size: 24px;
+        line-height: 36px;
+        margin-bottom: 28px;
+    }
+
+    #support .support_box {
+        padding: 24px;
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
 }

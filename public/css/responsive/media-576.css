@@ -147,4 +147,14 @@
         font-size: 13px;
         line-height: 18px;
     }
+
+    #support p {
+        font-size: 20px;
+        line-height: 30px;
+        margin-bottom: 24px;
+    }
+
+    #support .support_box {
+        padding: 20px;
+    }
 }
