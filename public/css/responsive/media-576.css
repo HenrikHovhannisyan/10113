@@ -157,4 +157,31 @@
     #support .support_box {
         padding: 20px;
     }
+
+    #plans > .title {
+        font-size: 24px;
+        line-height: 32px;
+        margin-bottom: 24px;
+    }
+
+    #plans .plan {
+        padding: 16px;
+    }
+
+    #plans .plan > h2,
+    #plans .plan > p {
+        font-size: 18px;
+        line-height: 24px;
+    }
+
+    #plans .plan > .price {
+        font-size: 32px;
+        line-height: 42px;
+        margin-bottom: 24px;
+    }
+
+    #plans .plan > ul > li > p {
+        font-size: 14px;
+        line-height: 20px;
+    }
 }

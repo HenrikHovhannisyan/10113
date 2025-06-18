@@ -19,6 +19,10 @@ p {
     margin-bottom: 0;
 }
 
+ul > li {
+    list-style: none;
+}
+
 .section_mb {
     margin-bottom: 160px;
 }
@@ -61,8 +65,22 @@ p {
     display: inline-block;
 }
 
+.navbar_btn.white {
+    background-color: #ffffff;
+    color: #15a1b7;
+    outline: 1px solid #15a1b7;
+}
+
+.navbar_btn.white:hover {
+    background-color: #15a1b7;
+    color: #ffffff;
+    outline: 1px solid #ffffff;
+}
+
 .navbar_btn:hover {
-    background-color: #148192;
+    background-color: #ffffff;
+    color: #15a1b7;
+    outline: 1px solid #15a1b7;
 }
 
 .soc_links {
@@ -461,6 +479,97 @@ footer a:hover {
     padding: 40px;
     display: flex;
     align-items: center;
+}
+
+#plans > .title {
+    font-family: DM Sans;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 64px;
+    letter-spacing: 0.1px;
+    text-align: center;
+    margin: 0 auto 40px;
+    color: #15a1b7;
+    max-width: 640px;
+}
+
+#plans > .plans {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+#plans .plan {
+    border: 1px solid #15a1b7;
+    border-radius: 12px;
+    padding: 24px;
+    background: #eaf9fc;
+    max-width: 432px;
+}
+
+#plans .plan.white {
+    background: #15a1b7;
+    border: 1px solid #eaf9fc;
+    color: #ffffff;
+}
+
+#plans .plan > h2 {
+    font-family: DM Sans;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #15a1b7;
+}
+
+#plans .plan > p {
+    font-family: DM Sans;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #1e3751;
+}
+
+#plans .plan > .price {
+    font-family: DM Sans;
+    font-weight: 600;
+    font-size: 48px;
+    line-height: 64px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #15a1b7;
+    margin-bottom: 40px;
+}
+
+#plans .plan > ul {
+    padding-left: 0;
+    margin-bottom: 72px;
+}
+
+#plans .plan > ul > li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+#plans .plan > ul > li > p {
+    font-family: DM Sans;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #1e3751;
+}
+
+#plans .plan.white > h2,
+#plans .plan.white > p,
+#plans .plan.white > ul > li > p {
+    color: #ffffff;
 }
 
 /* End services page */

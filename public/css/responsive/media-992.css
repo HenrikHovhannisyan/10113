@@ -131,4 +131,19 @@
     #support .support_box {
         padding: 32px;
     }
+
+    #plans > .title {
+        font-size: 40px;
+        line-height: 54px;
+    }
+
+    #plans > .plans {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    #plans .plan {
+        max-width: 100%;
+        flex: 1 1 45%;
+    }
 }

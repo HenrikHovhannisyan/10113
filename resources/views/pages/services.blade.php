@@ -97,6 +97,124 @@
         <img src="{{ asset('img/support.png') }}" class="img-fluid" alt="support">
     </div>
 </section>
+<section id="plans" class="section_mb">
+    <div class="title">
+        Choose the Plan That Fits Your Needs
+    </div>
+    <div class="container plans">
+        <div class="plan">
+            <h2>
+                Standard Plan
+            </h2>
+            <img src="{{ asset('img/icons/hr.png') }}"  class="hr">
+            <p>
+                Standard Individual Tax Return incl. GST
+            </p>
+            <p class="price">$ 149</p>
+            <ul>
+                <li>
+                    <img src="{{ asset('img/icons/check-green.png') }}" alt="">
+                    <p>
+                        PAYG Employees
+                    </p>
+                </li>
+                <li>
+                    <img src="{{ asset('img/icons/check-green.png') }}" alt="">
+                    <p>
+                        Deductions & Offsets
+                    </p>
+                </li>
+                <li>
+                    <img src="{{ asset('img/icons/check-green.png') }}" alt="">
+                    <p>
+                        Secure Online Form
+                    </p>
+                </li>
+                <li>
+                    <img src="{{ asset('img/icons/check-green.png') }}" alt="">
+                    <p>
+                        Agent Review & Lodgement
+                    </p>
+                </li>
+            </ul>
+            <a href="" class="navbar_btn">Get Started</a>
+        </div>
+        <div class="plan white">
+            <h2>
+                Premium Plan
+            </h2>
+            <img src="{{ asset('img/icons/hr-white.png') }}"  class="hr">
+            <p>
+                Sole Trader / ABN Holder incl. GST
+            </p>
+            <p class="price">$ 199</p>
+            <ul>
+                <li>
+                    <img src="{{ asset('img/icons/check-white.png') }}" alt="">
+                    <p>
+                        Includes Business Income
+                    </p>
+                </li>
+                <li>
+                    <img src="{{ asset('img/icons/check-white.png') }}" alt="">
+                    <p>
+                        Car/Tools/Expenses
+                    </p>
+                </li>
+                <li>
+                    <img src="{{ asset('img/icons/check-white.png') }}" alt="">
+                    <p>
+                        Document Uploads
+                    </p>
+                </li>
+                <li>
+                    <img src="{{ asset('img/icons/check-white.png') }}" alt="">
+                    <p>
+                        Professional Review
+                    </p>
+                </li>
+            </ul>
+            <a href="" class="navbar_btn white">Get Started</a>
+        </div>
+        <div class="plan">
+            <h2>
+                Investor Plan
+            </h2>
+            <img src="{{ asset('img/icons/hr.png') }}"  class="hr">
+            <p>
+                Rental Property / Investor Returns incl. GST
+            </p>
+            <p class="price">$ 249</p>
+            <ul>
+                <li>
+                    <img src="{{ asset('img/icons/check-green.png') }}" alt="">
+                    <p>
+                        Investment Income
+                    </p>
+                </li>
+                <li>
+                    <img src="{{ asset('img/icons/check-green.png') }}" alt="">
+                    <p>
+                        CGT/Dividends
+                    </p>
+                </li>
+                <li>
+                    <img src="{{ asset('img/icons/check-green.png') }}" alt="">
+                    <p>
+                        Rental Property Reporting
+                    </p>
+                </li>
+                <li>
+                    <img src="{{ asset('img/icons/check-green.png') }}" alt="">
+                    <p>
+                        Asset Depreciation Support
+                    </p>
+                </li>
+            </ul>
+            <a href="" class="navbar_btn">Get Started</a>
+        </div>
+    </div>
+</section>
 <section id="faq" class="section_mb py-5">
     <h2 class="title">Frequently Asked Questions</h2>
     <div class="container">
