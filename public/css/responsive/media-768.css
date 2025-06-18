@@ -1,0 +1,159 @@
+@media (max-width: 768px) {
+    .section_mb {
+        margin-bottom: 80px;
+    }
+
+    #home_banner {
+        padding-top: 80px;
+        padding-bottom: 100px;
+    }
+
+    #home_banner .col-md-6 > h1 {
+        font-size: 36px;
+        line-height: 48px;
+    }
+
+    #home_banner .col-md-6 > p {
+        font-size: 18px;
+        line-height: 26px;
+    }
+
+    #home_info .home_info_box {
+        padding: 20px;
+    }
+
+    #home_info .home_info_box > .title {
+        font-size: 24px;
+        line-height: 32px;
+    }
+
+    #home_info .home_info_box > h2 {
+        font-size: 18px;
+        line-height: 26px;
+    }
+
+    #home_info .home_info_box > p {
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    #how_it_works > .title {
+        font-size: 32px;
+        line-height: 44px;
+    }
+
+    #how_it_works > .container h2 {
+        font-size: 20px;
+        line-height: 28px;
+    }
+
+    #how_it_works > .container p {
+        font-size: 15px;
+        line-height: 22px;
+    }
+
+    #happens .title {
+        font-size: 24px;
+        line-height: 32px;
+    }
+
+    #happens .happens_box {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    #happens .happens_box > span {
+        font-size: 32px;
+        line-height: 36px;
+    }
+
+    #happens .happens_box h3 {
+        font-size: 15px;
+    }
+
+    #happens .happens_box p {
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    #testimonials > .title {
+        font-size: 32px;
+        line-height: 44px;
+    }
+
+    #testimonials .testimonials_box {
+        padding: 18px;
+    }
+
+    #testimonials .testimonials_box .testimonials_author,
+    #testimonials .testimonials_box > .testimonials_text,
+    #testimonials .testimonials_box > .testimonials_loc {
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    #testimonials .owl-carousel .owl-stage-outer {
+        padding: 20px 0;
+    }
+
+    #faq .title {
+        font-size: 32px;
+        line-height: 44px;
+        margin-bottom: 28px;
+    }
+
+    #faq .accordion-button {
+        font-size: 14px;
+        line-height: 20px;
+        padding: 12px 18px;
+    }
+
+    #faq .accordion-item {
+        margin-bottom: 18px;
+    }
+
+    #services_banner {
+        padding-top: 120px;
+        padding-bottom: 120px;
+    }
+
+    #services_banner h2 {
+        font-size: 36px;
+        line-height: 48px;
+    }
+
+    #accurate h2 {
+        font-size: 32px;
+        line-height: 44px;
+    }
+
+    #accurate p {
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    #accurate .accurate_item {
+        flex-direction: column;
+        text-align: center;
+        padding: 18px;
+    }
+
+    #accurate .accurate_item > h3 {
+        font-size: 18px;
+        line-height: 26px;
+    }
+
+    #services_info .item {
+        padding: 18px;
+    }
+
+    #services_info .item > h2 {
+        font-size: 18px;
+        line-height: 26px;
+    }
+
+    #services_info .item > p {
+        font-size: 14px;
+        line-height: 20px;
+    }
+}
