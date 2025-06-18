@@ -572,4 +572,39 @@ footer a:hover {
     color: #ffffff;
 }
 
+#what_included > .what_included {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#what_included h2 {
+    font-family: DM Sans;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 64px;
+    letter-spacing: 0.1px;
+    color: #15a1b7;
+    margin-bottom: 40px;
+}
+
+#what_included ul {
+    padding-left: 0;
+}
+
+#what_included ul > li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-family: DM Sans;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #1e3751;
+    text-align: left;
+}
+
 /* End services page */

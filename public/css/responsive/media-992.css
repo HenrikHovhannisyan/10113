@@ -146,4 +146,15 @@
         max-width: 100%;
         flex: 1 1 45%;
     }
+
+    #what_included > .what_included {
+        flex-direction: column;
+        gap: 40px;
+        text-align: center;
+    }
+
+    #what_included h2 {
+        font-size: 40px;
+        line-height: 54px;
+    }
 }

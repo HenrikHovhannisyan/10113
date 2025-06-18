@@ -215,6 +215,46 @@
         </div>
     </div>
 </section>
+<section id="what_included" class="section_mb">
+    <div class="container what_included">
+        <div>
+            <h2>What’s Included</h2>
+            <ul>
+                <li>
+                    <img src="{{ asset('img/icons/check-green.png') }}" alt="">
+                    <p>
+                        Personal review by a registered tax agent
+                    </p>
+                </li>
+                <li>
+                    <img src="{{ asset('img/icons/check-green.png') }}" alt="">
+                    <p>
+                        Secure document upload
+                    </p>
+                </li>
+                <li>
+                    <img src="{{ asset('img/icons/check-green.png') }}" alt="">
+                    <p>
+                        Phone support if needed
+                    </p>
+                </li>
+                <li>
+                    <img src="{{ asset('img/icons/check-green.png') }}" alt="">
+                    <p>
+                        Free re-lodgement for ATO rejected returns
+                    </p>
+                </li>
+                <li>
+                    <img src="{{ asset('img/icons/check-green.png') }}" alt="">
+                    <p>
+                        Lodgement to ATO within 24–48 hours after submission
+                    </p>
+                </li>
+            </ul>
+        </div>
+        <img src="{{ asset('img/what_included.png') }}" class="img-fluid" alt="">
+    </div>
+</section>
 <section id="faq" class="section_mb py-5">
     <h2 class="title">Frequently Asked Questions</h2>
     <div class="container">

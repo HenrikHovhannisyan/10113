@@ -190,4 +190,15 @@
         font-size: 20px;
         line-height: 28px;
     }
+
+    #what_included h2 {
+        font-size: 32px;
+        line-height: 44px;
+        margin-bottom: 32px;
+    }
+
+    #what_included ul > li {
+        font-size: 15px;
+        line-height: 22px;
+    }
 }
