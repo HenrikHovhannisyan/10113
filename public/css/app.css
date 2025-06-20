@@ -719,4 +719,32 @@ footer a:hover {
 .form-check .form-check-input {
     margin-top: 10px;
 }
+
+.sign_bg {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 10px;
+    font-size: 14px;
+    color: #ffffff;
+    max-width: 700px;
+}
+
+.sign_bg > h1 {
+    font-family: DM Sans;
+    font-weight: 700;
+    font-size: 64px;
+    line-height: 80px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+}
+
+.sign_bg > h2 {
+    font-family: DM Sans;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+}
 /* End sign pahge */

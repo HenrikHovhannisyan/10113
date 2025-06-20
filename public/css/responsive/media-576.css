@@ -211,4 +211,19 @@
         margin-bottom: 24px;
         padding: 0 16px;
     }
+
+    .sign_bg {
+        padding: 4px;
+        max-width: 100%;
+    }
+
+    .sign_bg > h1 {
+        font-size: 28px;
+        line-height: 36px;
+    }
+
+    .sign_bg > h2 {
+        font-size: 16px;
+        line-height: 22px;
+    }
 }

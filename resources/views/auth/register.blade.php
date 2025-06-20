@@ -3,8 +3,12 @@
 @section('content')
 <div class="container-fluid">
     <div class="row align-items-center">
-        <div class="col-lg-8 ps-0 pe-0 d-md-block d-none">
+        <div class="col-lg-8 ps-0 pe-0 mb-lg-0 mb-5 position-relative">
             <img src="{{ asset('img/sign_bg.png') }}" class="img-fluid" alt="">
+            <div class="sign_bg">
+                <h1>Welcome to Tax Easy!</h1>
+                <h2>We’re excited to help make your tax return simple, secure, and stress-free. Just create your account to get started — you can save your progress anytime and come back whenever you're ready.</h2>
+            </div>
         </div>
         <div class="col-lg-4 ps-0 pe-0">
             <div class="text-center w-100" style="margin-bottom: 40px;">

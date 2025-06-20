@@ -167,4 +167,19 @@
         line-height: 54px;
         text-align: center;
     }
+
+    .sign_bg {
+        padding: 8px;
+        max-width: 600px;
+    }
+
+    .sign_bg > h1 {
+        font-size: 48px;
+        line-height: 60px;
+    }
+
+    .sign_bg > h2 {
+        font-size: 20px;
+        line-height: 28px;
+    }
 }
