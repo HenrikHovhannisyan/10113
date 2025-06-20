@@ -20,8 +20,8 @@
                 <form method="POST" action="{{ route('register') }}">
                     @csrf
 
-                    <input id="full_name" type="text" class="form-control @error('full_name') is-invalid @enderror" name="full_name" value="{{ old('full_name') }}" placeholder="Full Name" required autofocus>
-                    @error('full_name')
+                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="Full Name" required autofocus>
+                    @error('name')
                         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                     @enderror
 
