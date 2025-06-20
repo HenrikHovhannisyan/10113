@@ -627,3 +627,96 @@ footer a:hover {
 }
 
 /* End services page */
+
+/* Start sign pahge */
+.sign_form {
+    border: 1px solid #15a1b7;
+    border-radius: 12px;
+    margin: auto;
+    max-width: 550px;
+    padding: 40px 24px;
+}
+
+.sign_form > h2 {
+    font-family: DM Sans;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #15a1b7;
+    margin-bottom: 16px;
+}
+.sign_form > h3 {
+    font-family: DM Sans;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #1e3751;
+    margin-bottom: 40px;
+}
+
+.sign_form input {
+    border: 1px solid #1e3751;
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+.sign_form button {
+    margin-top: 26px;
+}
+
+.sign_form small {
+    font-family: DM Sans;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 18px;
+    letter-spacing: 0.1px;
+    color: #1e3751;
+    margin-bottom: 16px;
+    display: block;
+}
+
+.sign_account {
+    width: 100%;
+    text-align: center;
+    margin-top: 50px;
+}
+.sign_account p {
+    font-family: DM Sans;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #1e3751;
+}
+
+.form-check p > a,
+.sign_account p > a {
+    font-family: DM Sans;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    text-align: center;
+    vertical-align: middle;
+    color: #15a1b7;
+    text-decoration: none;
+}
+
+.form-check p {
+    font-family: DM Sans;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #1e3751;
+}
+.form-check .form-check-input {
+    margin-top: 10px;
+}
+/* End sign pahge */

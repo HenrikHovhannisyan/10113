@@ -1,3 +1,6 @@
+@php
+    $authRoutes = ['login', 'register', 'password.request', 'password.email', 'password.reset', 'verification.notice'];
+@endphp
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -14,6 +17,7 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
@@ -30,11 +34,15 @@
                 {{ session('status') }}
             </div>
         @endif
-        @include('layouts.navbar')
+        @if (!in_array(Route::currentRouteName(), $authRoutes))
+            @include('layouts.navbar')
+        @endif
         <main>
             @yield('content')
         </main>
-        @include('layouts.footer')
+        @if (!in_array(Route::currentRouteName(), $authRoutes))
+            @include('layouts.footer')
+        @endif
     </div>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
