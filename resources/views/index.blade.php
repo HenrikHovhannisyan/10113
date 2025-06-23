@@ -10,48 +10,6 @@
         </div>
     </div>
 </section>
-<section id="home_info" class="section_mb">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="home_info_box">
-                    <p class="title">TPB</p>
-                    <p>Registered</p>
-                </div>
-                <div class="home_info_box">
-                    <img src="{{ asset('img/icons/secure.png') }}" alt="secure">
-                    <img src="{{ asset('img/icons/hr.png') }}"  class="hr">
-                    <h2>Secure & Private</h2>
-                    <p>Your financial data is encrypted and handled by registered professionals.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="home_info_box">
-                    <img src="{{ asset('img/icons/fast.png') }}" alt="fast">
-                    <img src="{{ asset('img/icons/hr.png') }}"  class="hr">
-                    <h2>Fast Lodgement</h2>
-                    <p>Complete your tax return in as little as 15 minutes.</p>
-                </div>
-                <div class="home_info_box">
-                    <p class="title">1000+</p>
-                    <p>Returns Lodged</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="home_info_box">
-                    <p class="title">Stripe</p>
-                    <p>Secure Payments</p>
-                </div>
-                <div class="home_info_box">
-                    <img src="{{ asset('img/icons/expert.png') }}" alt="expert">
-                    <img src="{{ asset('img/icons/hr.png') }}"  class="hr">
-                    <h2>Expert Help</h2>
-                    <p>Need support? Our licensed tax agents are ready to help.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 <section id="how_it_works" class="section_mb">
     <h2 class="title">How It Works</h2>
     <div class="container">
@@ -146,6 +104,48 @@
                 </div>
             @endfor
         </div>        
+    </div>
+</section>
+<section id="home_info" class="section_mb">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="home_info_box">
+                    <p class="title">TPB</p>
+                    <p>Registered</p>
+                </div>
+                <div class="home_info_box">
+                    <img src="{{ asset('img/icons/secure.png') }}" alt="secure">
+                    <img src="{{ asset('img/icons/hr.png') }}"  class="hr">
+                    <h2>Secure & Private</h2>
+                    <p>Your financial data is encrypted and handled by registered professionals.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="home_info_box">
+                    <img src="{{ asset('img/icons/fast.png') }}" alt="fast">
+                    <img src="{{ asset('img/icons/hr.png') }}"  class="hr">
+                    <h2>Fast Lodgement</h2>
+                    <p>Complete your tax return in as little as 15 minutes.</p>
+                </div>
+                <div class="home_info_box">
+                    <p class="title">1000+</p>
+                    <p>Returns Lodged</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="home_info_box">
+                    <p class="title">Stripe</p>
+                    <p>Secure Payments</p>
+                </div>
+                <div class="home_info_box">
+                    <img src="{{ asset('img/icons/expert.png') }}" alt="expert">
+                    <img src="{{ asset('img/icons/hr.png') }}"  class="hr">
+                    <h2>Expert Help</h2>
+                    <p>Need support? Our licensed tax agents are ready to help.</p>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 <section id="faq" class="section_mb py-5">
