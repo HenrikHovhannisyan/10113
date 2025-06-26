@@ -21,10 +21,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/responsive/media-992.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/responsive/media-768.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/responsive/media-576.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css?v=' . time()) }}" rel="stylesheet">
+    <link href="{{ asset('css/responsive/media-992.css?v=' . time()) }}" rel="stylesheet">
+    <link href="{{ asset('css/responsive/media-768.css?v=' . time()) }}" rel="stylesheet">
+    <link href="{{ asset('css/responsive/media-576.css?v=' . time()) }}" rel="stylesheet">
 </head>
 
 <body>
@@ -48,7 +48,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/app.js?v=' . time()) }}"></script>
 </body>
 
 </html>
