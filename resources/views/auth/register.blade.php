@@ -12,7 +12,9 @@
         </div>
         <div class="col-lg-4 ps-0 pe-0">
             <div class="text-center w-100" style="margin-bottom: 40px;">
-                <img src="{{ asset('img/green-logo.png') }}" class="img-fluid" alt="">
+                <a class="" href="{{ route('home') }}">
+                    <img src="{{ asset('img/logo.png?v=' . time()) }}" class="img-fluid" alt="">
+                </a>
             </div>
             <div class="sign_form">
                 <h2>Create Your Tax Easy Account</h2>

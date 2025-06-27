@@ -3,7 +3,7 @@
       <div class="container py-5">
         <div class="row">
             <div class="col-md-4 mb-3">
-              <img src="{{ asset('img/footer-logo.png') }}" alt="logo" class="img-fluid">
+              <img src="{{ asset('img/logo.png?v=' . time()) }}" alt="logo" class="img-fluid">
               <div class="soc_links">
                 <a href="#">
                     <img src="{{ asset('img/icons/facebook.png') }}" alt="facebook">
