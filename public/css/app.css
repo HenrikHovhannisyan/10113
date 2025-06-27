@@ -752,6 +752,7 @@ footer a:hover {
 /* Start Admin panel */
 .admin_controler {
     min-height: calc(100vh - 535px);
+    margin: 40px auto;
 }
 
 .pagination {

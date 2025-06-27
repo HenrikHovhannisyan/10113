@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container admin_controler mt-5">
+<div class="container admin_controler">
     <div class="row justify-content-center">
         <div class="col-md-8">
 

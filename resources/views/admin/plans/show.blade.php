@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container admin_controler my-4">
+<div class="container admin_controler">
     <a href="{{ url()->previous() }}" class="btn btn-secondary mb-3">
         <i class="fa-solid fa-arrow-left "></i>
         Back

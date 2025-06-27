@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container admin_controler my-4">
+<div class="container admin_controler">
     <h1 class="mb-4">Users List</h1>
     <hr>
     <a href="{{ route('admin.dashboard') }}" class="btn btn-secondary mb-3">
