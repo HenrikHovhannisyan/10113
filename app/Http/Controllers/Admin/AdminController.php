@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Plan;
 use App\Models\User;
+use App\Models\SiteInfo;
 
 class AdminController extends Controller
 {
@@ -13,8 +13,9 @@ class AdminController extends Controller
     {
         $plansCount = Plan::count();
         $usersCount = User::count();
+        $info = SiteInfo::first();
 
-        return view('admin.dashboard', compact('plansCount', 'usersCount'));
+        return view('admin.dashboard', compact('plansCount', 'usersCount', 'info'));
     }
 
     public function users()

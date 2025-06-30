@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container admin_controler">
+    @include('components.alerts')
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1>Plans</h1>
         <a href="{{ route('plans.create') }}" class="btn btn-primary">

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\AdminController;
 use \App\Http\Controllers\Admin\PlanController;
+use App\Http\Controllers\Admin\SiteInfoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,4 +27,5 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/users', [AdminController::class, 'users'])->name('users.index');
     Route::resource('plans', PlanController::class);
+    Route::resource('site-info', SiteInfoController::class);
 });
