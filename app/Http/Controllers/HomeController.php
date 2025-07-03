@@ -32,4 +32,9 @@ class HomeController extends Controller
     {
         return view('pages.services');
     }
+
+    public function choosingBusinessType()
+    {
+        return view('pages.choosing-business-type');
+    }
 }

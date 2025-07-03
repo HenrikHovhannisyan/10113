@@ -763,3 +763,151 @@ footer a:hover {
     gap: 15px;
 }
 /* End Admin panel */
+
+/* Start Choosing business type page */
+.choosing-business-type {
+    margin: 80px auto;
+}
+
+.choosing-business-type .back-home {
+    margin-bottom: 40px;
+}
+
+.back-home {
+    font-family: DM Sans;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #15a1b7;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.custom-tabs {
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 2px solid #cac9ca;
+    position: relative;
+    padding: 0;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 60px;
+}
+
+.tab-item {
+    cursor: pointer;
+    font-family: "DM Sans", sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    text-align: center;
+    vertical-align: middle;
+    text-transform: uppercase;
+    color: #cac9ca;
+    border-bottom: 2px solid transparent;
+    position: relative;
+    z-index: 1;
+    padding: 10px 15px;
+    flex-grow: 1;
+    min-width: 100px;
+    transition: color 0.3s;
+}
+
+.tab-item.active {
+    border-bottom-color: #00a6c9;
+    color: #00a6c9;
+    bottom: -2px;
+}
+
+.tab-item:hover:not(.active) {
+    color: #00a6c9;
+}
+
+.back_btn {
+    font-family: DM Sans;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    text-align: center;
+    vertical-align: middle;
+    color: #15a1b7;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.back_btn:hover {
+    color: #15a1b7;
+    border-color: #15a1b7;
+}
+
+.choosing-business-type-title {
+    font-family: DM Sans;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 64px;
+    letter-spacing: 0.1px;
+    text-align: center;
+    color: #15a1b7;
+}
+
+.choosing-business-type-text {
+    font-family: DM Sans;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #1e3751;
+    margin-bottom: 5px;
+}
+
+.choosing-business-type-form-box {
+    margin-top: 40px;
+    text-align: left;
+}
+
+.custom-radio {
+    width: 18px;
+    height: 18px;
+    margin-top: 5px !important;
+}
+
+.custom-radio:checked {
+    border-color: #15a1b7;
+    background-color: #15a1b7;
+}
+
+.custom-label {
+    font-family: "DM Sans", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #697b8c;
+    margin-left: 4px;
+    cursor: pointer;
+}
+
+.grin_box_border {
+    border: 1px solid #15a1b780;
+    border-radius: 16px;
+    padding: 16px 24px;
+}
+
+select.form-control {
+    background: url("../img/icons/select.png") no-repeat right 1rem center;
+    background-size: 1em;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding-right: 2.5rem;
+}
+
+/* End Choosing business type page */

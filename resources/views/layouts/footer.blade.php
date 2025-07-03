@@ -7,7 +7,7 @@
     <div class="container-fluid p-0" style="background: #FAFAFA; border-top: 1px solid #EEEEEE">
         <div class="container py-5">
             <div class="row">
-                {{-- Логотип и соцсети --}}
+                
                 <div class="col-md-4 mb-3">
                     <img src="{{ asset('img/logo.png?v=' . time()) }}" alt="logo" class="img-fluid">
 
@@ -34,7 +34,6 @@
                     <a href="https://www.tpb.gov.au" target="_blank" class="d-block mt-3">Verify at www.tpb.gov.au</a>
                 </div>
 
-                {{-- Контактная информация --}}
                 <div class="col-md-4 mb-3">
                     <ul class="nav flex-column gap-4">
                         @if($info?->phone)
@@ -78,7 +77,6 @@
                     </ul>
                 </div>
 
-                {{-- Навигация --}}
                 <div class="col-md-4 mb-3">
                     <ul class="nav flex-column gap-4">
                         <li><a href="{{ route('home') }}" class="navbar_link">Home</a></li>
@@ -90,7 +88,6 @@
         </div>
     </div>
 
-    {{-- Копирайт и ссылки --}}
     <div class="container-fluid p-0" style="background: #ffffff">
         <div class="container py-4">
             <div class="row">
