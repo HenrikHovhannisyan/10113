@@ -141,4 +141,50 @@ visaSelect.addEventListener("change", function () {
     }
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+    const toggleBtn = document.getElementById("toggleBtn");
+    const items = document.querySelectorAll(".income-item");
+    const visibleCount = 10;
+    let isExpanded = false;
+
+    function updateView() {
+        items.forEach((item, index) => {
+            if (isExpanded || index < visibleCount) {
+                item.classList.remove("hidden");
+            } else {
+                item.classList.add("hidden");
+            }
+        });
+
+        toggleBtn.textContent = isExpanded ? "Show Less" : "Show More";
+    }
+
+    toggleBtn.addEventListener("click", () => {
+        isExpanded = !isExpanded;
+        updateView();
+    });
+
+    updateView(); // Initial
+});
+
+document.querySelectorAll(".income-item").forEach((item) => {
+    item.addEventListener("click", () => {
+        const index = item.getAttribute("data-index");
+
+        document.querySelectorAll(".form-container > div").forEach((form) => {
+            form.classList.add("d-none");
+        });
+
+        const formToShow = document.getElementById(`form-${index}`);
+        if (formToShow) {
+            formToShow.classList.remove("d-none");
+        }
+
+        document
+            .querySelectorAll(".income-item")
+            .forEach((i) => i.classList.remove("active"));
+        item.classList.add("active");
+    });
+});
+
 /* End Choosing business type page */

@@ -769,6 +769,10 @@ footer a:hover {
     margin: 80px auto;
 }
 
+.choosing-business-type_section {
+    margin-bottom: 120px;
+}
+
 .choosing-business-type .back-home {
     margin-bottom: 40px;
 }
@@ -908,6 +912,111 @@ select.form-control {
     -webkit-appearance: none;
     -moz-appearance: none;
     padding-right: 2.5rem;
+}
+
+.select_income_container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(246px, 1fr));
+    gap: 16px;
+    margin: 40px auto;
+}
+
+.income-item {
+    background-color: #fafafa;
+    border: 2px solid #c3cad0;
+    border-radius: 12px;
+    padding: 24px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.income-item:hover {
+    border: 2px solid #15a1b7;
+    background-color: #eaf9fc;
+}
+
+.income-icon {
+    text-align: center;
+    margin-top: auto;
+}
+
+.income-label {
+    font-family: DM Sans;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 24px;
+    leading-trim: NONE;
+    line-height: 32px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #15a1b7;
+}
+
+.hidden {
+    display: none;
+}
+
+.toggle-btn {
+    font-family: DM Sans;
+    font-weight: 600;
+    font-style: SemiBold;
+    font-size: 16px;
+    leading-trim: NONE;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    text-align: center;
+    vertical-align: middle;
+    color: #15a1b7;
+    border-radius: 10px;
+    padding: 10px 20px;
+}
+
+.toggle-btn:hover {
+    border: 1px solid #15a1b7;
+    color: #15a1b7;
+}
+
+.form_title {
+    font-family: DM Sans;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 24px;
+    leading-trim: NONE;
+    line-height: 32px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #1e3751;
+}
+
+.form-check-input[type="checkbox"] {
+    width: 2.5em;
+    height: 1.4em;
+    background-color: #ccc;
+    border-radius: 1em;
+    position: relative;
+}
+
+.form-check-input[type="checkbox"]:checked {
+    background-color: #15a1b7;
+}
+
+.form-check-input[type="checkbox"]::before {
+    content: "";
+    position: absolute;
+    top: 0.15em;
+    left: 0.15em;
+    width: 1em;
+    height: 1em;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+.form-check-input[type="checkbox"]:checked::before {
+    transform: translateX(1.1em);
 }
 
 /* End Choosing business type page */
