@@ -933,6 +933,7 @@ select.form-control {
     height: 100%;
 }
 
+.income-item.active,
 .income-item:hover {
     border: 2px solid #15a1b7;
     background-color: #eaf9fc;
@@ -1017,6 +1018,46 @@ select.form-control {
 
 .form-check-input[type="checkbox"]:checked::before {
     transform: translateX(1.1em);
+}
+
+.btn_add_employer {
+    padding: 10px 24px;
+    border: 1px solid #79747e;
+    border-radius: 8px;
+    font-family: DM Sans;
+    font-weight: 600;
+    font-style: SemiBold;
+    font-size: 16px;
+    leading-trim: NONE;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    text-align: center;
+    vertical-align: middle;
+    color: #15a1b7;
+}
+
+.btn_add_employer:hover {
+    background: #15a1b7;
+    color: #fff;
+}
+
+.btn_delete_employer {
+    padding: 10px 24px;
+    font-family: DM Sans;
+    font-weight: 600;
+    font-style: SemiBold;
+    font-size: 16px;
+    leading-trim: NONE;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    text-align: center;
+    vertical-align: middle;
+    color: #15a1b7;
+}
+
+.btn_delete_employer:hover {
+    background: #15a1b7;
+    color: #fff;
 }
 
 /* End Choosing business type page */
