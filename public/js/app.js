@@ -184,6 +184,11 @@ document.querySelectorAll(".income-item").forEach((item) => {
             .querySelectorAll(".income-item")
             .forEach((i) => i.classList.remove("active"));
         item.classList.add("active");
+
+        const target = document.getElementById("forms_title");
+        if (target) {
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
     });
 });
 

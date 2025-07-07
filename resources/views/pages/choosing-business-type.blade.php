@@ -542,7 +542,7 @@
                     </div>
                 </section>
                 <section class="choosing-business-type_section">
-                    <h2 class="choosing-business-type-title">Let’s add the details</h2>
+                    <h2 class="choosing-business-type-title" id="forms_title">Let’s add the details</h2>
                     <div class="form-container">
                         <div class="d-none" id="form-0">@include('forms.salary')</div>
                         <div class="d-none" id="form-1">@include('forms.interest')</div>
