@@ -74,12 +74,12 @@
             </div>
 
             <div class="row">
-                <div class="col-md-6 mb-3">
-                    <button type="button" class="btn btn_add btn_add_allowance">
-                        <img src="{{ asset('img/icons/plus.png') }}" alt="plus"> Add another allowance
+                <div class="col mb-3">
+                    <button type="button" class="btn btn_add btn_add_allowance mb-2">
+                        <img src="{{ asset('img/icons/plus.png') }}" alt="plus"> Add another Government Allowance
                     </button>
-                    <button type="button" class="btn btn_delete btn_delete_allowance">
-                        Delete allowance
+                    <button type="button" class="btn btn_delete btn_delete_allowance mb-2">
+                        Delete another Government Allowance
                     </button>
                 </div>
             </div>
