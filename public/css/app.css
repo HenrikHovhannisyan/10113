@@ -1020,7 +1020,7 @@ select.form-control {
     transform: translateX(1.1em);
 }
 
-.btn_add_employer {
+.btn_add {
     padding: 10px 24px;
     border: 1px solid #79747e;
     border-radius: 8px;
@@ -1036,12 +1036,12 @@ select.form-control {
     color: #15a1b7;
 }
 
-.btn_add_employer:hover {
+.btn_add:hover {
     background: #15a1b7;
     color: #fff;
 }
 
-.btn_delete_employer {
+.btn_delete {
     padding: 10px 24px;
     font-family: DM Sans;
     font-weight: 600;
@@ -1055,7 +1055,7 @@ select.form-control {
     color: #15a1b7;
 }
 
-.btn_delete_employer:hover {
+.btn_delete:hover {
     background: #15a1b7;
     color: #fff;
 }
