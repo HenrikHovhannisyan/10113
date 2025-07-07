@@ -1,6 +1,4 @@
 <form>
-    <!-- ... другие формы выше ... -->
-
     <div class="mt-5">
         <div class="d-flex align-items-center justify-content-between mb-3">
             <h4 class="form_title">Dividends</h4>
