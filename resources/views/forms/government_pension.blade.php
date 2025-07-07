@@ -1,12 +1,15 @@
 <form>
     <div class="mt-5">
         <div class="d-flex align-items-center justify-content-between mb-3">
-            <h4 class="form_title">Government Pensions</h4>
+            <h4 class="form_title">Australian Government Pensions</h4>
             <img src="{{ asset('img/icons/help.png') }}" alt="Help">
         </div>
 
         <p class="choosing-business-type-text">
-            Please select the type of government pension you received. If you received multiple types, please complete the form for each one separately.
+            This can include Parenting Payment (Single), Aged Pension, Disability Support Pension, Carer Payments and any other Government pension you received.
+        </p>
+        <p class="choosing-business-type-text">
+            If you received more than one, add additional pensions below.
         </p>
 
         <div class="grin_box_border">
