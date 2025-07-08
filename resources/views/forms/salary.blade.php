@@ -75,11 +75,11 @@
 
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <button type="button" class="btn btn_add_employer">
+                    <button type="button" class="btn btn_add btn_add_employer">
                         <img src="{{ asset('img/icons/plus.png') }}" alt="plus">
                         Add another employer
                     </button>
-                    <button type="button" class="btn btn_delete_employer">
+                    <button type="button" class="btn btn_delete btn_delete_employer">
                         Delete employer
                     </button>
                 </div>
