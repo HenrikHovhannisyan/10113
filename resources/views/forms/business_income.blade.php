@@ -20,7 +20,7 @@
       </div>
 
       <div class="col-md-6 mb-3">
-        <p class="choosing-business-type-text">Rental Property Business Income/Loss</p>
+        <p class="choosing-business-type-text">Net income or loss from carrying on a rental property business</p>
         <input type="number" step="0.01" name="rental_business" class="form-control border-dark" placeholder="00.00$" />
       </div>
       <div class="col-md-6 mb-3">
@@ -51,22 +51,22 @@
       </div>
 
       <div class="col-md-6 mb-3">
-        <p class="choosing-business-type-text">Tax withheld - voluntary agreement</p>
+        <p class="choosing-business-type-text">Net income/loss from business tax withheld voluntary agreement</p>
         <input type="number" step="0.01" name="tax_withheld_voluntary" class="form-control border-dark" placeholder="00.00$" />
       </div>
 
       <div class="col-md-6 mb-3">
-        <p class="choosing-business-type-text">Tax withheld - ABN not quoted</p>
+        <p class="choosing-business-type-text">Net income/loss from business tax withheld where Australian business number not quoted</p>
         <input type="number" step="0.01" name="tax_withheld_abn" class="form-control border-dark" placeholder="00.00$" />
       </div>
 
       <div class="col-md-6 mb-3">
-        <p class="choosing-business-type-text">Tax withheld - foreign resident withholding</p>
+        <p class="choosing-business-type-text">Net income/loss from business tax withheld - foreign resident withholding (excluding capital gains)</p>
         <input type="number" step="0.01" name="foreign_withholding" class="form-control border-dark" placeholder="00.00$" />
       </div>
 
       <div class="col-md-6 mb-3">
-        <p class="choosing-business-type-text">Tax withheld - labour hire or other payments</p>
+        <p class="choosing-business-type-text">Net income/loss from business tax withheld - labour hire or other specified payments</p>
         <input type="number" step="0.01" name="labour_hire" class="form-control border-dark" placeholder="00.00$" />
       </div>
     </div>
