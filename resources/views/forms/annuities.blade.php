@@ -1,7 +1,28 @@
 <form>
-    <h4>Australian Annuities</h4>
-    <div class="mb-3">
-        <label class="form-label">Annuity Income</label>
-        <input type="text" class="form-control" name="annuities" placeholder="Enter annuity income">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <h4 class="form_title">Australian Annuities</h4>
+        <img src="{{ asset('img/icons/help.png') }}" alt="Help">
+    </div>
+
+    <p class="choosing-business-type-text">
+        Complete this section if you receive an Australian annuity from your super fund or life insurance company.
+    </p>
+
+    <div class="grin_box_border mb-4">
+        <div class="row">
+            <p class="choosing-business-type-text">
+                “Where can I find the details?” Your super fund or life insurance company should provide a summary with the numbers below.
+            </p>
+
+            <div class="col-md-6 mb-3">
+                <label class="choosing-business-type-text">Total tax withheld from Australian Annuities</label>
+                <input type="text" name="annuity_tax_withheld" class="form-control border-dark" placeholder="00.00$">
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="choosing-business-type-text">Total payments received from Australian Annuities</label>
+                <input type="text" name="annuity_total_received" class="form-control border-dark" placeholder="00.00$">
+            </div>
+        </div>
     </div>
 </form>
