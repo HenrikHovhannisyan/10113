@@ -13,7 +13,7 @@
       <div class="col-md-6 mb-3">
         <p class="choosing-business-type-text">Profit or Loss</p>
         <select name="net_business_type" class="form-control border-dark">
-          <option value="">Select</option>
+          <option value="">Choose</option>
           <option value="profit">Profit</option>
           <option value="loss">Loss</option>
         </select>
@@ -26,7 +26,7 @@
       <div class="col-md-6 mb-3">
         <p class="choosing-business-type-text">Profit or Loss</p>
         <select name="rental_business_type" class="form-control border-dark">
-          <option value="">Select</option>
+          <option value="">Choose</option>
           <option value="profit">Profit</option>
           <option value="loss">Loss</option>
         </select>
@@ -39,7 +39,7 @@
       <div class="col-md-6 mb-3">
         <p class="choosing-business-type-text">Profit or Loss</p>
         <select name="other_income_15_type" class="form-control border-dark">
-          <option value="">Select</option>
+          <option value="">Choose</option>
           <option value="profit">Profit</option>
           <option value="loss">Loss</option>
         </select>
