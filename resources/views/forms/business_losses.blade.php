@@ -61,7 +61,8 @@
         </p>
         <input type="number" step="0.01" name="sole_other" class="form-control border-dark" placeholder="00.00$" />
       </div>
-
+    </div>
+    <div class="row">
       <!-- Sole trader: total -->
       <div class="col-md-6 mb-3">
         <p class="choosing-business-type-text">
@@ -69,7 +70,8 @@
         </p>
         <input type="number" step="0.01" name="sole_total" class="form-control border-dark" placeholder="00.00$" />
       </div>
-
+    </div>
+    <div class="row">
       <!-- Primary production -->
       <div class="col-md-6 mb-3">
         <p class="choosing-business-type-text">Primary production deferred losses</p>
