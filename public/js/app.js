@@ -167,29 +167,4 @@ document.addEventListener("DOMContentLoaded", function () {
     updateView(); // Initial
 });
 
-document.querySelectorAll(".income-item").forEach((item) => {
-    item.addEventListener("click", () => {
-        const index = item.getAttribute("data-index");
-
-        document.querySelectorAll(".form-container > div").forEach((form) => {
-            form.classList.add("d-none");
-        });
-
-        const formToShow = document.getElementById(`form-${index}`);
-        if (formToShow) {
-            formToShow.classList.remove("d-none");
-        }
-
-        document
-            .querySelectorAll(".income-item")
-            .forEach((i) => i.classList.remove("active"));
-        item.classList.add("active");
-
-        const target = document.getElementById("forms_title");
-        if (target) {
-            target.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-    });
-});
-
 /* End Choosing business type page */

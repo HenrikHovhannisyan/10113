@@ -914,13 +914,15 @@ select.form-control {
     padding-right: 2.5rem;
 }
 
-.select_income_container {
+.select_income_container,
+.select_deduction_container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(246px, 1fr));
     gap: 16px;
     margin: 40px auto;
 }
 
+.deduction-item,
 .income-item {
     background-color: #fafafa;
     border: 2px solid #c3cad0;
@@ -933,17 +935,21 @@ select.form-control {
     height: 100%;
 }
 
+.deduction-item.active,
+.deduction-item:hover,
 .income-item.active,
 .income-item:hover {
     border: 2px solid #15a1b7;
     background-color: #eaf9fc;
 }
 
+.deduction-icon,
 .income-icon {
     text-align: center;
     margin-top: auto;
 }
 
+.deduction-label,
 .income-label {
     font-family: DM Sans;
     font-weight: 700;
