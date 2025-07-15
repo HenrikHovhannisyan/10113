@@ -1,10 +1,13 @@
 <form>
   <div class="d-flex align-items-center justify-content-between mb-3">
-    <h4 class="form_title">Travel Expenses</h4>
+    <h4 class="form_title">Work-Related Travel Expenses</h4>
     <img src="{{ asset('img/icons/help.png') }}" alt="Help">
   </div>
 
   <div id="travelExpenseContainer">
+    <p class="choosing-business-type-text">
+      For work-related travel costs other than using your car. Can include airfares, bus, train, taxi, meals and accommodation. Does not include travel between home and work. Only include items that you paid for yourself and were not repaid by your employer.
+    </p>
     <div class="grin_box_border mb-3 travel-expense-block">
       <div class="row">
         <div class="col-md-6 mb-3">
