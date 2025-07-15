@@ -11,13 +11,13 @@
         <p class="choosing-business-type-text">
             <strong>Important:</strong> To claim internet, you must have:
         </p>
-        <p class="choosing-business-type-text">
+        <p class="choosing-business-type-text ms-3">
             A copy of your internet bills AND a record that represents your typical work-related internet use for a continuous 4-week period (e.g. diary entries, timesheets, logbook)
         </p>
         <p class="choosing-business-type-text">
             <strong>OR</strong>
         </p>
-        <p class="choosing-business-type-text">
+        <p class="choosing-business-type-text ms-3">
             A record of the number of hours that you worked at home each day during the year (e.g. diary entries, timesheets, logbook).
         </p>
       <div class="col-md-6 mb-3">
