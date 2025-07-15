@@ -5,8 +5,11 @@
   </div>
 
     <div class="row">
+    <p class="choosing-business-type-text mb-4">
+      Are you required to do some of your work on your personal computer? Did you pay for the computer yourself? If you answered “yes”, then you might be able to claim part of the cost as a deduction. Includes desktop, laptop, tablet, iPad or printer that cost more than $300.
+    </p>
         <div class="col-md-6 mb-3">
-            <label class="choosing-business-type-text">Number of expenses you need to claim</label>
+            <label class="choosing-business-type-text">Number of expenses you need to claim (choose)</label>
             <select id="computerCount" class="form-control border-dark">
             @for ($i = 1; $i <= 5; $i++)
                 <option value="{{ $i }}">{{ $i }}</option>
@@ -18,13 +21,13 @@
   <div id="computerContainer">
     <section class="grin_box_border mb-4 computer-block">
       <div class="row">
-        <div class="col-md-6 mb-3">
-          <label class="choosing-business-type-text">Describe the computer</label>
-          <input type="text" name="computer_description" class="form-control border-dark" placeholder="e.g. Apple MacBook Air">
+        <div class="col-md-6 mb-3 pt-0 pt-md-4">
+          <label class="choosing-business-type-text">Describe the computer (eg. Apple MacBook Air)</label>
+          <input type="text" name="computer_description" class="form-control border-dark" placeholder="...">
         </div>
         <div class="col-md-6 mb-3">
-          <label class="choosing-business-type-text">Why do you use this computer for work?</label>
-          <input type="text" name="computer_reason" class="form-control border-dark" placeholder="e.g. I log in to manage evening staff rosters">
+          <label class="choosing-business-type-text">In a few words, WHY do you use this computer for work? (eg. “I log in to manage evening staff rosters”</label>
+          <input type="text" name="computer_reason" class="form-control border-dark" placeholder="...">
         </div>
 
         <!-- Date of purchase -->
@@ -58,11 +61,11 @@
 
         <div class="col-md-6 mb-3">
           <label class="choosing-business-type-text">What % of this computer’s usage is for your work?</label>
-          <input type="text" name="computer_percentage" class="form-control border-dark" placeholder="e.g. 80%">
+          <input type="text" name="computer_percentage" class="form-control border-dark" placeholder="0%">
         </div>
 
         <div class="col-md-6 mb-3">
-          <label class="choosing-business-type-text">What sort of records do you have for this item?</label>
+          <label class="choosing-business-type-text">What sort of records do you have for this item? (eg. an invoice or receipt)</label>
           <select name="computer_record" class="form-control border-dark">
             <option value="">Choose</option>
             <option value="invoice">Invoice / receipt</option>
