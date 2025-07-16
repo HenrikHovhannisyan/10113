@@ -83,10 +83,31 @@
 
         <div class="purchase-date-yes" style="display:none; margin-top:10px;">
             <label>Purchase Date</label>
-            <div class="d-flex gap-2">
-                <input type="text" name="expense_day_yes_1" placeholder="DD" class="form-control" style="width:60px;">
-                <input type="text" name="expense_month_yes_1" placeholder="MM" class="form-control" style="width:60px;">
-                <input type="text" name="expense_year_yes_1" placeholder="YYYY" class="form-control" style="width:80px;">
+            <div class="row">
+                <div class="col-4">
+                    <select name="expense_day_yes_1" class="form-control border-dark">
+                        <option value="">Day</option>
+                        @for ($i = 1; $i <= 31; $i++)
+                            <option value="{{ $i }}">{{ $i }}</option>
+                        @endfor
+                    </select>
+                </div>
+                <div class="col-4">
+                    <select name="expense_month_yes_1" class="form-control border-dark">
+                        <option value="">Month</option>
+                        @for ($i = 1; $i <= 12; $i++)
+                            <option value="{{ $i }}">{{ DateTime::createFromFormat('!m', $i)->format('F') }}</option>
+                        @endfor
+                    </select>
+                </div>
+                <div class="col-4">
+                    <select name="expense_year_yes_1" class="form-control border-dark">
+                        <option value="">Year</option>
+                        @for ($i = date('Y'); $i >= 1990; $i--)
+                            <option value="{{ $i }}">{{ $i }}</option>
+                        @endfor
+                    </select>
+                </div>
             </div>
         </div>
 
