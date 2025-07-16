@@ -133,6 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function createVehicleBlock(index) {
     return `
       <section class="vehicle-block">
+        <hr>
         <div class="row">
           <div class="col-md-12 mb-3">
             <p class="choosing-business-type-text">Is the vehicle registered in your name (do you own the vehicle)?</p>
