@@ -59,7 +59,7 @@
     </div>
 
     <div id="edu_expense_block" class="mt-3" style="display: none;">
-      <div class="mb-3">
+      <div class="col-md-6 mb-3">
         <label class="form-label">Why did you do this education?</label>
         <select name="edu_reason" class="form-select">
           <option value="">Choose</option>
@@ -71,7 +71,7 @@
 
       <div id="edu_expense_items">
         <div class="grin_box_border p-3 mb-3 edu-expense-item">
-    <div class="mb-3">
+    <div class="col-md-6 mb-3">
     <label class="form-label">Type of education expense</label>
     <select name="edu_expense_type[]" class="form-select edu-expense-type">
       <option value="">Choose</option>
@@ -86,7 +86,7 @@
   </div>
 
   <!-- Это поле скроем для Laptop -->
-  <div class="mb-3 amount-paid-block">
+  <div class="col-md-6 mb-3 amount-paid-block">
     <label class="form-label">Amount you paid for this item</label>
     <input type="number" step="0.01" class="form-control edu-amount" name="edu_amount[]" placeholder="00.00$">
   </div>
@@ -107,32 +107,34 @@
     </div>
 
     <div class="row">
-      <div class="col-md-4 mb-3">
-        <label class="form-label">Day</label>
-        <select name="laptop_purchase_day[]" class="form-control border-dark">
-          <option value="">Day</option>
-          <!-- options 1-31 -->
-          ${[...Array(31)].map((_,i) => `<option value="${i+1}">${i+1}</option>`).join('')}
-        </select>
-      </div>
-      <div class="col-md-4 mb-3">
-        <label class="form-label">Month</label>
-        <select name="laptop_purchase_month[]" class="form-control border-dark">
-          <option value="">Month</option>
-          ${[...Array(12)].map((_,i) => {
-            const month = new Date(0, i).toLocaleString('en', {month: 'long'});
-            return `<option value="${i+1}">${month}</option>`;
-          }).join('')}
-        </select>
-      </div>
-      <div class="col-md-4 mb-3">
-        <label class="form-label">Year</label>
-        <select name="laptop_purchase_year[]" class="form-control border-dark">
-          <option value="">Year</option>
-          <!-- Years from current year down to 1990 -->
-          ${Array.from({length: new Date().getFullYear() - 1990 + 1}, (_, i) => new Date().getFullYear() - i).map(y => `<option value="${y}">${y}</option>`).join('')}
-        </select>
-      </div>
+        <!-- Date of purchase -->
+        <div class="col-md-4 mb-3">
+          <label class="choosing-business-type-text">Day</label>
+          <select name="laptop_purchase_day" class="form-control border-dark">
+            <option value="">Day</option>
+            @for ($i = 1; $i <= 31; $i++)
+              <option value="{{ $i }}">{{ $i }}</option>
+            @endfor
+          </select>
+        </div>
+        <div class="col-md-4 mb-3">
+          <label class="choosing-business-type-text">Month</label>
+          <select name="laptop_purchase_month" class="form-control border-dark">
+            <option value="">Month</option>
+            @for ($i = 1; $i <= 12; $i++)
+              <option value="{{ $i }}">{{ DateTime::createFromFormat('!m', $i)->format('F') }}</option>
+            @endfor
+          </select>
+        </div>
+        <div class="col-md-4 mb-3">
+          <label class="choosing-business-type-text">Year</label>
+          <select name="laptop_purchase_year" class="form-control border-dark">
+            <option value="">Year</option>
+            @for ($i = date('Y'); $i >= 1990; $i--)
+              <option value="{{ $i }}">{{ $i }}</option>
+            @endfor
+          </select>
+        </div>
     </div>
   </div>
 </div>
@@ -174,20 +176,20 @@
 <!-- JS -->
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-  // Показывать/скрывать блоки
+  // Show/hide car travel block
   document.querySelectorAll('input[name="car_travel"]').forEach(input => {
     input.addEventListener('change', function () {
       document.getElementById('car_travel_block').style.display = this.value === 'yes' ? 'block' : 'none';
     });
   });
 
+  // Show/hide education block
   document.querySelectorAll('input[name="edu_expense"]').forEach(input => {
     input.addEventListener('change', function () {
       document.getElementById('edu_expense_block').style.display = this.value === 'yes' ? 'block' : 'none';
     });
   });
 
-  // Добавить ещё один блок расходов на образование
   const eduContainer = document.getElementById('edu_expense_items');
   const addEduBtn = document.getElementById('addEduExpense');
   const totalField = document.getElementById('edu_total');
@@ -198,56 +200,9 @@ document.addEventListener('DOMContentLoaded', function () {
       const val = parseFloat(input.value);
       if (!isNaN(val)) total += val;
     });
-    totalField.value = total.toFixed(2) + "$";
+    totalField.textContent = total.toFixed(2) + "$";
   }
 
-  // отслеживать изменение суммы
-  eduContainer.addEventListener('input', function (e) {
-    if (e.target.classList.contains('edu-amount')) {
-      updateEduTotal();
-    }
-  });
-
-  addEduBtn.addEventListener('click', function () {
-    const first = eduContainer.querySelector('.edu-expense-item');
-    const clone = first.cloneNode(true);
-    clone.querySelectorAll('input').forEach(input => input.value = '');
-    clone.querySelectorAll('select').forEach(select => select.selectedIndex = 0);
-    eduContainer.appendChild(clone);
-  });
-});
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  // File trigger
-  const eduFileInput = document.getElementById("eduFileInput");
-  const triggerEduFile = document.getElementById("triggerEduFile");
-  const eduFileName = document.getElementById("eduFileName");
-
-  triggerEduFile.addEventListener("click", () => eduFileInput.click());
-
-  eduFileInput.addEventListener("change", () => {
-    eduFileName.textContent = eduFileInput.files.length
-      ? eduFileInput.files[0].name
-      : "No file chosen";
-  });
-});
-</script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-  const eduContainer = document.getElementById('edu_expense_items');
-  const addEduBtn = document.getElementById('addEduExpense');
-
-  function updateEduTotal() {
-    let total = 0;
-    document.querySelectorAll('.edu-amount').forEach(input => {
-      const val = parseFloat(input.value);
-      if (!isNaN(val)) total += val;
-    });
-    document.getElementById('edu_total').value = total.toFixed(2) + "$";
-  }
-
-  // Отслеживаем изменения select и показываем/скрываем поля
   function toggleLaptopFields(block) {
     const typeSelect = block.querySelector('.edu-expense-type');
     const amountBlock = block.querySelector('.amount-paid-block');
@@ -262,35 +217,54 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Инициализация блока
   function initEduBlock(block) {
     const typeSelect = block.querySelector('.edu-expense-type');
     const amountInput = block.querySelector('.edu-amount');
+
+    toggleLaptopFields(block);
 
     typeSelect.addEventListener('change', () => {
       toggleLaptopFields(block);
       updateEduTotal();
     });
 
-    // При изменении суммы обновляем общий итог (для обычных)
     amountInput.addEventListener('input', updateEduTotal);
   }
 
-  // Инициализация всех блоков при загрузке
   eduContainer.querySelectorAll('.edu-expense-item').forEach(initEduBlock);
 
-  // Добавление нового блока
   addEduBtn.addEventListener('click', function () {
     const first = eduContainer.querySelector('.edu-expense-item');
     const clone = first.cloneNode(true);
 
-    clone.querySelectorAll('input').forEach(input => input.value = '');
-    clone.querySelectorAll('select').forEach(select => select.selectedIndex = 0);
+    clone.querySelectorAll('input').forEach(input => {
+      input.value = '';
+    });
+
+    clone.querySelectorAll('select').forEach(select => {
+      select.selectedIndex = 0;
+    });
+
+    clone.querySelector('.laptop-extra-fields').style.display = 'none';
+    clone.querySelector('.amount-paid-block').style.display = 'block';
 
     eduContainer.appendChild(clone);
     initEduBlock(clone);
   });
-});
 
+  // File input handler
+  const eduFileInput = document.getElementById("eduFileInput");
+  const triggerEduFile = document.getElementById("triggerEduFile");
+  const eduFileName = document.getElementById("eduFileName");
+
+  triggerEduFile.addEventListener("click", () => eduFileInput.click());
+
+  eduFileInput.addEventListener("change", () => {
+    eduFileName.textContent = eduFileInput.files.length
+      ? eduFileInput.files[0].name
+      : "No file chosen";
+  });
+});
 </script>
+
 
