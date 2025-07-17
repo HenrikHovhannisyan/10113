@@ -13,12 +13,12 @@
         <label class="choosing-business-type-text">
           Describe this item (eg. “sunnies and wide rimmed hat for paving work”)
         </label>
-        <input type="text" class="form-control" name="sun_description" placeholder="...">
+        <input type="text" class="form-control border-dark" name="sun_description" placeholder="...">
       </div>
 
       <div class="col-md-6 mb-3">
         <label class="choosing-business-type-text">Total cost of sun protection items</label>
-        <input type="text" class="form-control" name="sun_cost" placeholder="00.00$">
+        <input type="text" class="form-control border-dark" name="sun_cost" placeholder="00.00$">
       </div>
     </div>
   </div>
