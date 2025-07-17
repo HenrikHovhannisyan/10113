@@ -1,9 +1,12 @@
 <form>
   <div class="d-flex align-items-center justify-content-between mb-3">
-    <h4 class="form_title">Home Office Occupancy</h4>
+    <h4 class="form_title">Home Office Occupancy Costs (If you ONLY work from your home office)</h4>
     <img src="{{ asset('img/icons/help.png') }}" alt="Help">
   </div>
 
+  <p class="choosing-business-type-text">
+    Complete this section if you ONLY work from a home office and your employer does not provide any office for you.
+  </p>
   <div class="grin_box_border p-3 mb-3">
     <div class="mb-3">
       <label class="choosing-business-type-text">Does your employer provide an office or work area for you?</label>
