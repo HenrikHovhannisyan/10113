@@ -1,150 +1,129 @@
-$(document).ready(function () {
-    $(".owl-carousel").owlCarousel({
-        loop: true,
-        margin: 20,
-        nav: false,
-        dots: false,
-        autoplay: true,
-        autoplayTimeout: 4000,
-        autoplayHoverPause: true,
-        responsive: {
-            0: { items: 1 },
-            576: { items: 2 },
-            768: { items: 3 },
-            992: { items: 4 },
-            1200: { items: 5 },
-        },
+$(".owl-carousel").owlCarousel({
+    loop: true,
+    margin: 20,
+    nav: false,
+    dots: false,
+    autoplay: true,
+    autoplayTimeout: 4000,
+    autoplayHoverPause: true,
+    responsive: {
+        0: { items: 1 },
+        576: { items: 2 },
+        768: { items: 3 },
+        992: { items: 4 },
+        1200: { items: 5 },
+    },
+});
+
+const toggleButtons = document.querySelectorAll(".toggle-password");
+toggleButtons.forEach((button) => {
+    button.addEventListener("click", function () {
+        const passwordInput = this.previousElementSibling;
+        const type =
+            passwordInput.getAttribute("type") === "password"
+                ? "text"
+                : "password";
+        passwordInput.setAttribute("type", type);
+
+        const icon = this.querySelector("i");
+        icon.classList.toggle("fa-eye");
+        icon.classList.toggle("fa-eye-slash");
     });
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-    const toggleButtons = document.querySelectorAll(".toggle-password");
+// Tabs (Choosing Business Type)
+const tabs = Array.from(document.querySelectorAll(".tab-item"));
+const panes = Array.from(document.querySelectorAll(".tab-pane"));
+const nextBtn = document.getElementById("nextBtn");
+const prevBtn = document.getElementById("prevBtn");
+const confirmBtn = document.getElementById("confirmBtn");
+let currentTab = 0;
 
-    toggleButtons.forEach((button) => {
-        button.addEventListener("click", function () {
-            const passwordInput = this.previousElementSibling;
-            const type =
-                passwordInput.getAttribute("type") === "password"
-                    ? "text"
-                    : "password";
-            passwordInput.setAttribute("type", type);
-
-            const icon = this.querySelector("i");
-            if (type === "text") {
-                icon.classList.remove("fa-eye");
-                icon.classList.add("fa-eye-slash");
-            } else {
-                icon.classList.remove("fa-eye-slash");
-                icon.classList.add("fa-eye");
-            }
-        });
-    });
-});
-
-/* Start Choosing business type page */
-document.addEventListener("DOMContentLoaded", function () {
-    const tabs = Array.from(document.querySelectorAll(".tab-item"));
-    const panes = Array.from(document.querySelectorAll(".tab-pane"));
-    const nextBtn = document.getElementById("nextBtn");
-    const prevBtn = document.getElementById("prevBtn");
-    const confirmBtn = document.getElementById("confirmBtn");
-
-    let currentTab = 0;
-
-    function updateTab(index) {
-        tabs.forEach((tab, i) => {
-            tab.classList.toggle("active", i === index);
-            tab.setAttribute("aria-selected", i === index);
-        });
-
-        panes.forEach((pane, i) => {
-            if (i === index) {
-                pane.classList.add("show", "active");
-                pane.style.display = "block";
-            } else {
-                pane.classList.remove("show", "active");
-                pane.style.display = "none";
-            }
-        });
-
-        prevBtn.classList.toggle("d-none", index === 0);
-        nextBtn.classList.toggle("d-none", index === tabs.length - 1);
-        confirmBtn.classList.toggle("d-none", index !== tabs.length - 1);
-    }
-
+function updateTab(index) {
     tabs.forEach((tab, i) => {
-        tab.addEventListener("click", () => {
-            currentTab = i;
-            updateTab(currentTab);
-        });
+        tab.classList.toggle("active", i === index);
+        tab.setAttribute("aria-selected", i === index);
     });
 
-    // Next
-    nextBtn.addEventListener("click", () => {
-        if (currentTab < tabs.length - 1) {
-            currentTab++;
-            updateTab(currentTab);
-        }
+    panes.forEach((pane, i) => {
+        pane.classList.toggle("show", i === index);
+        pane.classList.toggle("active", i === index);
+        pane.style.display = i === index ? "block" : "none";
     });
 
-    // Back
-    prevBtn.addEventListener("click", () => {
-        if (currentTab > 0) {
-            currentTab--;
-            updateTab(currentTab);
-        }
-    });
+    prevBtn?.classList.toggle("d-none", index === 0);
+    nextBtn?.classList.toggle("d-none", index === tabs.length - 1);
+    confirmBtn?.classList.toggle("d-none", index !== tabs.length - 1);
+}
 
-    // Confirm
-    confirmBtn.addEventListener("click", () => {
-        alert("Form confirmed!");
-        // Здесь можно отправить форму или перейти на страницу
+tabs.forEach((tab, i) => {
+    tab.addEventListener("click", () => {
+        currentTab = i;
+        updateTab(currentTab);
     });
-
-    updateTab(currentTab);
 });
 
+nextBtn?.addEventListener("click", () => {
+    if (currentTab < tabs.length - 1) {
+        currentTab++;
+        updateTab(currentTab);
+    }
+});
+
+prevBtn?.addEventListener("click", () => {
+    if (currentTab > 0) {
+        currentTab--;
+        updateTab(currentTab);
+    }
+});
+
+confirmBtn?.addEventListener("click", () => {
+    alert("Form confirmed!");
+});
+
+updateTab(currentTab);
+
+// Occupation
 const occupationSelect = document.getElementById("occupationSelect");
 const otherField = document.getElementById("otherOccupationField");
-
-occupationSelect.addEventListener("change", function () {
-    if (this.value === "other") {
-        otherField.style.display = "flex";
-    } else {
-        otherField.style.display = "none";
-    }
+occupationSelect?.addEventListener("change", function () {
+    otherField.style.display = this.value === "other" ? "flex" : "none";
 });
 
+// Citizenship
 const yesRadio = document.getElementById("citizenshipYes");
 const noRadio = document.getElementById("citizenshipNo");
 const extraSection = document.getElementById("nonCitizenSection");
 
 function toggleExtraSection() {
-    if (noRadio.checked) {
-        extraSection.style.display = "block";
-    } else {
-        extraSection.style.display = "none";
-    }
+    extraSection.style.display = noRadio.checked ? "block" : "none";
 }
 
-yesRadio.addEventListener("change", toggleExtraSection);
-noRadio.addEventListener("change", toggleExtraSection);
+yesRadio?.addEventListener("change", toggleExtraSection);
+noRadio?.addEventListener("change", toggleExtraSection);
 
+// Visa
 const visaSelect = document.getElementById("visaSelect");
 const otherVisaInput = document.getElementById("otherVisaInput");
 
-visaSelect.addEventListener("change", function () {
-    if (this.value === "other") {
-        otherVisaInput.style.display = "block";
-    } else {
-        otherVisaInput.style.display = "none";
-    }
+visaSelect?.addEventListener("change", function () {
+    otherVisaInput.style.display = this.value === "other" ? "block" : "none";
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-    const toggleBtn = document.getElementById("toggleBtn");
-    const items = document.querySelectorAll(".income-item");
-    const visibleCount = 10;
+// Toggle List Function
+function initToggleList({
+    containerSelector,
+    itemSelector,
+    toggleBtnSelector,
+    visibleCount = 5,
+    showMoreText = "Show More",
+    showLessText = "Show Less",
+}) {
+    const toggleBtn = document.querySelector(toggleBtnSelector);
+    const container = document.querySelector(containerSelector);
+    if (!toggleBtn || !container) return;
+
+    const items = container.querySelectorAll(itemSelector);
     let isExpanded = false;
 
     function updateView() {
@@ -155,8 +134,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 item.classList.add("hidden");
             }
         });
-
-        toggleBtn.textContent = isExpanded ? "Show Less" : "Show More";
+        toggleBtn.textContent = isExpanded ? showLessText : showMoreText;
     }
 
     toggleBtn.addEventListener("click", () => {
@@ -164,7 +142,23 @@ document.addEventListener("DOMContentLoaded", function () {
         updateView();
     });
 
-    updateView(); // Initial
+    updateView();
+}
+
+initToggleList({
+    containerSelector: ".select_income_container",
+    itemSelector: ".income-item",
+    toggleBtnSelector: "#toggleBtn",
+    visibleCount: 10,
+    showMoreText: "Show More",
+    showLessText: "Show Less",
 });
 
-/* End Choosing business type page */
+initToggleList({
+    containerSelector: ".select_deduction_container1",
+    itemSelector: ".deduction-item",
+    toggleBtnSelector: "#toggleDeductionBtn",
+    visibleCount: 10,
+    showMoreText: "Show More",
+    showLessText: "Show Less",
+});

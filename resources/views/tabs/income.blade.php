@@ -207,31 +207,27 @@
 </section>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const items = document.querySelectorAll(".income-item");
-        const forms = document.querySelectorAll(".form-container > div");
+document.addEventListener("DOMContentLoaded", function () {
+    const items = document.querySelectorAll(".income-item");
 
-        items.forEach((item) => {
-            item.addEventListener("click", () => {
-                const index = item.getAttribute("data-index");
+    items.forEach((item) => {
+        item.addEventListener("click", () => {
+            const index = item.getAttribute("data-index");
+            const formToShow = document.getElementById(`form-${index}`);
 
-                forms.forEach((form) => form.classList.add("d-none"));
+            if (!formToShow) return;
 
-                const formToShow = document.getElementById(`form-${index}`);
-                if (formToShow) formToShow.classList.remove("d-none");
-
-                items.forEach((i) => i.classList.remove("active"));
+            if (formToShow.classList.contains("d-none")) {
+                formToShow.classList.remove("d-none");
                 item.classList.add("active");
 
                 const target = document.getElementById("forms_title");
                 if (target) {
                     target.scrollIntoView({ behavior: "smooth", block: "start" });
                 }
-            });
+            }
         });
-
-        if (items.length > 0) {
-            items[0].click();
-        }
     });
+});
 </script>
+

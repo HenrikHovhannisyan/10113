@@ -5,28 +5,68 @@
     </p>
     <h4 class="form_title">These are common tax deductions for a Manager - retail store.</h4>
     <div class="select_deduction_container mt-0">
-        <div class="deduction-item" data-index="deduction-0"><div class="deduction-label"><p>Car expenses + parking + tolls</p><img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr"></div><div class="deduction-icon"><img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image"></div></div>
-        <div class="deduction-item" data-index="deduction-1"><div class="deduction-label"><p>Travel Expenses</p><img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr"></div><div class="deduction-icon"><img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image"></div></div>
-        <div class="deduction-item" data-index="deduction-2"><div class="deduction-label"><p>Mobile Phone</p><img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr"></div><div class="deduction-icon"><img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image"></div></div>
-        <div class="deduction-item" data-index="deduction-3"><div class="deduction-label"><p>Internet Access</p><img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr"></div><div class="deduction-icon"><img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image"></div></div>
-        <div class="deduction-item" data-index="deduction-4"><div class="deduction-label"><p>Computer / Laptop</p><img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr"></div><div class="deduction-icon"><img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image"></div></div>
-        <div class="deduction-item" data-index="deduction-5"><div class="deduction-label"><p>Gifts / Donations</p><img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr"></div><div class="deduction-icon"><img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image"></div></div>
-        <div class="deduction-item" data-index="deduction-6"><div class="deduction-label"><p>Home Office Expenses</p><img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr"></div><div class="deduction-icon"><img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image"></div></div>
-        <div class="deduction-item" data-index="deduction-7"><div class="deduction-label"><p>Books & Other Work-Related Expenses</p><img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr"></div><div class="deduction-icon"><img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image"></div></div>
-        <div class="deduction-item" data-index="deduction-8"><div class="deduction-label"><p>Cost of Tax Affairs</p><img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr"></div><div class="deduction-icon"><img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image"></div></div>
+        <div class="deduction-item" data-index="0"><div class="deduction-label"><p>Car expenses + parking + tolls</p><img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr"></div><div class="deduction-icon"><img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image"></div></div>
+        <div class="deduction-item" data-index="1"><div class="deduction-label"><p>Travel Expenses</p><img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr"></div><div class="deduction-icon"><img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image"></div></div>
+        <div class="deduction-item" data-index="2"><div class="deduction-label"><p>Mobile Phone</p><img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr"></div><div class="deduction-icon"><img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image"></div></div>
+        <div class="deduction-item" data-index="3"><div class="deduction-label"><p>Internet Access</p><img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr"></div><div class="deduction-icon"><img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image"></div></div>
+        <div class="deduction-item" data-index="4"><div class="deduction-label"><p>Computer / Laptop</p><img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr"></div><div class="deduction-icon"><img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image"></div></div>
+        <div class="deduction-item" data-index="5"><div class="deduction-label"><p>Gifts / Donations</p><img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr"></div><div class="deduction-icon"><img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image"></div></div>
+        <div class="deduction-item" data-index="6"><div class="deduction-label"><p>Home Office Expenses</p><img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr"></div><div class="deduction-icon"><img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image"></div></div>
+        <div class="deduction-item" data-index="7"><div class="deduction-label"><p>Books & Other Work-Related Expenses</p><img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr"></div><div class="deduction-icon"><img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image"></div></div>
+        <div class="deduction-item" data-index="8"><div class="deduction-label"><p>Cost of Tax Affairs</p><img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr"></div><div class="deduction-icon"><img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image"></div></div>
     </div>
     <h4 class="form_title mt-4">Is there anything else you can claim?</h4>
-    <div class="select_deduction_container mt-0">
-        <div class="deduction-item" data-index="deduction-9"><div class="deduction-label"><p>Uniforms</p><img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr"></div><div class="deduction-icon"><img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image"></div></div>
-        <div class="deduction-item" data-index="deduction-10"><div class="deduction-label"><p>Education Expenses</p><img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr"></div><div class="deduction-icon"><img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image"></div></div>
-        <div class="deduction-item" data-index="deduction-11"><div class="deduction-label"><p>Tools and Equipment</p><img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr"></div><div class="deduction-icon"><img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image"></div></div>
-        <div class="deduction-item" data-index="deduction-12"><div class="deduction-label"><p>Superannuation Contributions</p><img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr"></div><div class="deduction-icon"><img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image"></div></div>
-        <div class="deduction-item" data-index="deduction-13"><div class="deduction-label"><p>Home Office Occupancy</p><img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr"></div><div class="deduction-icon"><img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image"></div></div>
-        <div class="deduction-item" data-index="deduction-14"><div class="deduction-label"><p>Union Fees</p><img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr"></div><div class="deduction-icon"><img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image"></div></div>
-        <div class="deduction-item" data-index="deduction-15"><div class="deduction-label"><p>Sun Protection</p><img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr"></div><div class="deduction-icon"><img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image"></div></div>
-        <div class="deduction-item" data-index="deduction-16"><div class="deduction-label"><p>Low Value Pool Deduction</p><img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr"></div><div class="deduction-icon"><img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image"></div></div>
-        <div class="deduction-item" data-index="deduction-17"><div class="deduction-label"><p>Interest Deductions</p><img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr"></div><div class="deduction-icon"><img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image"></div></div>
-        <div class="deduction-item" data-index="deduction-18"><div class="deduction-label"><p>Dividend Deductions</p><img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr"></div><div class="deduction-icon"><img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image"></div></div>
+    <div class="select_deduction_container select_deduction_container1 mt-0">
+        <div class="deduction-item" data-index="9"><div class="deduction-label"><p>Uniforms</p><img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr"></div><div class="deduction-icon"><img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image"></div></div>
+        <div class="deduction-item" data-index="10"><div class="deduction-label"><p>Education Expenses</p><img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr"></div><div class="deduction-icon"><img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image"></div></div>
+        <div class="deduction-item" data-index="11"><div class="deduction-label"><p>Tools and Equipment</p><img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr"></div><div class="deduction-icon"><img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image"></div></div>
+        <div class="deduction-item" data-index="12"><div class="deduction-label"><p>Superannuation Contributions</p><img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr"></div><div class="deduction-icon"><img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image"></div></div>
+        <div class="deduction-item" data-index="13"><div class="deduction-label"><p>Home Office Occupancy</p><img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr"></div><div class="deduction-icon"><img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image"></div></div>
+        <div class="deduction-item" data-index="14"><div class="deduction-label"><p>Union Fees</p><img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr"></div><div class="deduction-icon"><img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image"></div></div>
+        <div class="deduction-item" data-index="15"><div class="deduction-label"><p>Sun Protection</p><img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr"></div><div class="deduction-icon"><img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image"></div></div>
+        <div class="deduction-item" data-index="16"><div class="deduction-label"><p>Low Value Pool Deduction</p><img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr"></div><div class="deduction-icon"><img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image"></div></div>
+        <div class="deduction-item" data-index="17"><div class="deduction-label"><p>Interest Deductions</p><img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr"></div><div class="deduction-icon"><img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image"></div></div>
+        <div class="deduction-item" data-index="18"><div class="deduction-label"><p>Dividend Deductions</p><img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr"></div><div class="deduction-icon"><img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image"></div></div>
+        <div class="deduction-item hidden" data-index="19">
+        <div class="deduction-label">
+                <p>Deductible Amount Of UPP</p>
+                <img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr">
+            </div>
+            <div class="deduction-icon">
+                <img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image">
+            </div>
+        </div>
+        <div class="deduction-item hidden" data-index="20">
+            <div class="deduction-label">
+                <p>Deduction For Project Pool</p>
+                <img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr">
+            </div>
+            <div class="deduction-icon">
+                <img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image">
+            </div>
+        </div>
+        <div class="deduction-item hidden" data-index="21">
+            <div class="deduction-label">
+                <p>Investment Scheme Deduction</p>
+                <img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr">
+            </div>
+            <div class="deduction-icon">
+                <img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image">
+            </div>
+        </div>
+        <div class="deduction-item hidden" data-index="22">
+            <div class="deduction-label">
+                <p>Other Deductions</p>
+                <img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr">
+            </div>
+            <div class="deduction-icon">
+                <img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image">
+            </div>
+        </div>
+    </div>
+    
+    <div class="text-center">
+        <button class="btn toggle-btn" id="toggleDeductionBtn">Show More</button>
     </div>
 </section>
 
@@ -52,36 +92,35 @@
         <div class="d-none" id="form-deduction-16">@include('forms.deduction.low_value_pool')</div>
         <div class="d-none" id="form-deduction-17">@include('forms.deduction.interest_deduction')</div>
         <div class="d-none" id="form-deduction-18">@include('forms.deduction.dividend_deduction')</div>
+        <div class="d-none" id="form-deduction-19">@include('forms.deduction.upp')</div>
+        <div class="d-none" id="form-deduction-20">@include('forms.deduction.project_pool')</div>
+        <div class="d-none" id="form-deduction-21">@include('forms.deduction.investment_scheme')</div>
+        <div class="d-none" id="form-deduction-22">@include('forms.deduction.other')</div>
     </div>
 </section>
 
-
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const items = document.querySelectorAll(".deduction-item");
-        const forms = document.querySelectorAll(".deduction-form-container > div");
+document.addEventListener("DOMContentLoaded", function () {
+    const items = document.querySelectorAll(".deduction-item");
 
-        items.forEach((item) => {
-            item.addEventListener("click", () => {
-                const index = item.getAttribute("data-index");
+    items.forEach((item) => {
+        item.addEventListener("click", () => {
+            const index = item.getAttribute("data-index");
+            const formToShow = document.getElementById(`form-deduction-${index}`);
 
-                forms.forEach((form) => form.classList.add("d-none"));
+            if (!formToShow) return;
 
-                const formToShow = document.getElementById(`form-${index}`);
-                if (formToShow) formToShow.classList.remove("d-none");
-
-                items.forEach((i) => i.classList.remove("active"));
+            if (formToShow.classList.contains("d-none")) {
+                formToShow.classList.remove("d-none");
                 item.classList.add("active");
 
                 const target = document.getElementById("deduction-forms_title");
                 if (target) {
                     target.scrollIntoView({ behavior: "smooth", block: "start" });
                 }
-            });
+            }
         });
-        
-        if (items.length > 0) {
-            items[0].click();
-        }
     });
+});
 </script>
+
