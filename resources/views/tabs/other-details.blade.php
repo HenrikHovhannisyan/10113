@@ -51,11 +51,11 @@
         <div class="d-none" id="other-details-form-3">@include('forms.other-details.seniors_offset')</div>
         <div class="d-none" id="other-details-form-4">@include('forms.other-details.medicare_reduction')</div>
         @include('forms.other-details.form.mls')
+        <div class="d-none" id="other-details-form-5">@include('forms.other-details.tax_free_threshold')</div>
         @include('forms.other-details.form.income_tests')
         <div class="d-none" id="other-details-form-0">@include('forms.other-details.spouse_details')</div>
         @include('forms.other-details.form.attach')
         <div class="d-none" id="other-details-form-1">@include('forms.other-details.private_health_insurance')</div>
-        <div class="d-none" id="other-details-form-5">@include('forms.other-details.tax_free_threshold')</div>
         <div class="d-none" id="other-details-form-6">@include('forms.other-details.medical_expenses')</div>
         <div class="d-none" id="other-details-form-7">@include('forms.other-details.under_18')</div>
         <div class="d-none" id="other-details-form-8">@include('forms.other-details.working_holiday_income')</div>
