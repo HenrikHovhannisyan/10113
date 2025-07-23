@@ -48,12 +48,12 @@
     <div class="form-container">
         @include('forms.other-details.form.dependent_children')
         <div class="d-none" id="other-details-form-2">@include('forms.other-details.zone_offset')</div>
+        <div class="d-none" id="other-details-form-3">@include('forms.other-details.seniors_offset')</div>
         @include('forms.other-details.form.mls')
         @include('forms.other-details.form.income_tests')
         <div class="d-none" id="other-details-form-0">@include('forms.other-details.spouse_details')</div>
         @include('forms.other-details.form.attach')
         <div class="d-none" id="other-details-form-1">@include('forms.other-details.private_health_insurance')</div>
-        <div class="d-none" id="other-details-form-3">@include('forms.other-details.seniors_offset')</div>
         <div class="d-none" id="other-details-form-4">@include('forms.other-details.medicare_reduction')</div>
         <div class="d-none" id="other-details-form-5">@include('forms.other-details.tax_free_threshold')</div>
         <div class="d-none" id="other-details-form-6">@include('forms.other-details.medical_expenses')</div>
