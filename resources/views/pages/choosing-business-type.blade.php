@@ -18,8 +18,8 @@
             <div class="tab-item" role="tab" tabindex="0" aria-selected="false" aria-controls="deduction" data-bs-toggle="tab" data-bs-target="#deduction">
                 Deduction
             </div>
-            <div class="tab-item" role="tab" tabindex="0" aria-selected="false" aria-controls="final-details" data-bs-toggle="tab" data-bs-target="#final-details">
-                FINAL DETAILS
+            <div class="tab-item" role="tab" tabindex="0" aria-selected="false" aria-controls="other-details" data-bs-toggle="tab" data-bs-target="#other-details">
+                Other
             </div>
         </div>
 
@@ -364,10 +364,8 @@
                @include('tabs.deduction')
             </div>
 
-            <div class="tab-pane fade" id="final-details" role="tabpanel" aria-labelledby="final-details-tab">
-                <!-- Содержимое Final Details -->
-                <h2 class="fw-bold text-info">Final details</h2>
-                <p class="text-muted">Review and confirm your application.</p>
+            <div class="tab-pane fade" id="other-details" role="tabpanel" aria-labelledby="other-details-tab">
+                @include('tabs.other-details')
             </div>
         </div>
 

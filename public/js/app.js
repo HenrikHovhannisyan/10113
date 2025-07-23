@@ -162,3 +162,12 @@ initToggleList({
     showMoreText: "Show More",
     showLessText: "Show Less",
 });
+
+initToggleList({
+    containerSelector: ".select_deduction_container2",
+    itemSelector: ".other-details-item",
+    toggleBtnSelector: "#toggleBtnOther",
+    visibleCount: 10,
+    showMoreText: "Show More",
+    showLessText: "Show Lessddd",
+});

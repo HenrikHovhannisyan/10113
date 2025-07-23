@@ -922,6 +922,7 @@ select.form-control {
     margin: 40px auto;
 }
 
+.other-details-item,
 .deduction-item,
 .income-item {
     background-color: #fafafa;
@@ -935,20 +936,24 @@ select.form-control {
     height: 100%;
 }
 
-.deduction-item.active,
+.other-details-item.hover,
+.other-details-item.active,
 .deduction-item:hover,
+.deduction-item.active,
 .income-item.active,
 .income-item:hover {
     border: 2px solid #15a1b7;
     background-color: #eaf9fc;
 }
 
+.other-details-icon,
 .deduction-icon,
 .income-icon {
     text-align: center;
     margin-top: auto;
 }
 
+.other-details-label,
 .deduction-label,
 .income-label {
     font-family: DM Sans;
