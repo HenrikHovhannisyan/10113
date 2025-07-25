@@ -52,6 +52,7 @@
         <div class="d-none" id="other-details-form-4">@include('forms.other-details.medicare_reduction')</div>
         <div class="d-none" id="other-details-form-6">@include('forms.other-details.medical_expenses')</div>
         <div class="d-none" id="other-details-form-9">@include('forms.other-details.super_income_stream')</div>
+        <div class="d-none" id="other-details-form-10">@include('forms.other-details.super_contributions_spouse')</div>
         @include('forms.other-details.form.mls')
         <div class="d-none" id="other-details-form-5">@include('forms.other-details.tax_free_threshold')</div>
         <div class="d-none" id="other-details-form-7">@include('forms.other-details.under_18')</div>
@@ -60,7 +61,6 @@
         <div class="d-none" id="other-details-form-0">@include('forms.other-details.spouse_details')</div>
         @include('forms.other-details.form.attach')
         <div class="d-none" id="other-details-form-1">@include('forms.other-details.private_health_insurance')</div>
-        <div class="d-none" id="other-details-form-10">@include('forms.other-details.super_contributions_spouse')</div>
         <div class="d-none" id="other-details-form-11">@include('forms.other-details.tax_losses_earlier')</div>
         <div class="d-none" id="other-details-form-12">@include('forms.other-details.dependent_invalid')</div>
         <div class="d-none" id="other-details-form-13">@include('forms.other-details.super_co_contribution')</div>
