@@ -1072,3 +1072,147 @@ select.form-control {
 }
 
 /* End Choosing business type page */
+
+/* Start Contact page */
+.page_banner {
+    position: relative;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding-top: 210px;
+    padding-bottom: 210px;
+}
+.page_banner#contact_banner {
+    position: relative;
+    background-image: url("../img/banners/contact.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding-top: 210px;
+    padding-bottom: 210px;
+}
+
+.page_banner::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #00000066;
+    z-index: 2;
+}
+
+.page_banner h2 {
+    font-family: DM Sans;
+    font-weight: 700;
+    font-size: 64px;
+    line-height: 80px;
+    letter-spacing: 0.1px;
+    text-align: center;
+    vertical-align: middle;
+    color: #ffffff;
+    max-width: 850px;
+    margin: auto;
+    position: relative;
+    z-index: 3;
+}
+
+.page_banner p {
+    font-family: DM Sans;
+    font-weight: 600;
+    font-style: SemiBold;
+    font-size: 24px;
+    leading-trim: NONE;
+    line-height: 32px;
+    letter-spacing: 0.1px;
+    text-align: center;
+    vertical-align: middle;
+    color: #ffffff;
+    max-width: 850px;
+    margin: auto;
+    position: relative;
+    z-index: 3;
+}
+
+#contact_info .contact_info_box {
+    border: 1px solid #15a1b7;
+    border-radius: 12px;
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#contact_info .contact_info_box h3 {
+    font-family: DM Sans;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 48px;
+    line-height: 64px;
+    letter-spacing: 0.1px;
+    color: #15a1b7;
+}
+
+#contact_info .contact_info_box a {
+    font-family: DM Sans;
+    font-weight: 600;
+    font-style: SemiBold;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    text-align: center;
+    vertical-align: middle;
+    color: #1e3751;
+}
+
+#contact_form .contact_form_box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+}
+
+#contact_form input,
+#contact_form textarea {
+    padding: 16px;
+    font-family: DM Sans;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+}
+
+#contact_form input::placeholder,
+#contact_form textarea::placeholder {
+    padding: 0;
+    color: #49454f;
+}
+
+#contact_help h2 {
+    font-family: DM Sans;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 32px;
+    line-height: 48px;
+    letter-spacing: 0.1px;
+    text-align: center;
+    color: #15a1b7;
+    margin-bottom: 24px;
+}
+
+#contact_help p {
+    font-family: DM Sans;
+    font-weight: 600;
+    font-style: SemiBold;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    text-align: center;
+    vertical-align: middle;
+    color: #1e3751;
+    max-width: 665px;
+    margin: auto;
+}
+/* End Contact page */

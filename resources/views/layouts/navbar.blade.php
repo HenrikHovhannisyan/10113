@@ -17,7 +17,7 @@
                     <a href="{{ route('services') }}" class="navbar_link">Services</a>
                 </li>
                 <li>
-                    <a href="{{ route('home') }}" class="navbar_link">Contact Us</a>
+                    <a href="{{ route('contact') }}" class="navbar_link">Contact Us</a>
                 </li>
             </ul>
 

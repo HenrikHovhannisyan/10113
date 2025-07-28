@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\SiteInfo;
 
 class HomeController extends Controller
 {
@@ -31,6 +32,13 @@ class HomeController extends Controller
     public function services()
     {
         return view('pages.services');
+    }
+
+    public function contact()
+    {
+
+        $info = SiteInfo::first();
+        return view('pages.contact', compact('info'));
     }
 
     public function choosingBusinessType()

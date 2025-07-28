@@ -112,14 +112,20 @@
         margin-bottom: 18px;
     }
 
-    #services_banner {
+    #services_banner,
+    .page_banner {
         padding-top: 120px;
         padding-bottom: 120px;
     }
 
-    #services_banner h2 {
+    #services_banner h2,
+    .page_banner h2 {
         font-size: 36px;
         line-height: 48px;
+    }
+    .page_banner p {
+        font-size: 18px;
+        line-height: 28px;
     }
 
     #accurate h2 {
@@ -224,5 +230,36 @@
     .sign_bg > h2 {
         font-size: 18px;
         line-height: 24px;
+    }
+
+    #contact_info .contact_info_box {
+        padding: 24px;
+    }
+
+    #contact_info .contact_info_box h3 {
+        font-size: 32px;
+        line-height: 44px;
+    }
+
+    #contact_info .contact_info_box a {
+        font-size: 15px;
+        line-height: 20px;
+    }
+
+    #contact_form input,
+    #contact_form textarea {
+        font-size: 15px;
+        line-height: 22px;
+        padding: 14px;
+    }
+
+    #contact_help h2 {
+        font-size: 24px;
+        line-height: 36px;
+    }
+
+    #contact_help p {
+        font-size: 14px;
+        line-height: 20px;
     }
 }
