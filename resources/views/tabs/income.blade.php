@@ -1,9 +1,9 @@
 <section class="choosing-business-type_section">
     <h2 class="choosing-business-type-title">My Income</h2>
-    <p class="choosing-business-type-text text-center">
+    <p class="choosing-business-type-text text-center mb-5">
         Enter the personal information we need to verify your identity and begin your tax refund application.
     </p>
-    <div class="select_deduction_container select_deduction_container2 mt-0">
+    <div class="select_income_container mt-0">
         @php
             $incomeItems = [
                 'salary' => 'Salary / Wages',
@@ -29,7 +29,7 @@
         @endphp
 
         @foreach($incomeItems as $key => $label)
-            <div class="other-details-item {{ $loop->index > 5 ? 'hidden' : '' }}" data-index="{{ $loop->index }}">
+            <div class="income-item {{ $loop->index > 5 ? 'hidden' : '' }}" data-index="{{ $loop->index }}">
                 <div class="other-details-label">
                     <p>{{ $label }}</p>
                     <img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr">
@@ -57,14 +57,16 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    const items = document.querySelectorAll(".other-details-item");
+    const items = document.querySelectorAll(".income-item");
 
     items.forEach((item) => {
         item.addEventListener("click", () => {
             const index = item.getAttribute("data-index");
             const formToShow = document.getElementById(`form-${index}`);
 
-            if (formToShow && formToShow.classList.contains("d-none")) {
+            if (!formToShow) return;
+
+            if (formToShow.classList.contains("d-none")) {
                 formToShow.classList.remove("d-none");
                 item.classList.add("active");
 
@@ -74,12 +76,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             }
         });
-    });
-
-    const toggleBtn = document.getElementById("toggleBtnIncome");
-    toggleBtn.addEventListener("click", function () {
-        document.querySelectorAll(".other-details-item.hidden").forEach(el => el.classList.remove("hidden"));
-        toggleBtn.classList.add("d-none");
     });
 });
 </script>

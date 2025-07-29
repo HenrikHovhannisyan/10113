@@ -148,7 +148,7 @@ function initToggleList({
 initToggleList({
     containerSelector: ".select_income_container",
     itemSelector: ".income-item",
-    toggleBtnSelector: "#toggleBtn",
+    toggleBtnSelector: "#toggleBtnIncome",
     visibleCount: 10,
     showMoreText: "Show More",
     showLessText: "Show Less",
