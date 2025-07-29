@@ -43,9 +43,14 @@ class HomeController extends Controller
 
     public function privacyPolicy()
     {
-
         $info = SiteInfo::first();
         return view('pages.privacy-policy', compact('info'));
+    }
+
+    public function termsService()
+    {
+        $info = SiteInfo::first();
+        return view('pages.terms-service', compact('info'));
     }
 
     public function choosingBusinessType()

@@ -139,12 +139,6 @@
                 @endif
                 <li>
                     <a href="#">
-                        <img src="{{ asset('img/icons/clock.png') }}" alt="email">
-                        <span>Mon–Fri, 9AM–5PM (AEST)</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
                         <img src="{{ asset('img/icons/address.png') }}" alt="address">
                         <span>123 Tax Lane, Sydney, NSW 2000</span>
                     </a>

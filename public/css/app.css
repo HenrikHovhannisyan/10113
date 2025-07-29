@@ -1287,7 +1287,7 @@ select.form-control {
     color: #1e3751;
 }
 
-#content .item > a {
+#content .item a {
     font-family: DM Sans;
     font-weight: 600;
     font-style: SemiBold;
