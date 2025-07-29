@@ -1154,6 +1154,7 @@ select.form-control {
     color: #15a1b7;
 }
 
+#contact_info .contact_info_box p,
 #contact_info .contact_info_box a {
     font-family: DM Sans;
     font-weight: 600;
@@ -1216,3 +1217,89 @@ select.form-control {
     margin: auto;
 }
 /* End Contact page */
+
+/* Start Privacy Policy page */
+#header {
+    padding-top: 160px;
+    text-align: center;
+    max-width: 896px;
+    margin: auto;
+}
+
+#header > h2 {
+    font-family: DM Sans;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 64px;
+    line-height: 80px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #15a1b7;
+    margin-bottom: 12px;
+}
+
+#header > p {
+    font-family: DM Sans;
+    font-weight: 600;
+    font-style: SemiBold;
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #1e3751;
+    margin-bottom: 40px;
+}
+
+#header > span {
+    font-family: DM Sans;
+    font-weight: 600;
+    font-style: SemiBold;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #1e3751;
+}
+
+#content .item {
+    margin-top: 80px;
+}
+
+#content .item > h3 {
+    font-family: DM Sans;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 32px;
+    line-height: 48px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #15a1b7;
+}
+
+#content .item p {
+    font-family: DM Sans;
+    font-weight: 600;
+    font-style: SemiBold;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #1e3751;
+}
+
+#content .item > a {
+    font-family: DM Sans;
+    font-weight: 600;
+    font-style: SemiBold;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    text-align: center;
+    vertical-align: middle;
+    color: #15a1b7;
+}
+
+#content .item > ul > li {
+    list-style: disc;
+}
+/* End Privacy Policy page */

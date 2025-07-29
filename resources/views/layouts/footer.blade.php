@@ -96,7 +96,7 @@
                 </div>
                 <div class="col-md-4 mb-3">
                     <div class="d-flex gap-4">
-                        <a href="#" class="navbar_link">Privacy Policy</a>
+                        <a href="{{ route('privacy-policy') }}" class="navbar_link">Privacy Policy</a>
                         <a href="#" class="navbar_link">Terms of Service</a>
                     </div>
                 </div>

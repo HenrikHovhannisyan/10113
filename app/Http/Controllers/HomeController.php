@@ -41,6 +41,13 @@ class HomeController extends Controller
         return view('pages.contact', compact('info'));
     }
 
+    public function privacyPolicy()
+    {
+
+        $info = SiteInfo::first();
+        return view('pages.privacy-policy', compact('info'));
+    }
+
     public function choosingBusinessType()
     {
         return view('pages.choosing-business-type');
