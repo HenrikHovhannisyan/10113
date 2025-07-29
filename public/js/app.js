@@ -169,5 +169,5 @@ initToggleList({
     toggleBtnSelector: "#toggleBtnOther",
     visibleCount: 10,
     showMoreText: "Show More",
-    showLessText: "Show Lessddd",
+    showLessText: "Show Less",
 });
