@@ -5,37 +5,37 @@
     </p>
     <h4 class="form_title">These are common tax deductions for a Manager - retail store.</h4>
     <div class="select_deduction_container select_deduction_container2 mt-0">
-        @php
-            $items = [
-                'Spouse Details',
-                'Private Health Insurance',
-                'Zone / Overseas Forces Offset',
-                'Seniors Offset',
-                'Medicare Reduction / Exemption',
-                'Part-year Tax-free Threshold',
-                'Medical Expenses Offset',
-                'Under 18',
-                'Working Holiday Maker Net Income',
-                'Superannuation Income Stream Offset',
-                'Superannuation Contributions on Behalf of Your Spouse',
-                'Tax Losses of Earlier Income Years',
-                'Dependent (invalid and carer)',
-                'Superannuation Co-Contribution',
-                'Other Tax Offsets (Refundable)'
-            ];
-        @endphp
+    @php
+        $items = [
+            'spouse_details' => 'Spouse Details',
+            'private_health_insurance' => 'Private Health Insurance',
+            'zone_overseas_forces_offset' => 'Zone / Overseas Forces Offset',
+            'seniors_offset' => 'Seniors Offset',
+            'medicare_reduction_exemption' => 'Medicare Reduction / Exemption',
+            'part_year_tax_free_threshold' => 'Part-year Tax-free Threshold',
+            'medical_expenses_offset' => 'Medical Expenses Offset',
+            'under_18' => 'Under 18',
+            'working_holiday_maker_net_income' => 'Working Holiday Maker Net Income',
+            'superannuation_income_stream_offset' => 'Superannuation Income Stream Offset',
+            'superannuation_contributions_spouse' => 'Superannuation Contributions on Behalf of Your Spouse',
+            'tax_losses_earlier_income_years' => 'Tax Losses of Earlier Income Years',
+            'dependent_invalid_and_carer' => 'Dependent (invalid and carer)',
+            'superannuation_co_contribution' => 'Superannuation Co-Contribution',
+            'other_tax_offsets_refundable' => 'Other Tax Offsets (Refundable)',
+        ];
+    @endphp
 
-        @foreach($items as $index => $label)
-            <div class="other-details-item" data-index="{{ $index }}">
-                <div class="other-details-label">
-                    <p>{{ $label }}</p>
-                    <img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr">
-                </div>
-                <div class="other-details-icon">
-                    <img src="{{ asset('img/image.png') }}" class="img-fluid" alt="image">
-                </div>
+    @foreach($items as $key => $label)
+        <div class="other-details-item" data-index="{{ $loop->index }}">
+            <div class="other-details-label">
+                <p>{{ $label }}</p>
+                <img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr">
             </div>
-        @endforeach
+            <div class="other-details-icon">
+                <img src="{{ asset('img/icons/other-details/' . $key . '.png') }}" class="img-fluid" alt="{{ $label }}">
+            </div>
+        </div>
+    @endforeach
     </div>
 
     <div class="text-center">
