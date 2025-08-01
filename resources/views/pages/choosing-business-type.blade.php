@@ -25,17 +25,17 @@
 
         <div class="tab-content">
             <div class="tab-pane fade show active" id="basic-info" role="tabpanel" aria-labelledby="basic-info-tab">
-                @include('forms.basic-info', ['form' => $form])
+                @include('forms.basic-info')
             </div>
             <div class="tab-pane fade" id="income" role="tabpanel" aria-labelledby="income-tab">
-                @include('tabs.income', ['form' => $form])
+                @include('tabs.income')
             </div>
             <div class="tab-pane fade" id="deduction" role="tabpanel" aria-labelledby="deduction-tab">
-               @include('tabs.deduction', ['form' => $form])
+               @include('tabs.deduction')
             </div>
 
             <div class="tab-pane fade" id="other-details" role="tabpanel" aria-labelledby="other-details-tab">
-                @include('tabs.other-details', ['form' => $form])
+                @include('tabs.other-details')
             </div>
         </div>
 
@@ -48,40 +48,7 @@
             <button class="btn navbar_btn d-none" id="confirmBtn" type="button">Confirm</button>
         </div>
 
-        <div class="col-12 text-center mt-4">
-            <form id="saveForm" method="POST" action="{{ route('choosing-business-form.save') }}">
-                @csrf
-                <input type="hidden" name="tab" id="currentTab" value="basic-info">
-                <input type="hidden" name="form_data" id="formData">
-
-                <button type="submit" class="btn btn-secondary">Save</button>
-            </form>
-        </div>
-
 
     </div>
 </div>
-
-<script>
-    document.getElementById('saveForm').addEventListener('submit', function (e) {
-        const activeTab = document.querySelector('.tab-pane.active');
-        const tabId = activeTab.id;
-        document.getElementById('currentTab').value = tabId;
-
-        const inputs = activeTab.querySelectorAll('input, select, textarea');
-        const data = {};
-
-        inputs.forEach(input => {
-            if (input.type === 'radio') {
-                if (input.checked) {
-                    data[input.name] = input.value;
-                }
-            } else {
-                data[input.name] = input.value;
-            }
-        });
-
-        document.getElementById('formData').value = JSON.stringify(data);
-    });
-</script>
 @endsection

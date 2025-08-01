@@ -57,14 +57,4 @@ class HomeController extends Controller
     {
         return view('pages.choosing-business-type');
     }
-
-    public function payment()
-    {
-        return view('pages.payment');
-    }
-
-    public function success()
-    {
-        return view('pages.success');
-    }
 }
