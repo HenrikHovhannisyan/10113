@@ -98,7 +98,7 @@ const extraSection = document.getElementById("nonCitizenSection");
 function toggleExtraSection() {
     extraSection.style.display = noRadio.checked ? "block" : "none";
 }
-
+toggleExtraSection();
 yesRadio?.addEventListener("change", toggleExtraSection);
 noRadio?.addEventListener("change", toggleExtraSection);
 

@@ -262,4 +262,52 @@
         font-size: 14px;
         line-height: 20px;
     }
+
+    .paymant_title {
+        font-size: 32px;
+        line-height: 44px;
+    }
+
+    .paymant_description {
+        font-size: 15px;
+        line-height: 22px;
+        margin-bottom: 32px;
+    }
+
+    .paymant_method {
+        font-size: 18px;
+        line-height: 24px;
+        padding: 16px;
+        padding-bottom: 40px;
+    }
+
+    .payment_details {
+        margin: 40px auto 16px;
+    }
+
+    .payment_details > .info > p {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .payment_details > .info > p > span {
+        font-size: 18px;
+        line-height: 24px;
+    }
+
+    .paymant_agree {
+        flex-direction: column;
+        padding-left: 0;
+        gap: 10px;
+    }
+
+    #success_message {
+        padding: 24px;
+    }
+
+    #success_message > p {
+        font-size: 15px;
+        line-height: 22px;
+    }
 }

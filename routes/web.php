@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\AdminController;
 use \App\Http\Controllers\Admin\PlanController;
 use App\Http\Controllers\Admin\SiteInfoController;
+use App\Http\Controllers\ChoosingBusinessFormController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +26,14 @@ Route::get('/services', [HomeController::class, 'services'])->name('services');
 Route::get('/contact-us', [HomeController::class, 'contact'])->name('contact');
 Route::get('/privacy-policy', [HomeController::class, 'privacyPolicy'])->name('privacy-policy');
 Route::get('/terms-service', [HomeController::class, 'termsService'])->name('terms-service');
-Route::get('/choosing-business-type', [HomeController::class, 'choosingBusinessType'])->name('choosing-business-type');
+Route::get('/payment', [HomeController::class, 'payment'])->name('payment');
+Route::get('/success', [HomeController::class, 'success'])->name('success');
+
+Route::resource('choosing-business-forms', ChoosingBusinessFormController::class)->middleware('auth');
+Route::post('/choosing-business-form', [ChoosingBusinessFormController::class, 'store'])->name('choosing-business-form.store');
+Route::post('/choosing-business-form/save', [ChoosingBusinessFormController::class, 'save'])->name('choosing-business-form.save');
+
+
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');

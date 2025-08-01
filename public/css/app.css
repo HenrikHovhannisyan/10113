@@ -1303,3 +1303,162 @@ select.form-control {
     list-style: disc;
 }
 /* End Privacy Policy page */
+
+/* Start Paymant page */
+.paymant_title {
+    font-family: DM Sans;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 48px;
+    line-height: 64px;
+    letter-spacing: 0.1px;
+    text-align: center;
+    color: #15a1b7;
+    margin-bottom: 16px;
+}
+
+.paymant_description {
+    font-family: DM Sans;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 16px;
+    leading-trim: NONE;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    text-align: center;
+    vertical-align: middle;
+    color: #1e3751;
+    margin-bottom: 40px;
+}
+
+.paymant_method {
+    outline: 1px solid #c3cad0;
+    border-radius: 12px;
+    background-color: #fafafa;
+    font-family: DM Sans;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #15a1b7;
+    padding: 24px;
+    padding-bottom: 64px;
+    cursor: pointer;
+}
+
+.paymant_method:hover {
+    outline: 2px solid #15a1b7;
+    background-color: #eaf9fc;
+}
+
+#paymant_method {
+    max-width: 1036px;
+    margin: auto;
+}
+
+.payment_details {
+    margin: 60px auto 24px;
+}
+
+.payment_details > .info {
+    border: 1px solid #15a1b780;
+    border-radius: 16px;
+    padding: 16px 24px;
+    font-family: DM Sans;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #1e3751;
+}
+
+.payment_details > .info > p {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.payment_details > .info > p > span {
+    font-family: DM Sans;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #15a1b7;
+}
+
+.payment_details > .form {
+    border: 1px solid #15a1b780;
+    border-radius: 16px;
+    padding: 16px 24px;
+    margin-top: 24px;
+}
+
+.payment_details > .form > h3 {
+    font-family: DM Sans;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #1e3751;
+    margin-bottom: 24px;
+}
+
+.paymant_agree {
+    display: flex;
+    gap: 15px;
+    padding-left: 15px;
+}
+
+.paymant_agree > label {
+    cursor: pointer;
+    font-family: DM Sans;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #697b8c;
+}
+
+#success_message {
+    border: 2px solid #15a1b7;
+    border-radius: 24px;
+    padding: 40px;
+    max-width: 1036px;
+    margin: auto;
+}
+
+#success_message > h3 {
+    font-family: DM Sans;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: 0.1px;
+    text-align: center;
+    color: #15a1b7;
+    margin-bottom: 24px;
+}
+
+#success_message > p {
+    font-family: DM Sans;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    text-align: center;
+    vertical-align: middle;
+    color: #1e3751;
+    margin-bottom: 8px;
+}
+/* End Paymant page */

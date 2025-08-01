@@ -1,5 +1,15 @@
 @php
-    $authRoutes = ['login', 'register', 'password.request', 'password.email', 'password.reset', 'verification.notice', 'choosing-business-type'];
+    $authRoutes = [
+        'login', 
+        'register', 
+        'password.request', 
+        'password.email', 
+        'password.reset', 
+        'verification.notice', 
+        'choosing-business-type', 
+        'payment',
+        'success',
+    ];
 @endphp
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
