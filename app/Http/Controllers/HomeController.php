@@ -52,9 +52,4 @@ class HomeController extends Controller
         $info = SiteInfo::first();
         return view('pages.terms-service', compact('info'));
     }
-
-    public function choosingBusinessType()
-    {
-        return view('pages.choosing-business-type');
-    }
 }

@@ -6,7 +6,7 @@
         'password.email', 
         'password.reset', 
         'verification.notice', 
-        'choosing-business-type', 
+        'tax-returns.create', 
         'payment',
         'success',
     ];

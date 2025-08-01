@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\AdminController;
 use \App\Http\Controllers\Admin\PlanController;
 use App\Http\Controllers\Admin\SiteInfoController;
+use App\Http\Controllers\TaxReturnController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,8 @@ Route::get('/contact-us', [HomeController::class, 'contact'])->name('contact');
 Route::get('/privacy-policy', [HomeController::class, 'privacyPolicy'])->name('privacy-policy');
 Route::get('/terms-service', [HomeController::class, 'termsService'])->name('terms-service');
 Route::get('/choosing-business-type', [HomeController::class, 'choosingBusinessType'])->name('choosing-business-type');
+
+Route::resource('tax-returns', TaxReturnController::class);
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');

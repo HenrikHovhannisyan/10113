@@ -1462,3 +1462,75 @@ select.form-control {
     margin-bottom: 8px;
 }
 /* End Paymant page */
+
+/* Start Tax Returns page */
+.tax-returns-title {
+    margin-top: 110px;
+    margin-bottom: 40px;
+    font-family: DM Sans;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 48px;
+    line-height: 64px;
+    letter-spacing: 0.1px;
+    color: #15a1b7;
+}
+
+.tax_returns_box {
+    margin-bottom: 80px;
+}
+
+.tax_returns_box > h3 {
+    font-family: DM Sans;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #1e3751;
+    margin-bottom: 24px;
+}
+
+.tax_returns_box > p {
+    font-family: DM Sans;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #1e3751;
+    margin-bottom: 8px;
+}
+
+.tax_returns_table {
+    width: 100%;
+    font-family: DM Sans;
+    font-weight: 500;
+    font-style: SemiBold;
+    font-size: 18px;
+    line-height: 26px;
+    letter-spacing: 0.1px;
+    vertical-align: middle;
+    color: #1e3751;
+    padding: 10px;
+}
+
+.tax_returns_table > thead {
+    background-color: #15a1b71f;
+}
+
+.tax_returns_table tr {
+    background-color: transparent;
+}
+
+.tax_returns_table tr:nth-child(even) {
+    background-color: #15a1b70f;
+}
+
+.tax_returns_table th,
+.tax_returns_table td {
+    padding: 10px;
+}
+/* End Tax Returns page */
