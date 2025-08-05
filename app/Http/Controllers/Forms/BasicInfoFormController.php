@@ -30,10 +30,7 @@ class BasicInfoFormController extends Controller
      */
     public function store(Request $request)
     {
-        $taxReturnId = TaxReturn::where('user_id', auth()->id())->get();
-        dd($taxReturnId);
-        $data['tax_return_id'] = $taxReturnId;
-        $data = $request->validate([
+        $validated = $request->validate([
             'first_name' => 'nullable|string|max:255',
             'last_name' => 'nullable|string|max:255',
             'day' => 'nullable|integer|min:1|max:31',
@@ -63,14 +60,20 @@ class BasicInfoFormController extends Controller
             'other_occupation' => 'nullable|string',
         ]);
 
-        // Normalize boolean radio values (yes/no → true/false)
+        $taxReturn = TaxReturn::where('user_id', auth()->id())->first();
+        if (!$taxReturn) {
+            return redirect()->back()->with('error', 'Tax Return not found.');
+        }
+        $validated['tax_return_id'] = $taxReturn->id;
+
+        // Convert 'yes'/'no' to true/false
         foreach (['has_spouse', 'future_tax_return', 'australian_citizenship', 'long_stay_183', 'full_tax_year', 'same_as_home_address', 'has_education_debt', 'has_sfss_debt'] as $key) {
-            if (isset($data[$key])) {
-                $data[$key] = $data[$key] === 'yes';
+            if (isset($validated[$key])) {
+                $validated[$key] = $validated[$key] === 'yes';
             }
         }
 
-        BasicInfoForm::create($data);
+        BasicInfoForm::create($validated);
 
         return redirect()->back()->with('success', 'Form submitted successfully!');
     }

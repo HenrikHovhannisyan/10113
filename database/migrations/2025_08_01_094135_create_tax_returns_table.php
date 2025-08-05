@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('tax_returns', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->decimal('amount', 8, 2);
-            $table->string('status')->default('unpaid');
+            $table->enum('form_status', ['incomplete', 'complete'])->default('incomplete');
+            $table->enum('payment_status', ['unpaid', 'paid'])->default('unpaid');
             $table->timestamps();
+
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
-
     /**
      * Reverse the migrations.
      */

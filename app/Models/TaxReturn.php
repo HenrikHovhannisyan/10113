@@ -9,21 +9,33 @@ class TaxReturn extends Model
 {
     use HasFactory;
 
-    const PAID = 'paid';
-    const UNPAID = 'unpaid';
+    protected $fillable = [
+        'user_id',
+        'form_status',
+        'payment_status',
+    ];
 
     /**
-     * @var string[]
-     */
-    protected $guarded = ['id'];
-
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * Get the user who owns the declaration.
      */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Check if the form is complete.
+     */
+    public function isComplete(): bool
+    {
+        return $this->form_status === 'complete';
+    }
+
+    /**
+     * Check if the declaration has been paid.
+     */
+    public function isPaid(): bool
+    {
+        return $this->payment_status === 'paid';
+    }
 }

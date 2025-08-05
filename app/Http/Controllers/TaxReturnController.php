@@ -26,8 +26,12 @@ class TaxReturnController extends Controller
      */
     public function create()
     {
-        TaxReturn::create();
-        return view('pages.tax-returns.create');
+        $taxReturn = TaxReturn::create([
+            'user_id' => auth()->id(),
+            'form_status' => 'incomplete',
+            'payment_status' => 'unpaid',
+        ]);
+        return view('pages.tax-returns.create', compact('taxReturn'));
     }
 
     /**
