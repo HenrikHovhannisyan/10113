@@ -52,4 +52,14 @@ class HomeController extends Controller
         $info = SiteInfo::first();
         return view('pages.terms-service', compact('info'));
     }
+
+    public function payment()
+    {
+        return view('pages.payment');
+    }
+
+    public function success()
+    {
+        return view('pages.success');
+    }
 }

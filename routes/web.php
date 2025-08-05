@@ -27,6 +27,8 @@ Route::get('/contact-us', [HomeController::class, 'contact'])->name('contact');
 Route::get('/privacy-policy', [HomeController::class, 'privacyPolicy'])->name('privacy-policy');
 Route::get('/terms-service', [HomeController::class, 'termsService'])->name('terms-service');
 Route::get('/choosing-business-type', [HomeController::class, 'choosingBusinessType'])->name('choosing-business-type');
+Route::get('/payment', [HomeController::class, 'payment'])->name('payment');
+Route::get('/success', [HomeController::class, 'success'])->name('success');
 
 Route::resource('tax-returns', TaxReturnController::class);
 
