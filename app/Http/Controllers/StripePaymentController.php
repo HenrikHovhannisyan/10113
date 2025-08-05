@@ -31,4 +31,5 @@ class StripePaymentController extends Controller
             return back()->with('error', $e->getMessage());
         }
     }
+
 }
