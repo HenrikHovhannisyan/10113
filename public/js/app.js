@@ -90,18 +90,6 @@ occupationSelect?.addEventListener("change", function () {
     otherField.style.display = this.value === "other" ? "flex" : "none";
 });
 
-// Citizenship
-const yesRadio = document.getElementById("citizenshipYes");
-const noRadio = document.getElementById("citizenshipNo");
-const extraSection = document.getElementById("nonCitizenSection");
-
-function toggleExtraSection() {
-    extraSection.style.display = noRadio.checked ? "block" : "none";
-}
-toggleExtraSection();
-yesRadio?.addEventListener("change", toggleExtraSection);
-noRadio?.addEventListener("change", toggleExtraSection);
-
 // Visa
 const visaSelect = document.getElementById("visaSelect");
 const otherVisaInput = document.getElementById("otherVisaInput");

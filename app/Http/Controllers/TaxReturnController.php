@@ -26,6 +26,7 @@ class TaxReturnController extends Controller
      */
     public function create()
     {
+        TaxReturn::create();
         return view('pages.tax-returns.create');
     }
 

@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\AdminController;
 use \App\Http\Controllers\Admin\PlanController;
 use App\Http\Controllers\Admin\SiteInfoController;
 use App\Http\Controllers\TaxReturnController;
+use App\Http\Controllers\Forms\BasicInfoFormController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,9 @@ Route::get('/payment', [HomeController::class, 'payment'])->name('payment');
 Route::get('/success', [HomeController::class, 'success'])->name('success');
 
 Route::resource('tax-returns', TaxReturnController::class);
+
+// FORMS
+Route::resource('basic-info', BasicInfoFormController::class);
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
