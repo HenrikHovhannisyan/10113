@@ -98,7 +98,7 @@
             </div>
         </div>
     </section>
-    <section class="choosing-business-type_section">
+    <section class="choosing-business-type_section mb-4">
         <h2 class="choosing-business-type-title">Residency Information</h2>
         <div class="choosing-business-type-form-box container">
             <div class="row mb-5 grin_box_border text-center py-4">
@@ -330,7 +330,9 @@
         </div>
     </section>
     
-    <button class="btn navbar_btn" type="submit">Save</button>
+    <div class="col-12 text-end mb-5">
+        <button class="btn navbar_btn" type="submit">Save</button>
+    </div>
 
 </form>
 

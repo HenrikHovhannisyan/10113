@@ -26,7 +26,7 @@
                 <div class="payment_details mt-4">
                     <div class="info">
                         <p>
-                            <span>${{ $tax->amount }}</span>
+                            <span>${{ $amount }}</span>
                             Amount Due
                         </p>
                     </div>

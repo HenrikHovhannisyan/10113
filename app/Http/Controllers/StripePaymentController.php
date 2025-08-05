@@ -27,15 +27,16 @@ class StripePaymentController extends Controller
             ->where('user_id', Auth::id())
             ->first();
 
-
         if(!$tax) {
            return redirect()->route('home')->with('error', 'Tax not found!');
         }
 
-        if($tax->status == TaxReturn::PAID) {
+        if($tax->payment_status == 'paid') {
             return redirect()->route('home')->with('error', 'You already paid this tax!');
         }
-        return view('pages.payment', compact('tax'));
+
+        $amount = env('AMOUNT', 100);
+        return view('pages.payment', compact('tax', 'amount'));
     }
 
 
@@ -61,7 +62,7 @@ class StripePaymentController extends Controller
             return redirect()->route('home')->with('error', 'Tax not found!');
         }
 
-        if ($tax->status == TaxReturn::PAID) {
+        if ($tax->payment_status == 'paid') {
             return redirect()->route('home')->with('error', 'You already paid this tax!');
         }
 
@@ -70,7 +71,7 @@ class StripePaymentController extends Controller
         try {
             // Create a Stripe charge
             $charge = \Stripe\Charge::create([
-                'amount' => intval($tax->amount * 100),
+                'amount' => intval(env('AMOUNT', 100) * 100),
                 'currency' => 'usd',
                 'source' => $validated['stripeToken'],
                 'description' => 'Tax Payment for Tax ID #' . $tax->id,
@@ -83,7 +84,7 @@ class StripePaymentController extends Controller
 
             // Save payment status
             $tax->update([
-                'status' => TaxReturn::PAID,
+                'payment_status' => 'paid',
                 'payment_reference' => $charge->id ?? null
             ]);
 
