@@ -126,12 +126,12 @@
                 <div class="col mt-3 mb-3">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input custom-radio" type="radio" name="australian_citizenship" id="citizenshipYes" value="yes"
-                            {{ old('australian_citizenship', $basicInfo->australian_citizenship ?? '') == 'yes' ? 'checked' : '' }}>
+                            {{ old('australian_citizenship', $basicInfo->australian_citizenship ?? '') == '1' ? 'checked' : '' }}>
                         <label class="form-check-label custom-label" for="citizenshipYes">Yes</label>
                     </div>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input custom-radio" type="radio" name="australian_citizenship" id="citizenshipNo" value="no"
-                            {{ old('australian_citizenship', $basicInfo->australian_citizenship ?? '') == 'no' ? 'checked' : '' }}>
+                            {{ old('australian_citizenship', $basicInfo->australian_citizenship ?? '') == '0' ? 'checked' : '' }}>
                         <label class="form-check-label custom-label" for="citizenshipNo">No</label>
                     </div>
                 </div>
@@ -162,13 +162,13 @@
                         <p class="choosing-business-type-text">Did you live or stay in one place continuously for more than 183 days, during your stay in Australia?</p>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input custom-radio" type="radio" name="long_stay_183" id="stay183Yes" value="yes"
-                                {{ old('long_stay_183', $basicInfo->long_stay_183 ?? '') == 'yes' ? 'checked' : '' }}>
+                                {{ old('long_stay_183', $basicInfo->long_stay_183 ?? '') == '1' ? 'checked' : '' }}>
                             <label class="form-check-label custom-label" for="stay183Yes">Yes</label>
                         </div>
 
                         <div class="form-check form-check-inline">
                             <input class="form-check-input custom-radio" type="radio" name="long_stay_183" id="stay183No" value="no"
-                                {{ old('long_stay_183', $basicInfo->long_stay_183 ?? '') == 'no' ? 'checked' : '' }}>
+                                {{ old('long_stay_183', $basicInfo->long_stay_183 ?? '') == '1' ? 'checked' : '' }}>
                             <label class="form-check-label custom-label" for="stay183No">No</label>
                         </div>
                     </div>
@@ -240,12 +240,12 @@
                     <div class="col-md-6 mb-3">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input custom-radio" type="radio" name="full_tax_year" id="taxYearYes" value="yes"
-                                {{ old('full_tax_year', $basicInfo->full_tax_year ?? '') == 'yes' ? 'checked' : '' }}>
+                                {{ old('full_tax_year', $basicInfo->full_tax_year ?? '') == '1' ? 'checked' : '' }}>
                             <label class="form-check-label custom-label" for="taxYearYes">Yes</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input custom-radio" type="radio" name="full_tax_year" id="taxYearNo" value="no"
-                                {{ old('full_tax_year', $basicInfo->full_tax_year ?? '') == 'no' ? 'checked' : '' }}>
+                                {{ old('full_tax_year', $basicInfo->full_tax_year ?? '') == '0' ? 'checked' : '' }}>
                             <label class="form-check-label custom-label" for="taxYearNo">No</label>
                         </div>
                     </div>
