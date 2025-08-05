@@ -18,7 +18,12 @@ class TaxReturnController extends Controller
      */
     public function index()
     {
-        return view('pages.tax-returns.index');
+        $incompleteForm = TaxReturn::where('user_id', auth()->id())
+            ->where('form_status', 'incomplete')
+            ->latest()
+            ->first();
+
+        return view('pages.tax-returns.index', compact('incompleteForm'));
     }
 
     /**
@@ -55,7 +60,9 @@ class TaxReturnController extends Controller
      */
     public function edit(TaxReturn $taxReturn)
     {
-        //
+        $basicInfo = $taxReturn->basicInfos()->latest()->first();
+
+        return view('pages.tax-returns.edit', compact('taxReturn', 'basicInfo'));
     }
 
     /**

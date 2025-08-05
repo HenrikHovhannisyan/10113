@@ -4,6 +4,7 @@ namespace App\Models\Forms;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\TaxReturn;
 
 class BasicInfoForm extends Model
 {
@@ -42,6 +43,6 @@ class BasicInfoForm extends Model
 
     public function taxReturn()
     {
-        return $this->belongsTo(\App\Models\TaxReturn::class);
+        return $this->belongsTo(TaxReturn::class);
     }
 }

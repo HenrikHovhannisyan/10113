@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Forms\BasicInfoForm;
 
 class TaxReturn extends Model
 {
@@ -37,5 +38,10 @@ class TaxReturn extends Model
     public function isPaid(): bool
     {
         return $this->payment_status === 'paid';
+    }
+
+    public function basicInfos()
+    {
+        return $this->hasMany(BasicInfoForm::class);
     }
 }

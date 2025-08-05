@@ -3,8 +3,10 @@
 @section('content')
 <div class="container">
     <h2 class="tax-returns-title">
-        Hi John, welcome back
+        Hi {{ Auth::user()->name }}, welcome back
     </h2>
+
+    @include('widgets.toast')
 
     <div class="grin_box_border tax_returns_box">
         <h3>Your {{ date('Y') }} Tax Return</h3>
@@ -14,12 +16,15 @@
         <p>
             Just add your income, bank interest, any more deductions, health cover and other items, then you should be done! Your return was started, but not signed.
         </p>
-        <a href="{{ route('tax-returns.create') }}" class="navbar_btn mt-4">
-            Start My {{ date('Y') }} Tax Return
-        </a>
-{{--         <a href="{{ route('tax-returns.create') }}" class="navbar_btn mt-4">
-            Finish My {{ date('Y') }} Tax Return
-        </a> --}}
+        @if($incompleteForm)
+            <a href="{{ route('tax-returns.edit', $incompleteForm->id) }}" class="navbar_btn mt-4">
+                Finish My {{ date('Y') }} Tax Return
+            </a>
+        @else
+            <a href="{{ route('tax-returns.create') }}" class="navbar_btn mt-4">
+                Start My {{ date('Y') }} Tax Return
+            </a>
+        @endif
     </div>
 
     <div class="grin_box_border tax_returns_box">
