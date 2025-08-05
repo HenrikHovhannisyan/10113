@@ -48,4 +48,12 @@ class User extends Authenticatable
     {
         return $this->role === $role;
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function taxReturns()
+    {
+        return $this->hasMany(TaxReturn::class);
+    }
 }
