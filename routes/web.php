@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\StripePaymentController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -21,14 +22,15 @@ use App\Http\Controllers\Forms\BasicInfoFormController;
 */
 
 Auth::routes();
-
+Route::get('/next', [HomeController::class, function () {
+    print_r(curl_version()); die;
+}]);
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/services', [HomeController::class, 'services'])->name('services');
 Route::get('/contact-us', [HomeController::class, 'contact'])->name('contact');
 Route::get('/privacy-policy', [HomeController::class, 'privacyPolicy'])->name('privacy-policy');
 Route::get('/terms-service', [HomeController::class, 'termsService'])->name('terms-service');
 Route::get('/choosing-business-type', [HomeController::class, 'choosingBusinessType'])->name('choosing-business-type');
-Route::get('/payment', [HomeController::class, 'payment'])->name('payment');
 Route::get('/success', [HomeController::class, 'success'])->name('success');
 
 Route::resource('tax-returns', TaxReturnController::class);
@@ -41,4 +43,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/users', [AdminController::class, 'users'])->name('users.index');
     Route::resource('plans', PlanController::class);
     Route::resource('site-info', SiteInfoController::class);
+});
+
+
+Route::middleware(['auth'])->prefix('payments')->group(function () {
+    Route::get('/{id}', [StripePaymentController::class, 'payment'])->name('payment');
+    Route::post('/make', [StripePaymentController::class, 'makePayment'])->name('payment.make');
 });

@@ -53,10 +53,6 @@ class HomeController extends Controller
         return view('pages.terms-service', compact('info'));
     }
 
-    public function payment()
-    {
-        return view('pages.payment');
-    }
 
     public function success()
     {
