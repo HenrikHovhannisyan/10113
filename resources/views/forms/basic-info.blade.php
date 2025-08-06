@@ -1,4 +1,4 @@
-<form action="{{ isset($basicInfo) ? route('basic-info.update', $basicInfo->id) : route('basic-info.store') }}" method="POST">
+<form id="basic-info-form" action="{{ isset($basicInfo) ? route('basic-info.update', $basicInfo->id) : route('basic-info.store') }}" method="POST">
     @csrf
     @if(isset($basicInfo))
         @method('PUT')
@@ -140,9 +140,12 @@
                 <div class="row mb-3">
                     <div class="col-md-6 mb-3">
                         <select class="form-control" name="visa_type" id="visaSelect">
-                            <option value="">What type of visa do you have?</option>
-                            <option value="417" {{ old('visa_type', $basicInfo->visa_type ?? '') == '417' ? 'selected' : '' }}>417 - Working Holiday</option>
-                            <option value="457" {{ old('visa_type', $basicInfo->visa_type ?? '') == '457' ? 'selected' : '' }}>457 - Temporary Work</option>
+                            <option value="">What type of visa do you have (eg. 417, 457, NZ citizen)?</option>
+                            <option value="417" {{ old('visa_type', $basicInfo->visa_type ?? '') == '417' ? 'selected' : '' }}>417 - Working Holiday Visa</option>
+                            <option value="457" {{ old('visa_type', $basicInfo->visa_type ?? '') == '457' ? 'selected' : '' }}>457 - Temporary Work Visa New Zealand citizen</option>
+                            <option value="462" {{ old('visa_type', $basicInfo->visa_type ?? '') == '462' ? 'selected' : '' }}>462 - Work and Holiday Visa</option>
+                            <option value="416" {{ old('visa_type', $basicInfo->visa_type ?? '') == '416' ? 'selected' : '' }}>416 Special Program Visa</option>
+                            <option value="403" {{ old('visa_type', $basicInfo->visa_type ?? '') == '403' ? 'selected' : '' }}>403 - Seasonal Work Visa</option>
                             <option value="other" {{ old('visa_type', $basicInfo->visa_type ?? '') == 'other' ? 'selected' : '' }}>Other</option>
                         </select>
                     </div>
@@ -154,7 +157,9 @@
 
                 <div class="row mb-3">
                     <div class="col">
-                        <p class="choosing-business-type-text">Did you stay in one place >183 days?</p>
+                        <p class="choosing-business-type-text">
+                            Did you live or stay in one place continuously for more than 183 days, during your stay in Australia?
+                        </p>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input custom-radio" type="radio" name="long_stay_183" id="stay183Yes" value="yes"
                                 {{ old('long_stay_183', $basicInfo->long_stay_183 ?? '') == '1' ? 'checked' : '' }}>
@@ -221,7 +226,7 @@
                 <div class="row mb-3">
                     <div class="col-md-6 mb-3">
                         <select name="stay_purpose" class="form-control border-dark">
-                            <option value="">Primary purpose of stay</option>
+                            <option value="">What was the primary purpose of your stay in Australia?</option>
                             <option value="holiday" {{ old('stay_purpose', $basicInfo->stay_purpose ?? '') == 'holiday' ? 'selected' : '' }}>Holiday</option>
                             <option value="work" {{ old('stay_purpose', $basicInfo->stay_purpose ?? '') == 'work' ? 'selected' : '' }}>Work</option>
                             <option value="study" {{ old('stay_purpose', $basicInfo->stay_purpose ?? '') == 'study' ? 'selected' : '' }}>Study</option>
@@ -230,7 +235,7 @@
                 </div>
 
                 <div class="row mb-3">
-                    <p class="choosing-business-type-text">Did you live in Australia for the full tax year?</p>
+                    <p class="choosing-business-type-text">Did you live in Australia for the full tax year (1 July 2024 – 30 June 2025)?</p>
                     <div class="col-md-6 mb-3">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input custom-radio" type="radio" name="full_tax_year" id="taxYearYes" value="yes"
@@ -264,7 +269,7 @@
             <div class="grin_box_border">
                 <div class="row">
                     <div class="col-md-6">
-                        <p class="choosing-business-type-text">Same as home address?</p>
+                        <p class="choosing-business-type-text">Is this the same as your home address?</p>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input custom-radio" type="radio" name="same_as_home_address" id="sameAddressYes" value="yes"
                                 {{ old('same_as_home_address', $basicInfo->same_as_home_address ?? '') == '1' ? 'checked' : '' }}>
@@ -290,7 +295,7 @@
             <div class="grin_box_border">
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <p class="choosing-business-type-text">HELP/TSL/VSL/SSL debt?</p>
+                        <p class="choosing-business-type-text">Do you have any HELP, TSL (now known as AASL), VSL or SSL debt?</p>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input custom-radio" type="radio" name="has_education_debt" id="eduDebtYes" value="yes"
                                 {{ old('has_education_debt', $basicInfo->has_education_debt ?? '') == '1' ? 'checked' : '' }}>
@@ -303,7 +308,7 @@
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <p class="choosing-business-type-text">SFSS debt?</p>
+                        <p class="choosing-business-type-text">Do you have any Student Financial Supplement Scheme (SFSS) debt?</p>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input custom-radio" type="radio" name="has_sfss_debt" id="sfssDebtYes" value="yes"
                                 {{ old('has_sfss_debt', $basicInfo->has_sfss_debt ?? '') == '1' ? 'checked' : '' }}>
@@ -330,10 +335,16 @@
             <div class="grin_box_border py-4 px-3">
                 <div class="row mb-3">
                     <div class="col-md-6">
+                        <p class="choosing-business-type-text">
+                            What do you do for a living?
+                        </p>
                         <select class="form-control" name="occupation" id="occupationSelect">
-                            <option value="">Occupation</option>
+                            <option value="">Choose</option>
                             <option value="accountant" {{ old('occupation', $basicInfo->occupation ?? '') == 'accountant' ? 'selected' : '' }}>Accountant</option>
                             <option value="manager" {{ old('occupation', $basicInfo->occupation ?? '') == 'manager' ? 'selected' : '' }}>Manager</option>
+                            <option value="nurse" {{ old('nurse', $basicInfo->occupation ?? '') == 'nurse' ? 'selected' : '' }}>Nurse</option>
+                            <option value="electrician" {{ old('electrician', $basicInfo->occupation ?? '') == 'electrician' ? 'selected' : '' }}>Electrician</option>
+                            <option value="retail_clerk" {{ old('retail_clerk', $basicInfo->occupation ?? '') == 'retail_clerk' ? 'selected' : '' }}>Retail clerk</option>
                             <option value="student" {{ old('occupation', $basicInfo->occupation ?? '') == 'student' ? 'selected' : '' }}>Student</option>
                             <option value="other" {{ old('occupation', $basicInfo->occupation ?? '') == 'other' ? 'selected' : '' }}>Other</option>
                         </select>
@@ -348,10 +359,10 @@
             </div>
         </div>
     </section>
-
-    <div class="d-flex justify-content-center mb-5">
-        <button type="submit" class="btn btn-primary">
-            {{ isset($basicInfo) ? 'Update Information' : 'Save Information' }}
+    
+    <div class="d-flex justify-content-end mb-5">
+        <button type="submit" class="btn navbar_btn">
+            {{ isset($basicInfo) ? 'Update' : 'Save' }}
         </button>
     </div>
 </form>
@@ -403,5 +414,100 @@
         if(visaSelect) visaSelect.addEventListener('change', toggleVisaInput);
         addressRadios.forEach(radio => radio.addEventListener('change', togglePostalAddress));
         if(occupationSelect) occupationSelect.addEventListener('change', toggleOccupationField);
+
+                // AJAX обработчик формы
+        const form = document.getElementById('basic-info-form');
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Удаляем старые сообщения об ошибках
+            document.querySelectorAll('.text-danger').forEach(el => el.remove());
+            
+            // Показываем индикатор загрузки
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span> Processing...';
+            submitBtn.disabled = true;
+
+            try {
+                const formData = new FormData(form);
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Успешное сохранение
+                    showToast('success', data.message);
+                    
+                    // Если это создание новой записи, обновляем ID в форме
+                    if (data.basicInfoId && !form.action.includes('update')) {
+                        const newAction = form.action.replace('basic-info.store', `basic-info.update/${data.basicInfoId}`);
+                        form.action = newAction;
+                        form.querySelector('button[type="submit"]').textContent = 'Update Information';
+                    }
+                } else {
+                    // Обработка ошибок валидации
+                    if (data.errors) {
+                        for (const [field, errors] of Object.entries(data.errors)) {
+                            const input = form.querySelector(`[name="${field}"]`);
+                            if (input) {
+                                const errorDiv = document.createElement('div');
+                                errorDiv.className = 'text-danger mt-1';
+                                errorDiv.textContent = errors[0];
+                                input.closest('.mb-3').appendChild(errorDiv);
+                            }
+                        }
+                    }
+                    showToast('error', data.message || 'An error occurred');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showToast('error', 'Network error. Please try again.');
+            } finally {
+                submitBtn.innerHTML = originalBtnText;
+                submitBtn.disabled = false;
+            }
+        });
+
+        function showToast(type, message) {
+            // Реализация toast-уведомлений (можно использовать любую библиотеку)
+            const toast = document.createElement('div');
+            toast.className = `toast align-items-center text-white bg-${type === 'success' ? 'success' : 'danger'} border-0`;
+            toast.setAttribute('role', 'alert');
+            toast.setAttribute('aria-live', 'assertive');
+            toast.setAttribute('aria-atomic', 'true');
+            
+            toast.innerHTML = `
+                <div class="d-flex">
+                    <div class="toast-body">${message}</div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            `;
+            
+            const toastContainer = document.getElementById('toast-container') || createToastContainer();
+            toastContainer.appendChild(toast);
+            
+            const bsToast = new bootstrap.Toast(toast);
+            bsToast.show();
+            
+            // Автоматическое скрытие через 5 секунд
+            setTimeout(() => bsToast.hide(), 5000);
+        }
+        
+        function createToastContainer() {
+            const container = document.createElement('div');
+            container.id = 'toast-container';
+            container.className = 'toast-container position-fixed bottom-0 end-0 p-3';
+            container.style.zIndex = '1100';
+            document.body.appendChild(container);
+            return container;
+        }
     });
 </script>
