@@ -415,15 +415,15 @@
         addressRadios.forEach(radio => radio.addEventListener('change', togglePostalAddress));
         if(occupationSelect) occupationSelect.addEventListener('change', toggleOccupationField);
 
-                // AJAX обработчик формы
+        // AJAX обработчик формы
         const form = document.getElementById('basic-info-form');
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            // Удаляем старые сообщения об ошибках
+            // Removing old error messages
             document.querySelectorAll('.text-danger').forEach(el => el.remove());
             
-            // Показываем индикатор загрузки
+            // Show loading indicator
             const submitBtn = form.querySelector('button[type="submit"]');
             const originalBtnText = submitBtn.innerHTML;
             submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span> Processing...';
@@ -443,17 +443,17 @@
                 const data = await response.json();
 
                 if (response.ok) {
-                    // Успешное сохранение
+                    // Successful save
                     showToast('success', data.message);
                     
-                    // Если это создание новой записи, обновляем ID в форме
+                    // If this is a new record creation, update the ID in the form
                     if (data.basicInfoId && !form.action.includes('update')) {
                         const newAction = form.action.replace('basic-info.store', `basic-info.update/${data.basicInfoId}`);
                         form.action = newAction;
                         form.querySelector('button[type="submit"]').textContent = 'Update Information';
                     }
                 } else {
-                    // Обработка ошибок валидации
+                    // Handling validation errors
                     if (data.errors) {
                         for (const [field, errors] of Object.entries(data.errors)) {
                             const input = form.querySelector(`[name="${field}"]`);
@@ -477,7 +477,7 @@
         });
 
         function showToast(type, message) {
-            // Реализация toast-уведомлений (можно использовать любую библиотеку)
+            // Implementation of toast notifications (can use any library)
             const toast = document.createElement('div');
             toast.className = `toast align-items-center text-white bg-${type === 'success' ? 'success' : 'danger'} border-0`;
             toast.setAttribute('role', 'alert');
@@ -497,7 +497,7 @@
             const bsToast = new bootstrap.Toast(toast);
             bsToast.show();
             
-            // Автоматическое скрытие через 5 секунд
+            // Automatic hiding after 5 seconds
             setTimeout(() => bsToast.hide(), 5000);
         }
         
