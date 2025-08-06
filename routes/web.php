@@ -23,7 +23,8 @@ use App\Http\Controllers\Forms\BasicInfoFormController;
 
 Auth::routes();
 Route::get('/next', [HomeController::class, function () {
-    print_r(curl_version()); die;
+    print_r(curl_version());
+    die;
 }]);
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/services', [HomeController::class, 'services'])->name('services');

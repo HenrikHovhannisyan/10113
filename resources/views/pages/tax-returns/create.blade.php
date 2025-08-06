@@ -25,7 +25,11 @@
 
         <div class="tab-content">
             <div class="tab-pane fade show active" id="basic-info" role="tabpanel" aria-labelledby="basic-info-tab">
-                @include('forms.basic-info')
+                @if(isset($basicInfo))
+                    @include('forms.basic-info', ['basicInfo' => $basicInfo])
+                @else
+                    @include('forms.basic-info')
+                @endif
             </div>
             <div class="tab-pane fade" id="income" role="tabpanel" aria-labelledby="income-tab">
                 @include('tabs.income')
