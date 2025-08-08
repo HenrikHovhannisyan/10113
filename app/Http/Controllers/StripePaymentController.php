@@ -2,9 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\TaxPaymentSucceeded;
+use App\Mail\FormsSubmittedWithAttachments;
 use App\Models\TaxReturn;
+use App\Models\Transaction;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class StripePaymentController extends Controller
 {
@@ -31,6 +39,8 @@ class StripePaymentController extends Controller
            return redirect()->route('home')->with('error', 'Tax not found!');
         }
 
+
+
         if($tax->payment_status == 'paid') {
             return redirect()->route('home')->with('error', 'You already paid this tax!');
         }
@@ -52,9 +62,7 @@ class StripePaymentController extends Controller
             'agree' => 'required|in:1'
         ]);
 
-        // Fetch the tax record
-        $tax = TaxReturn::query()
-            ->where('id', $validated['tax_id'])
+        $tax = TaxReturn::where('id', $validated['tax_id'])
             ->where('user_id', Auth::id())
             ->first();
 
@@ -62,14 +70,15 @@ class StripePaymentController extends Controller
             return redirect()->route('home')->with('error', 'Tax not found!');
         }
 
-        if ($tax->payment_status == 'paid') {
-            return redirect()->route('home')->with('error', 'You already paid this tax!');
+        if ($tax->payment_status === 'paid') {
+            return redirect()->route('home')->with('error', 'This tax return is already paid.');
         }
 
         \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
 
+        DB::beginTransaction();
+
         try {
-            // Create a Stripe charge
             $charge = \Stripe\Charge::create([
                 'amount' => intval(env('AMOUNT', 100) * 100),
                 'currency' => 'usd',
@@ -82,16 +91,33 @@ class StripePaymentController extends Controller
                 ]
             ]);
 
-            // Save payment status
             $tax->update([
                 'payment_status' => 'paid',
                 'payment_reference' => $charge->id ?? null
             ]);
 
+            Transaction::create([
+                'user_id' => Auth::id(),
+                'tax_return_id' => $tax->id,
+                'stripe_charge_id' => $charge->id ?? null,
+                'amount' => $charge->amount / 100,
+                'currency' => $charge->currency,
+                'status' => $charge->status === 'succeeded' ? 'paid' : 'failed',
+                'description' => $charge->description,
+                'metadata' => $charge->metadata,
+            ]);
+
+            DB::commit();
+
+            // Dispatch event to send email
+            TaxPaymentSucceeded::dispatch($tax);
+
             return redirect()->route('home')->with('success', 'Payment successful!');
         } catch (\Stripe\Exception\CardException $e) {
+            DB::rollBack();
             return back()->with('error', $e->getError()->message);
         } catch (\Exception $e) {
+            DB::rollBack();
             return back()->with('error', 'Payment failed: ' . $e->getMessage());
         }
     }
