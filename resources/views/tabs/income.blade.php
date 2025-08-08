@@ -48,34 +48,142 @@
 
 <section class="choosing-business-type_section">
     <h2 class="choosing-business-type-title" id="forms_title">Let’s add the details</h2>
-    <div class="form-container">
-        @foreach(array_keys($incomeItems) as $i => $key)
-            <div class="d-none" id="form-{{ $i }}">@include('forms.income.' . $key)</div>
-        @endforeach
-    </div>
+    <form id="income-form" action="{{ isset($incomes) ? route('income.update', $incomes->id) : route('income.store') }}" method="POST">
+        @csrf
+        @if(isset($incomes))
+            @method('PUT')
+        @endif
+
+        <div class="form-container">
+            @foreach(array_keys($incomeItems) as $i => $key)
+                <div class="d-none" id="form-{{ $i }}">@include('forms.income.' . $key)</div>
+            @endforeach
+            <div class="d-flex justify-content-end mb-5">
+                <button type="submit" class="btn navbar_btn">
+                    {{ isset($incomes) ? 'Update' : 'Save' }}
+                </button>
+            </div>
+        </div>
+
+    </form>
 </section>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-    const items = document.querySelectorAll(".income-item");
+    document.addEventListener("DOMContentLoaded", function () {
+        const items = document.querySelectorAll(".income-item");
 
-    items.forEach((item) => {
-        item.addEventListener("click", () => {
-            const index = item.getAttribute("data-index");
-            const formToShow = document.getElementById(`form-${index}`);
+        items.forEach((item) => {
+            item.addEventListener("click", () => {
+                const index = item.getAttribute("data-index");
+                const formToShow = document.getElementById(`form-${index}`);
 
-            if (!formToShow) return;
+                if (!formToShow) return;
 
-            if (formToShow.classList.contains("d-none")) {
-                formToShow.classList.remove("d-none");
-                item.classList.add("active");
+                if (formToShow.classList.contains("d-none")) {
+                    formToShow.classList.remove("d-none");
+                    item.classList.add("active");
 
-                const target = document.getElementById("forms_title");
-                if (target) {
-                    target.scrollIntoView({ behavior: "smooth", block: "start" });
+                    const target = document.getElementById("forms_title");
+                    if (target) {
+                        target.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }
                 }
-            }
+            });
         });
     });
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('income-form');
+    
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        document.querySelectorAll('.text-danger').forEach(el => el.remove());
+        
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span> Processing...';
+        submitBtn.disabled = true;
+
+        try {
+            const formData = new FormData(form);
+            const url = form.action;
+            const method = form.querySelector('input[name="_method"]') ? form.querySelector('input[name="_method"]').value : 'POST';
+
+            const response = await fetch(url, {
+                method: method,
+                body: formData,
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json'
+                }
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                showToast('success', data.message);
+                
+                if (data.incomeId && !form.action.includes('update')) {
+                    const newAction = form.action.replace('income.store', `income.update/${data.incomeId}`);
+                    form.action = newAction;
+                    form.querySelector('button[type="submit"]').textContent = 'Update Income';
+                }
+            } else {
+                if (data.errors) {
+                    for (const [field, errors] of Object.entries(data.errors)) {
+                        const input = form.querySelector(`[name="${field}"]`);
+                        if (input) {
+                            const errorDiv = document.createElement('div');
+                            errorDiv.className = 'text-danger mt-1';
+                            errorDiv.textContent = errors[0];
+                            input.closest('.mb-3').appendChild(errorDiv);
+                        }
+                    }
+                }
+                showToast('error', data.message || 'An error occurred');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            showToast('error', 'Network error. Please try again.');
+        } finally {
+            submitBtn.innerHTML = originalBtnText;
+            submitBtn.disabled = false;
+        }
+    });
+
+    function showToast(type, message) {
+        const toast = document.createElement('div');
+        toast.className = `toast align-items-center text-white bg-${type === 'success' ? 'success' : 'danger'} border-0`;
+        toast.setAttribute('role', 'alert');
+        toast.setAttribute('aria-live', 'assertive');
+        toast.setAttribute('aria-atomic', 'true');
+        
+        toast.innerHTML = `
+            <div class="d-flex">
+                <div class="toast-body">${message}</div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        `;
+        
+        const toastContainer = document.getElementById('toast-container') || createToastContainer();
+        toastContainer.appendChild(toast);
+        
+        const bsToast = new bootstrap.Toast(toast);
+        bsToast.show();
+        
+        setTimeout(() => bsToast.hide(), 5000);
+    }
+    
+    function createToastContainer() {
+        const container = document.createElement('div');
+        container.id = 'toast-container';
+        container.className = 'toast-container position-fixed bottom-0 end-0 p-3';
+        container.style.zIndex = '1100';
+        document.body.appendChild(container);
+        return container;
+    }
 });
 </script>

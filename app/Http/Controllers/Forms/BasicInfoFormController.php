@@ -60,7 +60,6 @@ class BasicInfoFormController extends Controller
 
         $validated = $validator->validated();
 
-        // Преобразование значений
         foreach (
             [
                 'has_spouse',

@@ -1,4 +1,4 @@
-<form>
+<section>
     <div class="mt-5">
         <div class="d-flex align-items-center justify-content-between mb-3">
             <h4 class="form_title">Dividends</h4>
@@ -50,7 +50,7 @@
             </div>
         </div>
     </div>
-</form>
+</section>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {

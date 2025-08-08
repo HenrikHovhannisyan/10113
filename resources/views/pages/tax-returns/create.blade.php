@@ -32,7 +32,11 @@
                 @endif
             </div>
             <div class="tab-pane fade" id="income" role="tabpanel" aria-labelledby="income-tab">
-                @include('tabs.income')
+                @if(isset($incomes))
+                    @include('tabs.income', ['incomes' => $incomes])
+                @else
+                    @include('tabs.income')
+                @endif
             </div>
             <div class="tab-pane fade" id="deduction" role="tabpanel" aria-labelledby="deduction-tab">
                @include('tabs.deduction')

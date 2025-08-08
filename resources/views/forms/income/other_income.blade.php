@@ -1,4 +1,4 @@
-<form>
+<section>
   <div class="d-flex align-items-center justify-content-between mb-3">
     <h4 class="form_title">Other Income</h4>
     <img src="{{ asset('img/icons/help.png') }}" alt="Help" />
@@ -81,7 +81,7 @@
         </button>
       </div>
     </div>
-</form>
+</section>
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {

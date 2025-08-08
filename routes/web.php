@@ -9,6 +9,7 @@ use \App\Http\Controllers\Admin\PlanController;
 use App\Http\Controllers\Admin\SiteInfoController;
 use App\Http\Controllers\TaxReturnController;
 use App\Http\Controllers\Forms\BasicInfoFormController;
+use App\Http\Controllers\Forms\IncomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,8 @@ Route::resource('tax-returns', TaxReturnController::class);
 
 // FORMS
 Route::resource('basic-info', BasicInfoFormController::class);
+Route::resource('income', IncomeController::class);
+
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
