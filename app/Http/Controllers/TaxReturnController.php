@@ -61,8 +61,9 @@ class TaxReturnController extends Controller
     public function edit(TaxReturn $taxReturn)
     {
         $basicInfo = $taxReturn->basicInfos()->latest()->first();
+        $incomes = $taxReturn->incomes()->latest()->first();
 
-        return view('pages.tax-returns.create', compact('taxReturn', 'basicInfo'));
+        return view('pages.tax-returns.create', compact('taxReturn', 'basicInfo', 'incomes'));
     }
 
     /**

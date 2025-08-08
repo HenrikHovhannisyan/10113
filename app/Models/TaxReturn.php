@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Forms\BasicInfoForm;
+use App\Models\Forms\Income;
 
 class TaxReturn extends Model
 {
@@ -44,5 +45,10 @@ class TaxReturn extends Model
     public function basicInfos()
     {
         return $this->hasMany(BasicInfoForm::class);
+    }
+
+    public function incomes()
+    {
+        return $this->hasMany(Income::class);
     }
 }
