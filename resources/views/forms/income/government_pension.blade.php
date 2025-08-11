@@ -17,36 +17,36 @@
                 @php
                     $pensions = old('government_pensions', $incomes->government_pensions ?? []);
                     
-                    if(empty($pensions)) {
+                    if (empty($pensions)) {
                         $pensions = [['type' => '', 'other' => '', 'tax_withheld' => '', 'total_received' => '']];
                     }
                 @endphp
                 
                 @foreach($pensions as $index => $pension)
+                @php
+                    $pensionType = $pension['type'] ?? '';
+                    $isOtherSelected = ($pensionType === 'Other');
+                @endphp
                 <section class="pension-block" data-index="{{ $index }}">
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <p class="choosing-business-type-text">Please select the type of pension you received</p>
-                            @php
-                                $isOtherSelected = ($pension['type'] === 'Other');
-                            @endphp
-                            
                             <select name="government_pensions[{{ $index }}][type]" class="form-select border-dark pension-type-select">
-                                <option value="" disabled {{ !$pension['type'] ? 'selected' : '' }}>Choose</option>
-                                <option value="Parenting Payment (Single)" {{ $pension['type'] === 'Parenting Payment (Single)' ? 'selected' : '' }}>Parenting Payment (Single)</option>
-                                <option value="Aged Pension" {{ $pension['type'] === 'Aged Pension' ? 'selected' : '' }}>Aged Pension</option>
-                                <option value="Disability Support Pension" {{ $pension['type'] === 'Disability Support Pension' ? 'selected' : '' }}>Disability Support Pension</option>
-                                <option value="Carer Payments" {{ $pension['type'] === 'Carer Payments' ? 'selected' : '' }}>Carer Payments</option>
-                                <option value="Newstart" {{ $pension['type'] === 'Newstart' ? 'selected' : '' }}>Newstart</option>
-                                <option value="JobSeeker Allowance" {{ $pension['type'] === 'JobSeeker Allowance' ? 'selected' : '' }}>JobSeeker Allowance</option>
-                                <option value="Youth Allowance" {{ $pension['type'] === 'Youth Allowance' ? 'selected' : '' }}>Youth Allowance</option>
-                                <option value="Parenting Payment (Partnered)" {{ $pension['type'] === 'Parenting Payment (Partnered)' ? 'selected' : '' }}>Parenting Payment (Partnered)</option>
-                                <option value="Mature Age Allowance" {{ $pension['type'] === 'Mature Age Allowance' ? 'selected' : '' }}>Mature Age Allowance</option>
-                                <option value="Partner Allowance" {{ $pension['type'] === 'Partner Allowance' ? 'selected' : '' }}>Partner Allowance</option>
-                                <option value="Sickness Allowance" {{ $pension['type'] === 'Sickness Allowance' ? 'selected' : '' }}>Sickness Allowance</option>
-                                <option value="Special Benefit" {{ $pension['type'] === 'Special Benefit' ? 'selected' : '' }}>Special Benefit</option>
-                                <option value="Widow Allowance" {{ $pension['type'] === 'Widow Allowance' ? 'selected' : '' }}>Widow Allowance</option>
-                                <option value="Austudy Payment" {{ $pension['type'] === 'Austudy Payment' ? 'selected' : '' }}>Austudy Payment</option>
+                                <option value="" disabled {{ empty($pensionType) ? 'selected' : '' }}>Choose</option>
+                                <option value="Parenting Payment (Single)" {{ $pensionType === 'Parenting Payment (Single)' ? 'selected' : '' }}>Parenting Payment (Single)</option>
+                                <option value="Aged Pension" {{ $pensionType === 'Aged Pension' ? 'selected' : '' }}>Aged Pension</option>
+                                <option value="Disability Support Pension" {{ $pensionType === 'Disability Support Pension' ? 'selected' : '' }}>Disability Support Pension</option>
+                                <option value="Carer Payments" {{ $pensionType === 'Carer Payments' ? 'selected' : '' }}>Carer Payments</option>
+                                <option value="Newstart" {{ $pensionType === 'Newstart' ? 'selected' : '' }}>Newstart</option>
+                                <option value="JobSeeker Allowance" {{ $pensionType === 'JobSeeker Allowance' ? 'selected' : '' }}>JobSeeker Allowance</option>
+                                <option value="Youth Allowance" {{ $pensionType === 'Youth Allowance' ? 'selected' : '' }}>Youth Allowance</option>
+                                <option value="Parenting Payment (Partnered)" {{ $pensionType === 'Parenting Payment (Partnered)' ? 'selected' : '' }}>Parenting Payment (Partnered)</option>
+                                <option value="Mature Age Allowance" {{ $pensionType === 'Mature Age Allowance' ? 'selected' : '' }}>Mature Age Allowance</option>
+                                <option value="Partner Allowance" {{ $pensionType === 'Partner Allowance' ? 'selected' : '' }}>Partner Allowance</option>
+                                <option value="Sickness Allowance" {{ $pensionType === 'Sickness Allowance' ? 'selected' : '' }}>Sickness Allowance</option>
+                                <option value="Special Benefit" {{ $pensionType === 'Special Benefit' ? 'selected' : '' }}>Special Benefit</option>
+                                <option value="Widow Allowance" {{ $pensionType === 'Widow Allowance' ? 'selected' : '' }}>Widow Allowance</option>
+                                <option value="Austudy Payment" {{ $pensionType === 'Austudy Payment' ? 'selected' : '' }}>Austudy Payment</option>
                                 <option value="Other" {{ $isOtherSelected ? 'selected' : '' }}>Other (Please Specify)</option>
                             </select>
                         </div>
@@ -58,7 +58,7 @@
                                 name="government_pensions[{{ $index }}][other]"
                                 class="form-control border-dark pension-other-input"
                                 placeholder="Specify other pension"
-                                value="{{ $isOtherSelected ? $pension['other'] : '' }}"
+                                value="{{ $isOtherSelected ? ($pension['other'] ?? '') : '' }}"
                                 {{ $isOtherSelected ? '' : 'disabled' }}
                             >
                         </div>
