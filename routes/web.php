@@ -45,6 +45,7 @@ Route::resource('income', IncomeController::class);
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/users', [AdminController::class, 'users'])->name('users.index');
+    Route::get('/transactions', [AdminController::class, 'transactions'])->name('transactions.index');
     Route::resource('plans', PlanController::class);
     Route::resource('site-info', SiteInfoController::class);
 });

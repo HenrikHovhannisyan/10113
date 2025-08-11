@@ -27,7 +27,7 @@
                         </a>
                     </div>
                 </div>
-            </div>  
+            </div>
 
             <div class="card shadow-sm mb-3">
                 <div class="card-body d-flex justify-content-between align-items-center">
@@ -40,7 +40,7 @@
                         <i class="fa-solid fa-arrow-right ms-2"></i>
                     </a>
                 </div>
-            </div>            
+            </div>
 
             <div class="card shadow-sm mb-3">
                 <div class="card-body d-flex justify-content-between align-items-center">
@@ -54,7 +54,20 @@
                     </a>
                 </div>
             </div>
-          
+
+            <div class="card shadow-sm mb-3">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="card-title mb-1">Transactions</h5>
+                        <p class="card-text fs-4">{{ $transactionsCount ?? 0 }}</p>
+                    </div>
+                    <a href="{{ route('transactions.index') }}" class="btn btn-primary">
+                        View Transactions
+                        <i class="fa-solid fa-arrow-right ms-2"></i>
+                    </a>
+                </div>
+            </div>
+
 
         </div>
     </div>
