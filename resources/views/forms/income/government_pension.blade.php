@@ -14,23 +14,40 @@
 
         <div class="grin_box_border">
             <div id="pensionsContainer">
-                <section class="pension-block">
+                @php
+                    $pensions = old('government_pensions', $incomes->government_pensions ?? []);
+                    
+                    if(empty($pensions)) {
+                        $pensions = [['type' => '', 'other' => '', 'tax_withheld' => '', 'total_received' => '']];
+                    }
+                @endphp
+                
+                @foreach($pensions as $index => $pension)
+                <section class="pension-block" data-index="{{ $index }}">
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <p class="choosing-business-type-text">Please select the type of pension you received</p>
-                            <select name="pension_type[]" class="form-select border-dark pension-type-select">
-                                <option value="" disabled selected>Choose</option>
-                                <option value="Newstart">Newstart</option>
-                                <option value="JobSeeker Allowance">JobSeeker Allowance</option>
-                                <option value="Youth Allowance">Youth Allowance</option>
-                                <option value="Parenting Payment (Partnered)">Parenting Payment (Partnered)</option>
-                                <option value="Mature Age Allowance">Mature Age Allowance</option>
-                                <option value="Partner Allowance">Partner Allowance</option>
-                                <option value="Sickness Allowance">Sickness Allowance</option>
-                                <option value="Special Benefit">Special Benefit</option>
-                                <option value="Widow Allowance">Widow Allowance</option>
-                                <option value="Austudy Payment">Austudy Payment</option>
-                                <option value="Other">Other (Please Specify)</option>
+                            @php
+                                $isOtherSelected = ($pension['type'] === 'Other');
+                            @endphp
+                            
+                            <select name="government_pensions[{{ $index }}][type]" class="form-select border-dark pension-type-select">
+                                <option value="" disabled {{ !$pension['type'] ? 'selected' : '' }}>Choose</option>
+                                <option value="Parenting Payment (Single)" {{ $pension['type'] === 'Parenting Payment (Single)' ? 'selected' : '' }}>Parenting Payment (Single)</option>
+                                <option value="Aged Pension" {{ $pension['type'] === 'Aged Pension' ? 'selected' : '' }}>Aged Pension</option>
+                                <option value="Disability Support Pension" {{ $pension['type'] === 'Disability Support Pension' ? 'selected' : '' }}>Disability Support Pension</option>
+                                <option value="Carer Payments" {{ $pension['type'] === 'Carer Payments' ? 'selected' : '' }}>Carer Payments</option>
+                                <option value="Newstart" {{ $pension['type'] === 'Newstart' ? 'selected' : '' }}>Newstart</option>
+                                <option value="JobSeeker Allowance" {{ $pension['type'] === 'JobSeeker Allowance' ? 'selected' : '' }}>JobSeeker Allowance</option>
+                                <option value="Youth Allowance" {{ $pension['type'] === 'Youth Allowance' ? 'selected' : '' }}>Youth Allowance</option>
+                                <option value="Parenting Payment (Partnered)" {{ $pension['type'] === 'Parenting Payment (Partnered)' ? 'selected' : '' }}>Parenting Payment (Partnered)</option>
+                                <option value="Mature Age Allowance" {{ $pension['type'] === 'Mature Age Allowance' ? 'selected' : '' }}>Mature Age Allowance</option>
+                                <option value="Partner Allowance" {{ $pension['type'] === 'Partner Allowance' ? 'selected' : '' }}>Partner Allowance</option>
+                                <option value="Sickness Allowance" {{ $pension['type'] === 'Sickness Allowance' ? 'selected' : '' }}>Sickness Allowance</option>
+                                <option value="Special Benefit" {{ $pension['type'] === 'Special Benefit' ? 'selected' : '' }}>Special Benefit</option>
+                                <option value="Widow Allowance" {{ $pension['type'] === 'Widow Allowance' ? 'selected' : '' }}>Widow Allowance</option>
+                                <option value="Austudy Payment" {{ $pension['type'] === 'Austudy Payment' ? 'selected' : '' }}>Austudy Payment</option>
+                                <option value="Other" {{ $isOtherSelected ? 'selected' : '' }}>Other (Please Specify)</option>
                             </select>
                         </div>
 
@@ -38,10 +55,11 @@
                             <p class="choosing-business-type-text">Other Pension (specify)</p>
                             <input
                                 type="text"
-                                name="pension_other[]"
+                                name="government_pensions[{{ $index }}][other]"
                                 class="form-control border-dark pension-other-input"
-                                placeholder="What do you do for a living?"
-                                disabled
+                                placeholder="Specify other pension"
+                                value="{{ $isOtherSelected ? $pension['other'] : '' }}"
+                                {{ $isOtherSelected ? '' : 'disabled' }}
                             >
                         </div>
                     </div>
@@ -51,9 +69,10 @@
                             <p class="choosing-business-type-text">Tax withheld from this Government pension</p>
                             <input
                                 type="number"
-                                name="pension_tax_withheld[]"
+                                name="government_pensions[{{ $index }}][tax_withheld]"
                                 class="form-control border-dark"
                                 placeholder="00.00$"
+                                value="{{ $pension['tax_withheld'] ?? '' }}"
                             >
                         </div>
 
@@ -61,13 +80,15 @@
                             <p class="choosing-business-type-text">Total amount received from this Government pension</p>
                             <input
                                 type="number"
-                                name="pension_total_received[]"
+                                name="government_pensions[{{ $index }}][total_received]"
                                 class="form-control border-dark"
                                 placeholder="00.00$"
+                                value="{{ $pension['total_received'] ?? '' }}"
                             >
                         </div>
                     </div>
                 </section>
+                @endforeach
             </div>
 
             <div class="row">
@@ -90,6 +111,64 @@ document.addEventListener("DOMContentLoaded", () => {
     const addBtn = document.querySelector(".btn_add_pension");
     const deleteBtn = document.querySelector(".btn_delete_pension");
 
+    const newBlockTemplate = `
+    <section class="pension-block" data-index="__INDEX__">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <p class="choosing-business-type-text">Please select the type of pension you received</p>
+                <select name="government_pensions[__INDEX__][type]" class="form-select border-dark pension-type-select">
+                    <option value="" disabled selected>Choose</option>
+                    <option value="Parenting Payment (Single)">Parenting Payment (Single)</option>
+                    <option value="Aged Pension">Aged Pension</option>
+                    <option value="Disability Support Pension">Disability Support Pension</option>
+                    <option value="Carer Payments">Carer Payments</option>
+                    <option value="Newstart">Newstart</option>
+                    <option value="JobSeeker Allowance">JobSeeker Allowance</option>
+                    <option value="Youth Allowance">Youth Allowance</option>
+                    <option value="Parenting Payment (Partnered)">Parenting Payment (Partnered)</option>
+                    <option value="Mature Age Allowance">Mature Age Allowance</option>
+                    <option value="Partner Allowance">Partner Allowance</option>
+                    <option value="Sickness Allowance">Sickness Allowance</option>
+                    <option value="Special Benefit">Special Benefit</option>
+                    <option value="Widow Allowance">Widow Allowance</option>
+                    <option value="Austudy Payment">Austudy Payment</option>
+                    <option value="Other">Other (Please Specify)</option>
+                </select>
+            </div>
+            <div class="col-md-6 mb-3">
+                <p class="choosing-business-type-text">Other Pension (specify)</p>
+                <input
+                    type="text"
+                    name="government_pensions[__INDEX__][other]"
+                    class="form-control border-dark pension-other-input"
+                    placeholder="Specify other pension"
+                    disabled
+                >
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <p class="choosing-business-type-text">Tax withheld from this Government pension</p>
+                <input
+                    type="number"
+                    name="government_pensions[__INDEX__][tax_withheld]"
+                    class="form-control border-dark"
+                    placeholder="00.00$"
+                >
+            </div>
+            <div class="col-md-6 mb-3">
+                <p class="choosing-business-type-text">Total amount received from this Government pension</p>
+                <input
+                    type="number"
+                    name="government_pensions[__INDEX__][total_received]"
+                    class="form-control border-dark"
+                    placeholder="00.00$"
+                >
+            </div>
+        </div>
+    </section>
+    `;
+
     function initPensionBlock(section) {
         const select = section.querySelector(".pension-type-select");
         const input = section.querySelector(".pension-other-input");
@@ -108,25 +187,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function initAllPensionBlocks() {
-        const blocks = container.querySelectorAll(".pension-block");
-        blocks.forEach(initPensionBlock);
+        container.querySelectorAll(".pension-block").forEach(initPensionBlock);
     }
 
     addBtn.addEventListener("click", () => {
-        const blocks = container.querySelectorAll(".pension-block");
-        const lastBlock = blocks[blocks.length - 1];
-        const newBlock = lastBlock.cloneNode(true);
-
-        newBlock.querySelectorAll("input, select").forEach(el => {
-            if (el.tagName === "SELECT") {
-                el.selectedIndex = 0;
-            } else {
-                el.value = "";
-            }
-        });
-
-        container.appendChild(newBlock);
-        initAllPensionBlocks();
+        const newIndex = container.querySelectorAll(".pension-block").length;
+        const newBlockHTML = newBlockTemplate.replace(/__INDEX__/g, newIndex);
+        
+        container.insertAdjacentHTML('beforeend', newBlockHTML);
+        initPensionBlock(container.lastElementChild);
     });
 
     deleteBtn.addEventListener("click", () => {

@@ -17,23 +17,38 @@
 
         <div class="grin_box_border">
             <div id="allowancesContainer">
-                <section class="allowance-block">
+                @php
+                    $allowanceCount = max(
+                        count(old('allowance_type', [])),
+                        isset($incomes) ? count($incomes->allowance_type ?? []) : 0,
+                        1
+                    );
+                @endphp
+                
+                @for($i = 0; $i < $allowanceCount; $i++)
+                <section class="allowance-block" data-index="{{ $i }}">
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <p class="choosing-business-type-text">Please select the type of allowance you received</p>
-                            <select name="allowance_type[]" class="form-select border-dark allowance-type-select">
-                                <option value="" disabled selected>Choose</option>
-                                <option value="Newstart">Newstart</option>
-                                <option value="JobSeeker Allowance">JobSeeker Allowance</option>
-                                <option value="Youth Allowance">Youth Allowance</option>
-                                <option value="Parenting Payment (Partnered)">Parenting Payment (Partnered)</option>
-                                <option value="Mature Age Allowance">Mature Age Allowance</option>
-                                <option value="Partner Allowance">Partner Allowance</option>
-                                <option value="Sickness Allowance">Sickness Allowance</option>
-                                <option value="Special Benefit">Special Benefit</option>
-                                <option value="Widow Allowance">Widow Allowance</option>
-                                <option value="Austudy Payment">Austudy Payment</option>
-                                <option value="Other">Other (Please Specify)</option>
+                            @php
+                                $selectedType = old("allowance_type.$i", $incomes->allowance_type[$i] ?? '');
+                                $otherValue = old("allowance_other.$i", $incomes->allowance_other[$i] ?? '');
+                                $isOtherSelected = ($selectedType === 'Other');
+                            @endphp
+                            
+                            <select name="allowance_type[{{ $i }}]" class="form-select border-dark allowance-type-select">
+                                <option value="" disabled {{ !$selectedType ? 'selected' : '' }}>Choose</option>
+                                <option value="Newstart" {{ $selectedType === 'Newstart' ? 'selected' : '' }}>Newstart</option>
+                                <option value="JobSeeker Allowance" {{ $selectedType === 'JobSeeker Allowance' ? 'selected' : '' }}>JobSeeker Allowance</option>
+                                <option value="Youth Allowance" {{ $selectedType === 'Youth Allowance' ? 'selected' : '' }}>Youth Allowance</option>
+                                <option value="Parenting Payment (Partnered)" {{ $selectedType === 'Parenting Payment (Partnered)' ? 'selected' : '' }}>Parenting Payment (Partnered)</option>
+                                <option value="Mature Age Allowance" {{ $selectedType === 'Mature Age Allowance' ? 'selected' : '' }}>Mature Age Allowance</option>
+                                <option value="Partner Allowance" {{ $selectedType === 'Partner Allowance' ? 'selected' : '' }}>Partner Allowance</option>
+                                <option value="Sickness Allowance" {{ $selectedType === 'Sickness Allowance' ? 'selected' : '' }}>Sickness Allowance</option>
+                                <option value="Special Benefit" {{ $selectedType === 'Special Benefit' ? 'selected' : '' }}>Special Benefit</option>
+                                <option value="Widow Allowance" {{ $selectedType === 'Widow Allowance' ? 'selected' : '' }}>Widow Allowance</option>
+                                <option value="Austudy Payment" {{ $selectedType === 'Austudy Payment' ? 'selected' : '' }}>Austudy Payment</option>
+                                <option value="Other" {{ $isOtherSelected ? 'selected' : '' }}>Other (Please Specify)</option>
                             </select>
                         </div>
 
@@ -41,10 +56,11 @@
                             <p class="choosing-business-type-text">Other Allowance (specify)</p>
                             <input
                                 type="text"
-                                name="allowance_other[]"
+                                name="allowance_other[{{ $i }}]"
                                 class="form-control border-dark allowance-other-input"
                                 placeholder="What do you do for a living?"
-                                disabled
+                                value="{{ $isOtherSelected ? $otherValue : '' }}"
+                                {{ $isOtherSelected ? '' : 'disabled' }}
                             >
                         </div>
                     </div>
@@ -54,9 +70,10 @@
                             <p class="choosing-business-type-text">Tax withheld from this Government allowance</p>
                             <input
                                 type="number"
-                                name="allowance_tax_withheld[]"
+                                name="allowance_tax_withheld[{{ $i }}]"
                                 class="form-control border-dark"
                                 placeholder="00.00$"
+                                value="{{ old("allowance_tax_withheld.$i", $incomes->allowance_tax_withheld[$i] ?? '') }}"
                             >
                         </div>
 
@@ -64,13 +81,15 @@
                             <p class="choosing-business-type-text">Total amount received from this government allowance</p>
                             <input
                                 type="number"
-                                name="allowance_total_received[]"
+                                name="allowance_total_received[{{ $i }}]"
                                 class="form-control border-dark"
                                 placeholder="00.00$"
+                                value="{{ old("allowance_total_received.$i", $incomes->allowance_total_received[$i] ?? '') }}"
                             >
                         </div>
                     </div>
                 </section>
+                @endfor
             </div>
 
             <div class="row">
@@ -119,17 +138,29 @@ document.addEventListener("DOMContentLoaded", () => {
         const blocks = container.querySelectorAll(".allowance-block");
         const lastBlock = blocks[blocks.length - 1];
         const newBlock = lastBlock.cloneNode(true);
+        const newIndex = blocks.length;
 
+        newBlock.dataset.index = newIndex;
+        
         newBlock.querySelectorAll("input, select").forEach(el => {
             if (el.tagName === "SELECT") {
                 el.selectedIndex = 0;
             } else {
                 el.value = "";
             }
+            
+            if (el.name) {
+                const nameParts = el.name.split('[');
+                if (nameParts.length > 1) {
+                    const baseName = nameParts[0];
+                    el.name = `${baseName}[${newIndex}]`;
+                }
+            }
         });
 
         container.appendChild(newBlock);
-        initAllBlocks();
+        
+        initAllowanceBlock(newBlock);
     });
 
     deleteBtn.addEventListener("click", () => {

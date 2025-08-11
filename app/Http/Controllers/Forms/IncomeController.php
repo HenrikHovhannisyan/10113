@@ -12,17 +12,7 @@ class IncomeController extends Controller
 {
     private function saveIncome(Request $request, $id = null)
     {
-        $data = $request->only([
-            'employer_abn',
-            'total_tax_withheld',
-            'gross_payments',
-            'income_items',
-            'allowances',
-            'fringe_benefits',
-            'reportable_super',
-            'only_income',
-            'only_income_details'
-        ]);
+        $data = $request->all();
 
         $booleanFields = [
             'cgt_concession_active',
@@ -51,7 +41,6 @@ class IncomeController extends Controller
         }
 
         $data['tax_return_id'] = $taxReturn->id;
-
         if ($id) {
             $income = Income::findOrFail($id);
 

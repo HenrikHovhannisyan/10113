@@ -26,9 +26,12 @@ return new class extends Migration
             $table->json('franked_amount')->nullable();
             $table->json('franking_credits')->nullable();
             $table->json('dividend_tax_withheld')->nullable();
+            $table->json('allowance_type')->nullable();
+            $table->json('allowance_other')->nullable();
             $table->json('allowance_tax_withheld')->nullable();
             $table->json('allowance_total_received')->nullable();
             $table->json('pension_tax_withheld')->nullable();
+            $table->json('government_pensions')->nullable();
             $table->json('pension_total_received')->nullable();
             $table->json('etp_tax_withheld')->nullable();
             $table->json('etp_taxable_component')->nullable();
