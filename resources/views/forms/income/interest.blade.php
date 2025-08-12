@@ -9,22 +9,47 @@
         </p>
         <div class="grin_box_border">
             <div id="interestContainer">
-                <section class="interest-block">
+                @php
+                    $interests = old('interests', isset($incomes) ? $incomes->interests ?? [] : []);
+                    $interestCount = max(count($interests), 1);
+                @endphp
+
+                @for($i = 0; $i < $interestCount; $i++)
+                <section class="interest-block" data-index="{{ $i }}">
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <p class="choosing-business-type-text">Number of Account Holders</p>
-                            <input type="number" name="account_holders[]" class="form-control border-dark" placeholder="1">
+                            <input 
+                                type="number" 
+                                name="interests[{{ $i }}][account_holders]" 
+                                class="form-control border-dark" 
+                                placeholder="1"
+                                value="{{ old("interests.$i.account_holders", $interests[$i]['account_holders'] ?? '') }}"
+                            >
                         </div>
                         <div class="col-md-6 mb-3">
                             <p class="choosing-business-type-text">Total Tax Withheld from interest (if any)</p>
-                            <input type="number" name="interest_tax_withheld[]" class="form-control border-dark" placeholder="00.00$">
+                            <input 
+                                type="number" 
+                                name="interests[{{ $i }}][tax_withheld]" 
+                                class="form-control border-dark" 
+                                placeholder="00.00$"
+                                value="{{ old("interests.$i.tax_withheld", $interests[$i]['tax_withheld'] ?? '') }}"
+                            >
                         </div>
                         <div class="col-md-6 mb-3">
                             <p class="choosing-business-type-text">Total Interest</p>
-                            <input type="number" name="total_interest[]" class="form-control border-dark" placeholder="00.00$">
+                            <input 
+                                type="number" 
+                                name="interests[{{ $i }}][total_interest]" 
+                                class="form-control border-dark" 
+                                placeholder="00.00$"
+                                value="{{ old("interests.$i.total_interest", $interests[$i]['total_interest'] ?? '') }}"
+                            >
                         </div>
                     </div>
                 </section>
+                @endfor
             </div>
 
             <div class="row">
@@ -47,23 +72,63 @@ document.addEventListener("DOMContentLoaded", () => {
     const addInterestBtn = document.querySelector(".btn_add_interest");
     const deleteInterestBtn = document.querySelector(".btn_delete_interest");
 
-    addInterestBtn.addEventListener("click", () => {
+    const interestTemplate = `
+    <section class="interest-block" data-index="__INDEX__">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <p class="choosing-business-type-text">Number of Account Holders</p>
+                <input 
+                    type="number" 
+                    name="interests[__INDEX__][account_holders]" 
+                    class="form-control border-dark" 
+                    placeholder="1"
+                >
+            </div>
+            <div class="col-md-6 mb-3">
+                <p class="choosing-business-type-text">Total Tax Withheld from interest (if any)</p>
+                <input 
+                    type="number" 
+                    name="interests[__INDEX__][tax_withheld]" 
+                    class="form-control border-dark" 
+                    placeholder="00.00$"
+                >
+            </div>
+            <div class="col-md-6 mb-3">
+                <p class="choosing-business-type-text">Total Interest</p>
+                <input 
+                    type="number" 
+                    name="interests[__INDEX__][total_interest]" 
+                    class="form-control border-dark" 
+                    placeholder="00.00$"
+                >
+            </div>
+        </div>
+    </section>
+    `;
+
+    function refreshInterestIndices() {
         const blocks = interestContainer.querySelectorAll(".interest-block");
-        const lastBlock = blocks[blocks.length - 1];
-        const newBlock = lastBlock.cloneNode(true);
+        blocks.forEach((block, index) => {
+            block.dataset.index = index;
+            block.querySelectorAll("input").forEach(input => {
+                input.name = input.name.replace(/interests\[\d+\]/, `interests[${index}]`);
+            });
+        });
+    }
 
-        // Очистить значения инпутов
-        newBlock.querySelectorAll("input").forEach(input => input.value = "");
-
-        interestContainer.appendChild(newBlock);
+    addInterestBtn.addEventListener("click", () => {
+        const newIndex = interestContainer.querySelectorAll(".interest-block").length;
+        const newBlockHTML = interestTemplate.replace(/__INDEX__/g, newIndex);
+        interestContainer.insertAdjacentHTML("beforeend", newBlockHTML);
+        refreshInterestIndices();
     });
 
     deleteInterestBtn.addEventListener("click", () => {
         const blocks = interestContainer.querySelectorAll(".interest-block");
         if (blocks.length > 1) {
             blocks[blocks.length - 1].remove();
+            refreshInterestIndices();
         }
     });
 });
 </script>
-

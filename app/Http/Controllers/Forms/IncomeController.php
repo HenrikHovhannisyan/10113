@@ -20,19 +20,20 @@ class IncomeController extends Controller
             ], 404);
         }
 
-        $salaryData = $request->input('salary', []);
+        $data = [
+            'salary' => $request->input('salary', []),
+            'interests' => $request->input('interests', []),
+            // Add other income types as needed
+        ];
 
         if ($id) {
             $income = Income::findOrFail($id);
-            $income->update([
-                'salary' => $salaryData,
-            ]);
+            $income->update($data);
             $message = 'Income data updated successfully!';
         } else {
-            $income = Income::create([
-                'salary' => $salaryData,
-                'tax_return_id' => $taxReturn->id,
-            ]);
+            $income = Income::create(array_merge($data, [
+                'tax_return_id' => $taxReturn->id
+            ]));
             $message = 'Income data saved successfully!';
         }
 
@@ -42,8 +43,6 @@ class IncomeController extends Controller
             'incomeId' => $income->id
         ]);
     }
-
-
 
     public function store(Request $request)
     {
