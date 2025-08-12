@@ -24,6 +24,7 @@ class IncomeController extends Controller
             'salary' => $request->input('salary', []),
             'interests' => $request->input('interests', []),
             'dividends' => $request->input('dividends', []),
+            'government_allowances' => $request->input('government_allowances', []),
         ];
 
         if ($id) {
