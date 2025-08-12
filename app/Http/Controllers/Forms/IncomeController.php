@@ -23,7 +23,7 @@ class IncomeController extends Controller
         $data = [
             'salary' => $request->input('salary', []),
             'interests' => $request->input('interests', []),
-            // Add other income types as needed
+            'dividends' => $request->input('dividends', []),
         ];
 
         if ($id) {
