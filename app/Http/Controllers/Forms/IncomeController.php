@@ -6,31 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\TaxReturn;
 use App\Models\Forms\Income;
-use Illuminate\Support\Facades\Validator;
 
 class IncomeController extends Controller
 {
     private function saveIncome(Request $request, $id = null)
     {
-        $data = $request->all();
-
-        $booleanFields = [
-            'cgt_concession_active',
-            'cgt_concession_retirement',
-            'cgt_concession_rollover',
-            'psi_voluntary_agreement',
-            'psi_abn_not_quoted',
-            'psi_labour_hire',
-            'labour_hire',
-            'credit_paid_by_trustee',
-        ];
-
-        foreach ($booleanFields as $field) {
-            if (isset($data[$field])) {
-                $data[$field] = $data[$field] === 'yes' ? 1 : 0;
-            }
-        }
-
         $taxReturn = TaxReturn::where('user_id', auth()->id())->first();
 
         if (!$taxReturn) {
@@ -40,21 +20,19 @@ class IncomeController extends Controller
             ], 404);
         }
 
-        $data['tax_return_id'] = $taxReturn->id;
+        $salaryData = $request->input('salary', []);
+
         if ($id) {
             $income = Income::findOrFail($id);
-
-            if ($income->taxReturn->user_id !== auth()->id()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Unauthorized'
-                ], 403);
-            }
-
-            $income->update($data);
+            $income->update([
+                'salary' => $salaryData,
+            ]);
             $message = 'Income data updated successfully!';
         } else {
-            $income = Income::create($data);
+            $income = Income::create([
+                'salary' => $salaryData,
+                'tax_return_id' => $taxReturn->id,
+            ]);
             $message = 'Income data saved successfully!';
         }
 
@@ -64,6 +42,8 @@ class IncomeController extends Controller
             'incomeId' => $income->id
         ]);
     }
+
+
 
     public function store(Request $request)
     {

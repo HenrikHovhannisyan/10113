@@ -97,62 +97,72 @@
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('income-form');
     
-    form.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        
-        document.querySelectorAll('.text-danger').forEach(el => el.remove());
-        
-        const submitBtn = form.querySelector('button[type="submit"]');
-        const originalBtnText = submitBtn.innerHTML;
-        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span> Processing...';
-        submitBtn.disabled = true;
+form.addEventListener('submit', async function(e) {
+    e.preventDefault();
 
-        try {
-            const formData = new FormData(form);
-            const url = form.action;
-            const method = form.querySelector('input[name="_method"]') ? form.querySelector('input[name="_method"]').value : 'POST';
+    // Очищаем ошибки
+    document.querySelectorAll('.text-danger').forEach(el => el.remove());
 
-            const response = await fetch(url, {
-                method: method,
-                body: formData,
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                    'Accept': 'application/json'
-                }
-            });
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalBtnText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span> Processing...';
+    submitBtn.disabled = true;
 
-            const data = await response.json();
+    try {
+        // Сериализуем форму вручную
+        const formData = new FormData(form);
+        const params = new URLSearchParams();
 
-            if (response.ok) {
-                showToast('success', data.message);
-                
-                if (data.incomeId && !form.action.includes('update')) {
-                    const newAction = form.action.replace('income.store', `income.update/${data.incomeId}`);
-                    form.action = newAction;
-                    form.querySelector('button[type="submit"]').textContent = 'Update Income';
-                }
-            } else {
-                if (data.errors) {
-                    for (const [field, errors] of Object.entries(data.errors)) {
-                        const input = form.querySelector(`[name="${field}"]`);
-                        if (input) {
-                            const errorDiv = document.createElement('div');
-                            errorDiv.className = 'text-danger mt-1';
-                            errorDiv.textContent = errors[0];
-                            input.closest('.mb-3').appendChild(errorDiv);
-                        }
+        // Формируем строку с вложенными данными для Laravel
+        for (const [key, value] of formData.entries()) {
+            params.append(key, value);
+        }
+
+        const url = form.action;
+        const method = form.querySelector('input[name="_method"]')?.value || 'POST';
+
+        const response = await fetch(url, {
+            method: method,
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'Accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+            },
+            body: params.toString()
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            showToast('success', data.message);
+            if (data.incomeId && !form.action.includes('update')) {
+                const newAction = form.action.replace('income.store', `income.update/${data.incomeId}`);
+                form.action = newAction;
+                form.querySelector('button[type="submit"]').textContent = 'Update Income';
+            }
+        } else {
+            if (data.errors) {
+                for (const [field, errors] of Object.entries(data.errors)) {
+                    const input = form.querySelector(`[name="${field}"]`);
+                    if (input) {
+                        const errorDiv = document.createElement('div');
+                        errorDiv.className = 'text-danger mt-1';
+                        errorDiv.textContent = errors[0];
+                        input.closest('.mb-3').appendChild(errorDiv);
                     }
                 }
-                showToast('error', data.message || 'An error occurred');
             }
-        } catch (error) {
-            console.error('Error:', error);
-            showToast('error', 'Network error. Please try again.');
-        } finally {
-            submitBtn.innerHTML = originalBtnText;
-            submitBtn.disabled = false;
+            showToast('error', data.message || 'An error occurred');
         }
-    });
+    } catch (error) {
+        console.error('Error:', error);
+        showToast('error', 'Network error. Please try again.');
+    } finally {
+        submitBtn.innerHTML = originalBtnText;
+        submitBtn.disabled = false;
+    }
+});
+
 
     function showToast(type, message) {
         const toast = document.createElement('div');
