@@ -198,7 +198,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const addBtn = document.querySelector(".btn_add_employer");
     const deleteBtn = document.querySelector(".btn_delete_employer");
 
-    // Шаблон нового блока с __INDEX__ для замены
     const newBlockTemplate = `
     <section class="employer-block" data-index="__INDEX__">
         <div class="row">
@@ -315,18 +314,15 @@ document.addEventListener("DOMContentLoaded", () => {
         toggleDetails();
     }
 
-    // Пересчитать индексы и заменить в имени input и id радио
     function refreshIndices() {
         const blocks = employerContainer.querySelectorAll(".employer-block");
         blocks.forEach((block, index) => {
             block.dataset.index = index;
 
-            // Перебираем все input и меняем name
             block.querySelectorAll('input, select').forEach(el => {
                 if (el.name) {
                     el.name = el.name.replace(/salary\[\d+\]/, `salary[${index}]`);
                 }
-                // Обновляем id радио и лейблы
                 if (el.classList.contains('income-yes')) {
                     el.id = `incomeYes_${index}`;
                     const label = block.querySelector(`label[for^="incomeYes"]`);
@@ -358,10 +354,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Инициализация уже существующих блоков
     refreshIndices();
 
-    // Инициализация поля "only_income" - если нужно - можно добавить по аналогии с твоим кодом
 });
     const onlyIncomeYes = document.getElementById("onlyIncomeYes");
     const onlyIncomeNo = document.getElementById("onlyIncomeNo");
@@ -372,14 +366,13 @@ document.addEventListener("DOMContentLoaded", () => {
             onlyIncomeDetails.style.display = "block";
         } else {
             onlyIncomeDetails.style.display = "none";
-            onlyIncomeDetails.value = ''; // если нужно очищать поле
+            onlyIncomeDetails.value = ''; 
         }
     }
 
     if (onlyIncomeYes && onlyIncomeNo && onlyIncomeDetails) {
         onlyIncomeYes.addEventListener("change", toggleOnlyIncomeDetails);
         onlyIncomeNo.addEventListener("change", toggleOnlyIncomeDetails);
-        // Вызовем при загрузке, чтобы выставить правильное состояние
         toggleOnlyIncomeDetails();
     }
 </script>
