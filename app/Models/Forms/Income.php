@@ -34,6 +34,10 @@ class Income extends Model
         'other_income' => 'array', // Other Income
     ];
 
+    protected $fillable = [
+        'managed_funds'
+    ];
+
     public function taxReturn()
     {
         return $this->belongsTo(TaxReturn::class);
