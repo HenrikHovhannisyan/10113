@@ -48,7 +48,7 @@
 
 <section class="choosing-business-type_section">
     <h2 class="choosing-business-type-title" id="forms_title">Let’s add the details</h2>
-    <form id="income-form" action="{{ isset($incomes) ? route('income.update', $incomes->id) : route('income.store') }}" method="POST">
+    <form id="income-form" action="{{ isset($incomes) ? route('income.update', $incomes->id) : route('income.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         @if(isset($incomes))
             @method('PUT')
