@@ -30,6 +30,7 @@ class IncomeController extends Controller
             'managed_funds' => $request->input('managed_funds', []),
             'termination_payments' => $request->input('termination_payments', []),
             'rent' => $request->input('rent', []),
+            'partnerships' => $request->input('partnerships', []),
         ];
 
         if ($id) {
