@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Forms\OtherController;
 use App\Http\Controllers\StripePaymentController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +41,7 @@ Route::resource('tax-returns', TaxReturnController::class);
 // FORMS
 Route::resource('basic-info', BasicInfoFormController::class);
 Route::resource('income', IncomeController::class);
+Route::resource('other', OtherController::class);
 
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {

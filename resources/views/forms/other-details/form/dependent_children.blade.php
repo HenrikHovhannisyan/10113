@@ -1,4 +1,4 @@
-<form>
+<section>
     <div class="d-flex align-items-center justify-content-between mb-3">
         <h4 class="form_title">Do you have any dependent children?</h4>
         <img src="{{ asset('img/icons/help.png') }}" alt="Help">
@@ -10,13 +10,14 @@
             If you have children who depend on you for financial support (even if they don't live with you), please enter the number of dependent children here.
             </label>
             <input
-            type="number"
-            min="0"
-            class="form-control border-dark"
-            id="dependent_children"
-            name="dependent_children"
-            placeholder="..."
+                type="number"
+                min="0"
+                class="form-control border-dark"
+                id="dependent_children"
+                name="any_dependent_children"
+                placeholder="..."
+                value="{{ old('any_dependent_children', isset($others) ? $others->any_dependent_children : '') }}"
             />
         </div>
     </div>
-</form>
+</section>

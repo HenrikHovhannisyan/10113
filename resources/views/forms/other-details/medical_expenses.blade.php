@@ -1,4 +1,4 @@
-<form>
+<section>
     <div class="d-flex align-items-center justify-content-between mb-3">
         <h4 class="form_title">Net Medical Expenses Tax Offset</h4>
         <img src="{{ asset('img/icons/help.png') }}" alt="Help">
@@ -44,11 +44,8 @@
             </button>
             <p id="medical_expense_file_name" class="choosing-business-type-text text-muted mb-0 mt-2">No file chosen</p>
         </div>
-
     </div>
-
-
-</form>
+<section>
 
 <script>
     const medFileInput = document.getElementById("medical_expense_file");

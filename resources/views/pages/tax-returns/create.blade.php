@@ -39,11 +39,15 @@
                 @endif
             </div>
             <div class="tab-pane fade" id="deduction" role="tabpanel" aria-labelledby="deduction-tab">
-               @include('tabs.deduction')
+                @include('tabs.deduction')
             </div>
 
             <div class="tab-pane fade" id="other-details" role="tabpanel" aria-labelledby="other-details-tab">
-                @include('tabs.other-details')
+                @if(isset($others))
+                    @include('tabs.other-details', ['others' => $others])
+                @else
+                    @include('tabs.other-details')
+                @endif
             </div>
         </div>
 
@@ -55,8 +59,6 @@
             <button class="btn navbar_btn" id="nextBtn" type="button">Next</button>
             <button class="btn navbar_btn d-none" id="confirmBtn" type="button">Confirm</button>
         </div>
-
-
     </div>
 </div>
 @endsection

@@ -1,4 +1,4 @@
-<form>
+<section>
     <div class="d-flex align-items-center justify-content-between mb-3">
         <h4 class="form_title">Seniors And Pensioners (includes self-funded retirees)</h4>
         <img src="{{ asset('img/icons/help.png') }}" alt="Help">
@@ -28,4 +28,4 @@
   </div>
 </div>
 
-</form>
+</section>
