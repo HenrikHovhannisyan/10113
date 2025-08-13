@@ -32,6 +32,7 @@ class IncomeController extends Controller
             'rent' => $request->input('rent', []),
             'partnerships' => $request->input('partnerships', []),
             'annuities' => $request->input('annuities', []),
+            'superannuation' => $request->input('superannuation', []),
         ];
 
         if ($id) {
