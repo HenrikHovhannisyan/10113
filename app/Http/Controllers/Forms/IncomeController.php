@@ -31,6 +31,7 @@ class IncomeController extends Controller
             'termination_payments' => $request->input('termination_payments', []),
             'rent' => $request->input('rent', []),
             'partnerships' => $request->input('partnerships', []),
+            'annuities' => $request->input('annuities', []),
         ];
 
         if ($id) {
