@@ -10,7 +10,28 @@ class Income extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $fillable = [
+        'managed_funds',
+        'termination_payments',
+        'salary',
+        'interests',
+        'dividends',
+        'government_allowances',
+        'government_pensions',
+        'capital_gains',
+        'rent',
+        'partnerships',
+        'annuities',
+        'superannuation',
+        'super_lump_sums',
+        'ess',
+        'personal_services',
+        'business_income',
+        'business_losses',
+        'foreign_income',
+        'other_income',
+        'tax_return_id',
+    ];
 
     protected $casts = [
         'salary' => 'array', // Salary / Wages
@@ -32,10 +53,6 @@ class Income extends Model
         'business_losses' => 'array', // Deferred Business Losses
         'foreign_income' => 'array', // Foreign Source Income
         'other_income' => 'array', // Other Income
-    ];
-
-    protected $fillable = [
-        'managed_funds'
     ];
 
     public function taxReturn()
