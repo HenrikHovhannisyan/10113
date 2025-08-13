@@ -45,27 +45,70 @@
 
 <section class="choosing-business-type_section">
     <h2 class="choosing-business-type-title" id="other-details-forms_title">Let’s add the details</h2>
-    <div class="form-container">
-        @include('forms.other-details.form.dependent_children')
-        <div class="d-none" id="other-details-form-1">@include('forms.other-details.private_health_insurance')</div>
-        <div class="d-none" id="other-details-form-2">@include('forms.other-details.zone_offset')</div>
-        <div class="d-none" id="other-details-form-3">@include('forms.other-details.seniors_offset')</div>
-        <div class="d-none" id="other-details-form-4">@include('forms.other-details.medicare_reduction')</div>
-        <div class="d-none" id="other-details-form-6">@include('forms.other-details.medical_expenses')</div>
-        <div class="d-none" id="other-details-form-9">@include('forms.other-details.super_income_stream')</div>
-        <div class="d-none" id="other-details-form-10">@include('forms.other-details.super_contributions_spouse')</div>
-        <div class="d-none" id="other-details-form-11">@include('forms.other-details.tax_losses_earlier')</div>
-        <div class="d-none" id="other-details-form-12">@include('forms.other-details.dependent_invalid')</div>
-        <div class="d-none" id="other-details-form-14">@include('forms.other-details.other_refundable_offsets')</div>
-        @include('forms.other-details.form.mls')
-        <div class="d-none" id="other-details-form-5">@include('forms.other-details.tax_free_threshold')</div>
-        <div class="d-none" id="other-details-form-7">@include('forms.other-details.under_18')</div>
-        <div class="d-none" id="other-details-form-8">@include('forms.other-details.working_holiday_income')</div>
-        <div class="d-none" id="other-details-form-13">@include('forms.other-details.super_co_contribution')</div>
-        @include('forms.other-details.form.income_tests')
-        <div class="d-none" id="other-details-form-0">@include('forms.other-details.spouse_details')</div>
-        @include('forms.other-details.form.attach')
-    </div>
+    <form id="other-form" action="{{ isset($others) ? route('other.update', $others->id) : route('other.store') }}" method="POST"
+          enctype="multipart/form-data">
+        @csrf
+        @if(isset($others))
+            @method('PUT')
+        @endif
+        <div class="form-container">
+            @include('forms.other-details.form.dependent_children', ['others' => $others ?? null])
+            <div class="d-none" id="other-details-form-1">
+                @include('forms.other-details.private_health_insurance', ['others' => $others ?? null])
+            </div>
+            <div class="d-none" id="other-details-form-2">
+                @include('forms.other-details.zone_offset', ['others' => $others ?? null])
+            </div>
+            <div class="d-none" id="other-details-form-3">
+                @include('forms.other-details.seniors_offset', ['others' => $others ?? null])
+            </div>
+            <div class="d-none" id="other-details-form-4">
+                @include('forms.other-details.medicare_reduction', ['others' => $others ?? null])
+            </div>
+            <div class="d-none" id="other-details-form-6">
+                @include('forms.other-details.medical_expenses', ['others' => $others ?? null])
+            </div>
+            <div class="d-none" id="other-details-form-9">
+                @include('forms.other-details.super_income_stream', ['others' => $others ?? null])
+            </div>
+            <div class="d-none" id="other-details-form-10">
+                @include('forms.other-details.super_contributions_spouse', ['others' => $others ?? null])
+            </div>
+            <div class="d-none" id="other-details-form-11">
+                @include('forms.other-details.tax_losses_earlier', ['others' => $others ?? null])
+            </div>
+            <div class="d-none" id="other-details-form-12">
+                @include('forms.other-details.dependent_invalid', ['others' => $others ?? null])
+            </div>
+            <div class="d-none" id="other-details-form-14">
+                @include('forms.other-details.other_refundable_offsets', ['others' => $others ?? null])
+            </div>
+            @include('forms.other-details.form.mls', ['others' => $others ?? null])
+            <div class="d-none" id="other-details-form-5">
+                @include('forms.other-details.tax_free_threshold', ['others' => $others ?? null])
+            </div>
+            <div class="d-none" id="other-details-form-7">
+                @include('forms.other-details.under_18', ['others' => $others ?? null])
+            </div>
+            <div class="d-none" id="other-details-form-8">
+                @include('forms.other-details.working_holiday_income', ['others' => $others ?? null])
+            </div>
+            <div class="d-none" id="other-details-form-13">
+                @include('forms.other-details.super_co_contribution', ['others' => $others ?? null])
+            </div>
+            @include('forms.other-details.form.income_tests', ['others' => $others ?? null])
+            <div class="d-none" id="other-details-form-0">
+                @include('forms.other-details.spouse_details', ['others' => $others ?? null])
+            </div>
+            @include('forms.other-details.form.attach', ['others' => $others ?? null])
+
+            <div class="d-flex justify-content-end mb-5 mt-3">
+                <button type="submit" class="btn navbar_btn">
+                    {{ isset($others) ? 'Update' : 'Save' }}
+                </button>
+            </div>
+        </div>
+    </form>
 </section>
 
 <script>
@@ -89,5 +132,103 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('other-form');
+
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            // Clear old errors
+            document.querySelectorAll('.text-danger').forEach(el => el.remove());
+
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span> Processing...';
+            submitBtn.disabled = true;
+
+            try {
+                // Create FormData (supports files)
+                const formData = new FormData(form);
+
+                const url = form.action;
+                const method = 'POST';
+
+                const response = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json'
+                        // DO NOT set Content-Type, browser sets multipart/form-data automatically
+                    },
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showToast('success', data.message);
+
+                    // Update form action after creating a new record
+                    if (data.incomeId && !form.action.includes('update')) {
+                        form.action = form.action.replace('other.store', `other.update/${data.incomeId}`);
+                        form.querySelector('button[type="submit"]').textContent = 'Update Other';
+                    }
+                } else {
+                    if (data.errors) {
+                        for (const [field, errors] of Object.entries(data.errors)) {
+                            const input = form.querySelector(`[name="${field}"]`);
+                            if (input) {
+                                const errorDiv = document.createElement('div');
+                                errorDiv.className = 'text-danger mt-1';
+                                errorDiv.textContent = errors[0];
+                                input.closest('.mb-3').appendChild(errorDiv);
+                            }
+                        }
+                    }
+                    showToast('error', data.message || 'An error occurred');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showToast('error', 'Network error. Please try again.');
+            } finally {
+                submitBtn.innerHTML = originalBtnText;
+                submitBtn.disabled = false;
+            }
+        });
+
+        function showToast(type, message) {
+            const toast = document.createElement('div');
+            toast.className = `toast align-items-center text-white bg-${type === 'success' ? 'success' : 'danger'} border-0`;
+            toast.setAttribute('role', 'alert');
+            toast.setAttribute('aria-live', 'assertive');
+            toast.setAttribute('aria-atomic', 'true');
+
+            toast.innerHTML = `
+            <div class="d-flex">
+                <div class="toast-body">${message}</div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        `;
+
+            const toastContainer = document.getElementById('toast-container') || createToastContainer();
+            toastContainer.appendChild(toast);
+
+            const bsToast = new bootstrap.Toast(toast);
+            bsToast.show();
+            setTimeout(() => bsToast.hide(), 5000);
+        }
+
+        function createToastContainer() {
+            const container = document.createElement('div');
+            container.id = 'toast-container';
+            container.className = 'toast-container position-fixed bottom-0 end-0 p-3';
+            container.style.zIndex = '1100';
+            document.body.appendChild(container);
+            return container;
+        }
+    });
 </script>
 

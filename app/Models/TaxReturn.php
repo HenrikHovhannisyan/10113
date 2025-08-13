@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Forms\Other;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Forms\BasicInfoForm;
@@ -50,5 +51,14 @@ class TaxReturn extends Model
     public function incomes()
     {
         return $this->hasMany(Income::class);
+    }
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function others()
+    {
+        return $this->hasMany(Other::class);
     }
 }

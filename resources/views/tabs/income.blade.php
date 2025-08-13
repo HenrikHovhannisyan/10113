@@ -64,7 +64,6 @@
                 </button>
             </div>
         </div>
-
     </form>
 </section>
 
@@ -96,7 +95,7 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('income-form');
-    
+
 form.addEventListener('submit', async function(e) {
     e.preventDefault();
 
@@ -170,23 +169,23 @@ form.addEventListener('submit', async function(e) {
         toast.setAttribute('role', 'alert');
         toast.setAttribute('aria-live', 'assertive');
         toast.setAttribute('aria-atomic', 'true');
-        
+
         toast.innerHTML = `
             <div class="d-flex">
                 <div class="toast-body">${message}</div>
                 <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
         `;
-        
+
         const toastContainer = document.getElementById('toast-container') || createToastContainer();
         toastContainer.appendChild(toast);
-        
+
         const bsToast = new bootstrap.Toast(toast);
         bsToast.show();
-        
+
         setTimeout(() => bsToast.hide(), 5000);
     }
-    
+
     function createToastContainer() {
         const container = document.createElement('div');
         container.id = 'toast-container';
