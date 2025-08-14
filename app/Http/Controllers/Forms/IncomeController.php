@@ -38,6 +38,7 @@ class IncomeController extends Controller
             'personal_services' => $request->input('personal_services', []),
             'business_income' => $request->input('business_income', []),
             'business_losses' => $request->input('business_losses', []),
+            'foreign_income' => $request->input('foreign_income', []),
         ];
 
         if ($id) {
