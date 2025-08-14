@@ -36,6 +36,7 @@ class IncomeController extends Controller
             'super_lump_sums' => $request->input('super_lump_sums', []),
             'ess' => $request->input('ess', []),
             'personal_services' => $request->input('personal_services', []),
+            'business_income' => $request->input('business_income', []),
         ];
 
         if ($id) {
