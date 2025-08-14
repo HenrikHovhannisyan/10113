@@ -34,6 +34,7 @@ class IncomeController extends Controller
             'annuities' => $request->input('annuities', []),
             'superannuation' => $request->input('superannuation', []),
             'super_lump_sums' => $request->input('super_lump_sums', []),
+            'ess' => $request->input('ess', []),
         ];
 
         if ($id) {
