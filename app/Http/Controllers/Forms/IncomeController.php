@@ -90,6 +90,26 @@ class IncomeController extends Controller
         }
         $data['termination_payments'] = $etps;
 
+        // === Rent Received File Handling ===
+        $rents = $data['rent'];
+        foreach ($rents as $index => &$rent) {
+            if ($request->hasFile("rent.$index.rent_files")) {
+                $files = $request->file("rent.$index.rent_files");
+                $paths = [];
+                foreach ($files as $file) {
+                    $paths[] = $file->store('rent', 'public');
+                }
+                $rent['rent_files'] = $paths;
+            } elseif ($id) {
+                $existing = Income::findOrFail($id);
+                $oldRents = $existing->rent ?? [];
+                if (isset($oldRents[$index]['rent_files'])) {
+                    $rent['rent_files'] = $oldRents[$index]['rent_files'];
+                }
+            }
+        }
+        $data['rent'] = $rents;
+
         // === Save or Update Income ===
         if ($id) {
             $income = Income::findOrFail($id);
