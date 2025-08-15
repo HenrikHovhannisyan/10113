@@ -151,16 +151,23 @@
                 Attach Managed Fund statements here (optional)
             </p>
             <div class="col-md-6 mb-3">
-                <input type="file" name="capital_gains[cgt_attachment]" id="managedFundInput" class="d-none">
+                <input type="file" name="capital_gains[cgt_attachment]" id="capitalFundInput" class="d-none">
 
-                <button type="button" class="btn btn_add" id="customFileTrigger">
+                <button type="button" class="btn btn_add" id="capitalFundTrigger">
                     <img src="{{ asset('img/icons/plus.png') }}" alt="plus">
                     Choose file
                 </button>
             </div>
             <div class="col-md-6 mb-3">
-                <p id="selectedFileName" class="choosing-business-type-text text-muted mb-0">
-                    No file chosen
+                <p id="managedFundName" class="choosing-business-type-text text-muted mb-0">
+                     @if(!empty($capitalGains['cgt_attachment']))
+                <a href="{{ asset('storage/'.$capitalGains['cgt_attachment']) }}" target="_blank" class="btn btn-outline-success">
+                    <i class="fa-solid fa-file"></i>
+                    View file
+                </a>
+                    @else
+                        No file chosen
+                    @endif
                 </p>
             </div>
         </div>
@@ -201,20 +208,17 @@ document.addEventListener("DOMContentLoaded", function () {
     updateScheduleVisibility(); // Initialize
 
     // File input handling
-    const fileInput = document.getElementById("managedFundInput");
-    const fileTrigger = document.getElementById("customFileTrigger");
-    const fileNameDisplay = document.getElementById("selectedFileName");
+    const capitalFundInput = document.getElementById("capitalFundInput");
+    const capitalFundTrigger = document.getElementById("capitalFundTrigger");
+    const managedFundName = document.getElementById("managedFundName");
 
-    fileTrigger.addEventListener("click", () => {
-        fileInput.click();
-    });
+    // Trigger hidden input
+    capitalFundTrigger.addEventListener("click", () => capitalFundInput.click());
 
-    fileInput.addEventListener("change", function() {
-        if (this.files.length > 0) {
-            fileNameDisplay.textContent = this.files[0].name;
-        } else {
-            fileNameDisplay.textContent = "No file chosen";
-        }
+    // Display selected file name
+    capitalFundInput.addEventListener("change", () => {
+        const files = Array.from(capitalFundInput.files).map(f => f.name).join(", ");
+        managedFundName.textContent = files || "No file chosen";
     });
 });
 </script>
