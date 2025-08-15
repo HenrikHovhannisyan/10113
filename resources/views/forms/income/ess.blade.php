@@ -8,46 +8,44 @@
     </p>
 
     @php
-        $essData = old('ess', $incomes->ess ?? [ [] ]);
-        $numericItems = array_filter($essData, fn($key) => is_int($key), ARRAY_FILTER_USE_KEY);
-        $essCount = max(count($numericItems), 1);
+        $essData = old('ess', $incomes->ess ?? [[]]); // если пусто, хотя бы один пустой блок
     @endphp
 
     <div id="essContainer">
-        @foreach(array_values($numericItems) as $i => $ess)
+        @foreach($essData as $i => $ess)
         <div class="grin_box_border mb-4 ess-block" data-index="{{ $i }}">
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label class="choosing-business-type-text">Discount from taxed upfront schemes - eligible for reduction</label>
+                    <label>Discount from taxed upfront schemes - eligible for reduction</label>
                     <input type="text" name="ess[{{ $i }}][discount_upfront_eligible]" class="form-control border-dark"
                            value="{{ $ess['discount_upfront_eligible'] ?? '' }}" placeholder="00.00$">
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label class="choosing-business-type-text">Discount from taxed upfront schemes - not eligible for reduction</label>
+                    <label>Discount from taxed upfront schemes - not eligible for reduction</label>
                     <input type="text" name="ess[{{ $i }}][discount_upfront_not_eligible]" class="form-control border-dark"
                            value="{{ $ess['discount_upfront_not_eligible'] ?? '' }}" placeholder="00.00$">
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label class="choosing-business-type-text">Discount from deferral schemes</label>
+                    <label>Discount from deferral schemes</label>
                     <input type="text" name="ess[{{ $i }}][discount_deferral]" class="form-control border-dark"
                            value="{{ $ess['discount_deferral'] ?? '' }}" placeholder="00.00$">
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label class="choosing-business-type-text">TFN amounts withheld from discount</label>
+                    <label>TFN amounts withheld from discount</label>
                     <input type="text" name="ess[{{ $i }}][tfn_withheld]" class="form-control border-dark"
                            value="{{ $ess['tfn_withheld'] ?? '' }}" placeholder="00.00$">
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label class="choosing-business-type-text">Foreign source discounts</label>
+                    <label>Foreign source discounts</label>
                     <input type="text" name="ess[{{ $i }}][foreign_discounts]" class="form-control border-dark"
                            value="{{ $ess['foreign_discounts'] ?? '' }}" placeholder="00.00$">
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label class="choosing-business-type-text">Employee share scheme foreign tax paid</label>
+                    <label>Employee share scheme foreign tax paid</label>
                     <input type="text" name="ess[{{ $i }}][foreign_tax_paid]" class="form-control border-dark"
                            value="{{ $ess['foreign_tax_paid'] ?? '' }}" placeholder="00.00$">
                 </div>
@@ -59,7 +57,7 @@
 
     <div class="row mb-4">
         <div class="col-md-6 mb-3">
-            <button type="button" class="btn btn_add btn_add_employer" id="btnAddESS">
+            <button type="button" class="btn btn_add" id="btnAddESS">
                 <img src="{{ asset('img/icons/plus.png') }}" alt="plus"> Add another scheme
             </button>
         </div>
