@@ -29,7 +29,7 @@
         @endphp
 
         @foreach($incomeItems as $key => $label)
-            <div class="income-item {{ $loop->index > 5 ? 'hidden' : '' }}" data-index="{{ $loop->index }}">
+            <div class="income-item" data-index="{{ $loop->index }}">
                 <div class="other-details-label">
                     <p>{{ $label }}</p>
                     <img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr">
@@ -47,18 +47,21 @@
 </section>
 
 <section class="choosing-business-type_section">
-    <h2 class="choosing-business-type-title" id="forms_title">Let’s add the details</h2>
-    <form id="income-form" action="{{ isset($incomes) ? route('income.update', $incomes->id) : route('income.store') }}" method="POST" enctype="multipart/form-data">
+    <h2 class="choosing-business-type-title" id="income-forms_title">Let’s add the details</h2>
+    <form id="income-form" action="{{ isset($incomes) ? route('income.update', $incomes->id) : route('income.store') }}" method="POST"
+          enctype="multipart/form-data">
         @csrf
         @if(isset($incomes))
             @method('PUT')
         @endif
-
         <div class="form-container">
             @foreach(array_keys($incomeItems) as $i => $key)
-                <div class="d-none" id="form-{{ $i }}">@include('forms.income.' . $key)</div>
+                <div class="d-none" id="income-form-{{ $i }}">
+                    @include('forms.income.' . $key, ['incomes' => $incomes ?? null])
+                </div>
             @endforeach
-            <div class="d-flex justify-content-end mb-5">
+
+            <div class="d-flex justify-content-end mb-5 mt-3">
                 <button type="submit" class="btn navbar_btn">
                     {{ isset($incomes) ? 'Update' : 'Save' }}
                 </button>
@@ -68,100 +71,87 @@
 </section>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const items = document.querySelectorAll(".income-item");
+document.addEventListener("DOMContentLoaded", function () {
+    const items = document.querySelectorAll(".income-item");
 
-        items.forEach((item) => {
-            item.addEventListener("click", () => {
-                const index = item.getAttribute("data-index");
-                const formToShow = document.getElementById(`form-${index}`);
+    items.forEach((item) => {
+        item.addEventListener("click", () => {
+            const index = item.getAttribute("data-index");
 
-                if (!formToShow) return;
+            const formToShow = document.getElementById(`income-form-${index}`);
+            if (formToShow && formToShow.classList.contains("d-none")) {
+                formToShow.classList.remove("d-none");
+                item.classList.add("active");
 
-                if (formToShow.classList.contains("d-none")) {
-                    formToShow.classList.remove("d-none");
-                    item.classList.add("active");
-
-                    const target = document.getElementById("forms_title");
-                    if (target) {
-                        target.scrollIntoView({ behavior: "smooth", block: "start" });
-                    }
+                const target = document.getElementById("income-forms_title");
+                if (target) {
+                    target.scrollIntoView({ behavior: "smooth", block: "start" });
                 }
-            });
+            }
         });
     });
+});
 </script>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('income-form');
 
-form.addEventListener('submit', async function(e) {
-    e.preventDefault();
+    form.addEventListener('submit', async function (e) {
+        e.preventDefault();
 
-    // Очищаем ошибки
-    document.querySelectorAll('.text-danger').forEach(el => el.remove());
+        document.querySelectorAll('.text-danger').forEach(el => el.remove());
 
-    const submitBtn = form.querySelector('button[type="submit"]');
-    const originalBtnText = submitBtn.innerHTML;
-    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span> Processing...';
-    submitBtn.disabled = true;
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span> Processing...';
+        submitBtn.disabled = true;
 
-    try {
-        // Сериализуем форму вручную
-        const formData = new FormData(form);
-        const params = new URLSearchParams();
+        try {
+            const formData = new FormData(form);
+            const url = form.action;
+            const method = 'POST';
 
-        // Формируем строку с вложенными данными для Laravel
-        for (const [key, value] of formData.entries()) {
-            params.append(key, value);
-        }
+            const response = await fetch(url, {
+                method: method,
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json'
+                },
+                body: formData
+            });
 
-        const url = form.action;
-        const method = form.querySelector('input[name="_method"]')?.value || 'POST';
+            const data = await response.json();
 
-        const response = await fetch(url, {
-            method: method,
-            headers: {
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                'Accept': 'application/json',
-                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-            },
-            body: params.toString()
-        });
+            if (response.ok) {
+                showToast('success', data.message);
 
-        const data = await response.json();
-
-        if (response.ok) {
-            showToast('success', data.message);
-            if (data.incomeId && !form.action.includes('update')) {
-                const newAction = form.action.replace('income.store', `income.update/${data.incomeId}`);
-                form.action = newAction;
-                form.querySelector('button[type="submit"]').textContent = 'Update Income';
-            }
-        } else {
-            if (data.errors) {
-                for (const [field, errors] of Object.entries(data.errors)) {
-                    const input = form.querySelector(`[name="${field}"]`);
-                    if (input) {
-                        const errorDiv = document.createElement('div');
-                        errorDiv.className = 'text-danger mt-1';
-                        errorDiv.textContent = errors[0];
-                        input.closest('.mb-3').appendChild(errorDiv);
+                if (data.incomeId && !form.action.includes('update')) {
+                    form.action = form.action.replace('income.store', `income.update/${data.incomeId}`);
+                    form.querySelector('button[type="submit"]').textContent = 'Update Income';
+                }
+            } else {
+                if (data.errors) {
+                    for (const [field, errors] of Object.entries(data.errors)) {
+                        const input = form.querySelector(`[name="${field}"]`);
+                        if (input) {
+                            const errorDiv = document.createElement('div');
+                            errorDiv.className = 'text-danger mt-1';
+                            errorDiv.textContent = errors[0];
+                            input.closest('.mb-3').appendChild(errorDiv);
+                        }
                     }
                 }
+                showToast('error', data.message || 'An error occurred');
             }
-            showToast('error', data.message || 'An error occurred');
+        } catch (error) {
+            console.error('Error:', error);
+            showToast('error', 'Network error. Please try again.');
+        } finally {
+            submitBtn.innerHTML = originalBtnText;
+            submitBtn.disabled = false;
         }
-    } catch (error) {
-        console.error('Error:', error);
-        showToast('error', 'Network error. Please try again.');
-    } finally {
-        submitBtn.innerHTML = originalBtnText;
-        submitBtn.disabled = false;
-    }
-});
-
+    });
 
     function showToast(type, message) {
         const toast = document.createElement('div');
@@ -182,7 +172,6 @@ form.addEventListener('submit', async function(e) {
 
         const bsToast = new bootstrap.Toast(toast);
         bsToast.show();
-
         setTimeout(() => bsToast.hide(), 5000);
     }
 

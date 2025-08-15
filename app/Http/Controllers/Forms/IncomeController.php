@@ -21,27 +21,45 @@ class IncomeController extends Controller
         }
 
         $data = [
-            'salary' => $request->input('salary', []),
-            'interests' => $request->input('interests', []),
-            'dividends' => $request->input('dividends', []),
-            'government_allowances' => $request->input('government_allowances', []),
-            'government_pensions' => $request->input('government_pensions', []),
-            'capital_gains' => $request->input('capital_gains', []),
-            'managed_funds' => $request->input('managed_funds', []),
-            'termination_payments' => $request->input('termination_payments', []),
-            'rent' => $request->input('rent', []),
-            'partnerships' => $request->input('partnerships', []),
-            'annuities' => $request->input('annuities', []),
-            'superannuation' => $request->input('superannuation', []),
-            'super_lump_sums' => $request->input('super_lump_sums', []),
-            'ess' => $request->input('ess', []),
-            'personal_services' => $request->input('personal_services', []),
-            'business_income' => $request->input('business_income', []),
-            'business_losses' => $request->input('business_losses', []),
-            'foreign_income' => $request->input('foreign_income', []),
-            'other_income' => $request->input('other_income', []),
+            'salary'                 => $request->input('salary', []),
+            'interests'              => $request->input('interests', []),
+            'dividends'              => $request->input('dividends', []),
+            'government_allowances'  => $request->input('government_allowances', []),
+            'government_pensions'    => $request->input('government_pensions', []),
+            'capital_gains'          => $request->input('capital_gains', []),
+            'managed_funds'          => $request->input('managed_funds', []),
+            'termination_payments'   => $request->input('termination_payments', []),
+            'rent'                   => $request->input('rent', []),
+            'partnerships'           => $request->input('partnerships', []),
+            'annuities'              => $request->input('annuities', []),
+            'superannuation'         => $request->input('superannuation', []),
+            'super_lump_sums'        => $request->input('super_lump_sums', []),
+            'ess'                    => $request->input('ess', []),
+            'personal_services'      => $request->input('personal_services', []),
+            'business_income'        => $request->input('business_income', []),
+            'business_losses'        => $request->input('business_losses', []),
+            'foreign_income'         => $request->input('foreign_income', []),
+            'other_income'           => $request->input('other_income', []),
         ];
 
+
+        $capitalGains = $data['capital_gains'];
+
+        if ($request->hasFile('capital_gains.cgt_attachment')) {
+            $file = $request->file('capital_gains.cgt_attachment');
+            $path = $file->store('capital_gains', 'public');
+            $capitalGains['cgt_attachment'] = $path;
+        } else {
+            if ($id) {
+                $existing = Income::findOrFail($id);
+                $oldCapitalGains = $existing->capital_gains ?? [];
+                if (isset($oldCapitalGains['cgt_attachment'])) {
+                    $capitalGains['cgt_attachment'] = $oldCapitalGains['cgt_attachment'];
+                }
+            }
+        }
+
+        $data['capital_gains'] = $capitalGains;
         if ($id) {
             $income = Income::findOrFail($id);
             $income->update($data);
@@ -54,8 +72,8 @@ class IncomeController extends Controller
         }
 
         return response()->json([
-            'success' => true,
-            'message' => $message,
+            'success'  => true,
+            'message'  => $message,
             'incomeId' => $income->id
         ]);
     }

@@ -153,14 +153,21 @@
             <div class="col-md-6 mb-3">
                 <input type="file" name="capital_gains[cgt_attachment]" id="managedFundInput" class="d-none">
 
-                <button type="button" class="btn btn_add" id="customFileTrigger">
+                <button type="button" class="btn btn_add" id="managedFundTrigger">
                     <img src="{{ asset('img/icons/plus.png') }}" alt="plus">
                     Choose file
                 </button>
             </div>
             <div class="col-md-6 mb-3">
-                <p id="selectedFileName" class="choosing-business-type-text text-muted mb-0">
-                    No file chosen
+                <p id="managedFundName" class="choosing-business-type-text text-muted mb-0">
+                     @if(!empty($capitalGains['cgt_attachment']))
+                <a href="{{ asset('storage/'.$capitalGains['cgt_attachment']) }}" target="_blank" class="btn btn-outline-success">
+                    <i class="fa-solid fa-file"></i>
+                    View file
+                </a>
+                    @else
+                        No file chosen
+                    @endif
                 </p>
             </div>
         </div>
@@ -201,20 +208,17 @@ document.addEventListener("DOMContentLoaded", function () {
     updateScheduleVisibility(); // Initialize
 
     // File input handling
-    const fileInput = document.getElementById("managedFundInput");
-    const fileTrigger = document.getElementById("customFileTrigger");
-    const fileNameDisplay = document.getElementById("selectedFileName");
+    const managedFundInput = document.getElementById("managedFundInput");
+    const managedFundTrigger = document.getElementById("managedFundTrigger");
+    const managedFundName = document.getElementById("managedFundName");
 
-    fileTrigger.addEventListener("click", () => {
-        fileInput.click();
-    });
+    // Trigger hidden input
+    managedFundTrigger.addEventListener("click", () => managedFundInput.click());
 
-    fileInput.addEventListener("change", function() {
-        if (this.files.length > 0) {
-            fileNameDisplay.textContent = this.files[0].name;
-        } else {
-            fileNameDisplay.textContent = "No file chosen";
-        }
+    // Display selected file name
+    managedFundInput.addEventListener("change", () => {
+        const files = Array.from(managedFundInput.files).map(f => f.name).join(", ");
+        managedFundName.textContent = files || "No file chosen";
     });
 });
 </script>
