@@ -75,7 +75,7 @@
                 Attach Managed Fund statements here (optional)
             </p>
             <div class="col-md-6 mb-3">
-                <input type="file" name="managed_funds[managed_fund_files]" id="managedFundInput" class="d-none">
+                <input type="file" name="managed_funds[managed_fund_files][]" id="managedFundInput" class="d-none">
                 <button type="button" class="btn btn_add" id="customFileTrigger">
                     <img src="{{ asset('img/icons/plus.png') }}" alt="plus">
                     Choose file
@@ -83,7 +83,18 @@
             </div>
             <div class="col-md-6 mb-3">
                 <p id="selectedFileName" class="choosing-business-type-text text-muted mb-0">
-                    No file chosen
+                    @if(!empty($managedFunds['managed_fund_files']))
+                        @if(is_array($managedFunds['managed_fund_files']))
+                            @foreach($managedFunds['managed_fund_files'] as $file)
+                                <a href="{{ asset('storage/'.$file) }}" target="_blank" class="btn btn-outline-success">
+                                    <i class="fa-solid fa-file"></i>
+                                    View file
+                                </a>
+                            @endforeach
+                        @endif
+                    @else
+                        No file chosen
+                    @endif
                 </p>
             </div>
         </div>
@@ -163,7 +174,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // File Upload Handling
+    // File Upload Handling with clickable link
     const fileInput = document.getElementById("managedFundInput");
     const fileTrigger = document.getElementById("customFileTrigger");
     const fileNameDisplay = document.getElementById("selectedFileName");
@@ -174,8 +185,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     fileInput.addEventListener("change", () => {
         if (fileInput.files.length > 0) {
-            const names = Array.from(fileInput.files).map(file => file.name).join(', ');
-            fileNameDisplay.textContent = names;
+            const files = Array.from(fileInput.files).map(file => {
+                const url = URL.createObjectURL(file);
+                return `<a href="${url}" target="_blank">${file.name}</a>`;
+            }).join('<br>');
+            fileNameDisplay.innerHTML = files;
         } else {
             fileNameDisplay.textContent = "No file chosen";
         }

@@ -42,24 +42,40 @@ class IncomeController extends Controller
             'other_income'           => $request->input('other_income', []),
         ];
 
-
+        // === Capital Gains File Handling ===
         $capitalGains = $data['capital_gains'];
-
         if ($request->hasFile('capital_gains.cgt_attachment')) {
             $file = $request->file('capital_gains.cgt_attachment');
             $path = $file->store('capital_gains', 'public');
             $capitalGains['cgt_attachment'] = $path;
-        } else {
-            if ($id) {
-                $existing = Income::findOrFail($id);
-                $oldCapitalGains = $existing->capital_gains ?? [];
-                if (isset($oldCapitalGains['cgt_attachment'])) {
-                    $capitalGains['cgt_attachment'] = $oldCapitalGains['cgt_attachment'];
-                }
+        } else if ($id) {
+            $existing = Income::findOrFail($id);
+            $oldCapitalGains = $existing->capital_gains ?? [];
+            if (isset($oldCapitalGains['cgt_attachment'])) {
+                $capitalGains['cgt_attachment'] = $oldCapitalGains['cgt_attachment'];
             }
         }
-
         $data['capital_gains'] = $capitalGains;
+
+        // === Managed Funds File Handling ===
+        $managedFunds = $data['managed_funds'];
+        if ($request->hasFile('managed_funds.managed_fund_files')) {
+            $files = $request->file('managed_funds.managed_fund_files');
+            $paths = [];
+            foreach ($files as $file) {
+                $paths[] = $file->store('managed_funds', 'public');
+            }
+            $managedFunds['managed_fund_files'] = $paths;
+        } else if ($id) {
+            $existing = Income::findOrFail($id);
+            $oldManagedFunds = $existing->managed_funds ?? [];
+            if (isset($oldManagedFunds['managed_fund_files'])) {
+                $managedFunds['managed_fund_files'] = $oldManagedFunds['managed_fund_files'];
+            }
+        }
+        $data['managed_funds'] = $managedFunds;
+
+        // === Save or Update Income ===
         if ($id) {
             $income = Income::findOrFail($id);
             $income->update($data);
