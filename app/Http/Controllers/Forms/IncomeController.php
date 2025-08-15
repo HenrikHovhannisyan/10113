@@ -43,37 +43,52 @@ class IncomeController extends Controller
         ];
 
         // === Capital Gains File Handling ===
-        $capitalGains = $data['capital_gains'];
         if ($request->hasFile('capital_gains.cgt_attachment')) {
             $file = $request->file('capital_gains.cgt_attachment');
-            $path = $file->store('capital_gains', 'public');
-            $capitalGains['cgt_attachment'] = $path;
-        } else if ($id) {
+            $data['capital_gains']['cgt_attachment'] = $file->store('capital_gains', 'public');
+        } elseif ($id) {
             $existing = Income::findOrFail($id);
             $oldCapitalGains = $existing->capital_gains ?? [];
             if (isset($oldCapitalGains['cgt_attachment'])) {
-                $capitalGains['cgt_attachment'] = $oldCapitalGains['cgt_attachment'];
+                $data['capital_gains']['cgt_attachment'] = $oldCapitalGains['cgt_attachment'];
             }
         }
-        $data['capital_gains'] = $capitalGains;
 
         // === Managed Funds File Handling ===
-        $managedFunds = $data['managed_funds'];
         if ($request->hasFile('managed_funds.managed_fund_files')) {
             $files = $request->file('managed_funds.managed_fund_files');
             $paths = [];
             foreach ($files as $file) {
                 $paths[] = $file->store('managed_funds', 'public');
             }
-            $managedFunds['managed_fund_files'] = $paths;
-        } else if ($id) {
+            $data['managed_funds']['managed_fund_files'] = $paths;
+        } elseif ($id) {
             $existing = Income::findOrFail($id);
             $oldManagedFunds = $existing->managed_funds ?? [];
             if (isset($oldManagedFunds['managed_fund_files'])) {
-                $managedFunds['managed_fund_files'] = $oldManagedFunds['managed_fund_files'];
+                $data['managed_funds']['managed_fund_files'] = $oldManagedFunds['managed_fund_files'];
             }
         }
-        $data['managed_funds'] = $managedFunds;
+
+        // === Termination Payments (ETP) File Handling ===
+        $etps = $data['termination_payments'];
+        foreach ($etps as $index => &$etp) {
+            if ($request->hasFile("termination_payments.$index.etp_files")) {
+                $files = $request->file("termination_payments.$index.etp_files");
+                $paths = [];
+                foreach ($files as $file) {
+                    $paths[] = $file->store('termination_payments', 'public');
+                }
+                $etp['etp_files'] = $paths;
+            } elseif ($id) {
+                $existing = Income::findOrFail($id);
+                $oldETPs = $existing->termination_payments ?? [];
+                if (isset($oldETPs[$index]['etp_files'])) {
+                    $etp['etp_files'] = $oldETPs[$index]['etp_files'];
+                }
+            }
+        }
+        $data['termination_payments'] = $etps;
 
         // === Save or Update Income ===
         if ($id) {
@@ -93,6 +108,7 @@ class IncomeController extends Controller
             'incomeId' => $income->id
         ]);
     }
+
 
     public function store(Request $request)
     {

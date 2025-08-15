@@ -13,9 +13,7 @@
     <div class="grin_box_border mb-4">
         @php
             $etps = old('termination_payments', isset($incomes) ? $incomes->termination_payments ?? [] : []);
-            $numericItems = array_filter($etps, function($key) {
-                return is_int($key);
-            }, ARRAY_FILTER_USE_KEY);
+            $numericItems = array_filter($etps, fn($key) => is_int($key), ARRAY_FILTER_USE_KEY);
             $etpCount = max(count($numericItems), 1);
         @endphp
 
@@ -68,12 +66,12 @@
 
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <p class="choosing-business-type-text">Employment Termination Payment (ETP) Code</p>
+                        <p class="choosing-business-type-text">ETP Code</p>
                         <select name="termination_payments[{{ $i }}][code]" class="form-control border-dark">
                             <option value="">Choose</option>
                             <option value="R" {{ old("termination_payments.$i.code", $etps[$i]['code'] ?? '') == 'R' ? 'selected' : '' }}>R: excluded life benefit termination payment...</option>
                             <option value="S" {{ old("termination_payments.$i.code", $etps[$i]['code'] ?? '') == 'S' ? 'selected' : '' }}>S: excluded life benefit termination payment part of earlier year</option>
-                            <option value="O" {{ old("termination_payments.$i.code", $etps[$i]['code'] ?? '') == 'O' ? 'selected' : '' }}>O: non-excluded life benefit (e.g. golden handshake)</option>
+                            <option value="O" {{ old("termination_payments.$i.code", $etps[$i]['code'] ?? '') == 'O' ? 'selected' : '' }}>O: non-excluded life benefit</option>
                             <option value="P" {{ old("termination_payments.$i.code", $etps[$i]['code'] ?? '') == 'P' ? 'selected' : '' }}>P: non-excluded life benefit part of earlier year</option>
                             <option value="D" {{ old("termination_payments.$i.code", $etps[$i]['code'] ?? '') == 'D' ? 'selected' : '' }}>D: death benefit to dependant</option>
                             <option value="N" {{ old("termination_payments.$i.code", $etps[$i]['code'] ?? '') == 'N' ? 'selected' : '' }}>N: death benefit to non-dependant</option>
@@ -88,6 +86,28 @@
                         <input type="text" name="termination_payments[{{ $i }}][abn]" class="form-control border-dark" placeholder="51 824 753 556" value="{{ old("termination_payments.$i.abn", $etps[$i]['abn'] ?? '') }}">
                     </div>
                 </div>
+
+                <div class="row mb-3 align-items-end">
+                    <div class="col-md-6 mb-3">
+                        <input type="file" name="termination_payments[{{ $i }}][etp_files][]" class="d-none etpFileInput">
+                        <button type="button" class="btn btn_add triggerETPFile">
+                            <img src="{{ asset('img/icons/plus.png') }}" alt="plus"> Choose file
+                        </button>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <p class="choosing-business-type-text text-muted mb-0 etpFileName">
+                            @if(!empty($etps[$i]['etp_files']))
+                                @foreach($etps[$i]['etp_files'] as $file)
+                                    <a href="{{ asset('storage/'.$file) }}" target="_blank" class="btn btn-outline-success">
+                                        <i class="fa-solid fa-file"></i> View file
+                                    </a>
+                                @endforeach
+                            @else
+                                No file chosen
+                            @endif
+                        </p>
+                    </div>
+                </div>
             </section>
             @endfor
         </div>
@@ -96,30 +116,9 @@
     <div class="row mb-4">
         <div class="col-md-6 mb-3">
             <button type="button" class="btn btn_add" id="btnAddETP">
-                <img src="{{ asset('img/icons/plus.png') }}" alt="plus">
-                Add another ETP
+                <img src="{{ asset('img/icons/plus.png') }}" alt="plus"> Add another ETP
             </button>
-            <button type="button" class="btn btn_delete" id="btnDeleteETP">
-                Delete ETP
-            </button>
-        </div>
-    </div>
-
-    <div class="row mb-3 align-items-end">
-        <p class="choosing-business-type-text">
-            Add ETP income statement here or PAYG summary (optional)
-        </p>
-        <div class="col-md-6 mb-3">
-            <input type="file" name="termination_payments[etp_attachment]" id="etpFileInput" class="d-none">
-            <button type="button" class="btn btn_add" id="triggerETPFile">
-                <img src="{{ asset('img/icons/plus.png') }}" alt="plus">
-                Choose file
-            </button>
-        </div>
-        <div class="col-md-6 mb-3">
-            <p id="etpFileName" class="choosing-business-type-text text-muted mb-0">
-                {{ old('etp_attachment_name', 'No file chosen') }}
-            </p>
+            <button type="button" class="btn btn_delete" id="btnDeleteETP">Delete ETP</button>
         </div>
     </div>
 </section>
@@ -130,37 +129,32 @@ document.addEventListener("DOMContentLoaded", function () {
     const btnAdd = document.getElementById("btnAddETP");
     const btnDelete = document.getElementById("btnDeleteETP");
 
-    // Сохраняем шаблон первого блока
     const template = etpContainer.querySelector(".etp-block").outerHTML;
 
     function refreshIndices() {
-        const blocks = etpContainer.querySelectorAll(".etp-block");
-        blocks.forEach((block, index) => {
+        etpContainer.querySelectorAll(".etp-block").forEach((block, index) => {
             block.dataset.index = index;
             block.querySelectorAll("input, select").forEach(el => {
-                if (el.name) {
-                    // Меняем индекс в name
-                    el.name = el.name.replace(/termination_payments\[\d+\]/, `termination_payments[${index}]`);
-                }
+                if (el.name) el.name = el.name.replace(/termination_payments\[\d+\]/, `termination_payments[${index}]`);
             });
+            block.querySelectorAll(".etpFileInput").forEach(input => input.value = '');
+            block.querySelectorAll(".etpFileName").forEach(p => p.textContent = 'No file chosen');
         });
     }
 
-    btnAdd.addEventListener("click", function () {
-        const newIndex = etpContainer.querySelectorAll(".etp-block").length;
+    btnAdd.addEventListener("click", () => {
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = template;
         const newBlock = tempDiv.firstElementChild;
 
-        // Очищаем только значения инпутов и селектов нового блока
         newBlock.querySelectorAll("input").forEach(input => input.value = '');
         newBlock.querySelectorAll("select").forEach(select => select.selectedIndex = 0);
-
         etpContainer.appendChild(newBlock);
         refreshIndices();
+        attachFileTriggers();
     });
 
-    btnDelete.addEventListener("click", function () {
+    btnDelete.addEventListener("click", () => {
         const blocks = etpContainer.querySelectorAll(".etp-block");
         if (blocks.length > 1) {
             blocks[blocks.length - 1].remove();
@@ -168,14 +162,19 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    const etpInput = document.getElementById("etpFileInput");
-    const etpTrigger = document.getElementById("triggerETPFile");
-    const fileNameDisplay = document.getElementById("etpFileName");
+    function attachFileTriggers() {
+        etpContainer.querySelectorAll(".triggerETPFile").forEach(btn => {
+            btn.onclick = () => btn.previousElementSibling.click();
+        });
 
-    etpTrigger.addEventListener("click", () => etpInput.click());
-    etpInput.addEventListener("change", () => {
-        fileNameDisplay.textContent = etpInput.files.length ? etpInput.files[0].name : "No file chosen";
-    });
+        etpContainer.querySelectorAll(".etpFileInput").forEach(input => {
+            input.onchange = () => {
+                const display = input.closest(".row").querySelector(".etpFileName");
+                display.textContent = input.files.length ? input.files[0].name : "No file chosen";
+            };
+        });
+    }
+
+    attachFileTriggers();
 });
-
 </script>
