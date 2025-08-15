@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Forms\Other;
 use Illuminate\Http\Request;
 use App\Models\TaxReturn;
+use Illuminate\Support\Facades\Storage;
 
 class OtherController extends Controller
 {
@@ -29,10 +30,14 @@ class OtherController extends Controller
 
 
         $data = [
-            'zone_overseas_forces_offset' => $request->input('zone_overseas_forces_offset', []),
+            'zone_overseas_forces_offset' => $request->input('zone_overseas_forces_offset', null),
             'any_dependent_children' => $request->input('any_dependent_children', null),
-            'income_tests' => $request->input('income_tests', []),
-            'mls' => $request->input('mls', []),
+            'income_tests' => $request->input('income_tests',  null),
+            'mls' => $request->input('mls', null),
+            'seniors_offset' => $request->input('seniors_offset', null),
+            'spouse_details' => $request->input('spouse_details', null),
+            'private_health_insurance' => $request->input('private_health_insurance', null),
+            'part_year_tax_free_threshold' => $request->input('part_year_tax_free_threshold', null),
         ];
 
 
@@ -45,21 +50,47 @@ class OtherController extends Controller
             $attach = $existing->attach ?? [];
         }
 
-        // Save text input
-        $attach['additional_questions'] = $request->input('additional_questions', $attach['additional_questions'] ?? '');
-
-
 
         // Handle uploaded files
         if ($request->hasFile('additional_file')) {
+            // Delete old files from storage if they exist
+            if (!empty($attach['additional_file'])) {
+                foreach ($attach['additional_file'] as $oldFile) {
+                    if (Storage::disk('public')->exists($oldFile)) {
+                        Storage::disk('public')->delete($oldFile);
+                    }
+                }
+            }
+
+            // Replace with new files
+            $attach['additional_file'] = [];
             foreach ($request->file('additional_file') as $file) {
-                $path = $file->store('attachments', 'public'); // storage/app/public/attachments
+                $path = $file->store('attachments', 'public');
                 $attach['additional_file'][] = $path;
             }
         }
 
-        $data['attach'] = $attach;
+        if ($request->has('private_health_insurance')) {
+            $phiFiles = $request->file('private_health_insurance', []);
 
+            foreach ($phiFiles as $key => $file) {
+                if ($file) {
+                    // Delete old file if it exists
+                    if (!empty($attach['private_health_insurance'][$key])) {
+                        $oldFile = $attach['private_health_insurance'][$key];
+                        if (Storage::disk('public')->exists($oldFile)) {
+                            Storage::disk('public')->delete($oldFile);
+                        }
+                    }
+
+                    // Store new file
+                    $path = $file->store('attachments', 'public');
+                    $attach['private_health_insurance'][$key] = $path;
+                }
+            }
+        }
+
+        $data['attach'] = $attach;
 
 
         if ($id) {
