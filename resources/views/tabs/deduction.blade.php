@@ -4,6 +4,7 @@
         Now let’s find some tax deductions to help improve your refund.
     </p>
     <h4 class="form_title">These are common tax deductions for a Manager - retail store.</h4>
+
     <div class="select_deduction_container mt-0">
         @php
             $deductions = [
@@ -49,7 +50,7 @@
     <h4 class="form_title mt-4">Is there anything else you can claim?</h4>
     <div class="select_deduction_container select_deduction_container1 mt-0">
         @foreach(array_slice($deductions, 9) as $key => $label)
-            <div class="deduction-item {{ $loop->index > 8 ? 'hidden' : '' }}" data-index="{{ $loop->index + 9 }}">
+            <div class="deduction-item hidden" data-index="{{ $loop->index + 9 }}">
                 <div class="deduction-label">
                     <p>{{ $label }}</p>
                     <img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr">
@@ -68,13 +69,26 @@
 
 <section class="choosing-business-type_section">
     <h2 class="choosing-business-type-title" id="deduction-forms_title">Let’s add the details</h2>
-    <div class="deduction-form-container">
-        @foreach(array_keys($deductions) as $i => $key)
-            <div class="d-none" id="form-deduction-{{ $i }}">
-                @include('forms.deduction.' . $key)
+    <form id="deduction-form" action="{{ isset($deductionsData) ? route('deduction.update', $deductionsData->id) : route('deduction.store') }}" method="POST">
+        @csrf
+        @if(isset($deductionsData))
+            @method('PUT')
+        @endif
+
+        <div class="deduction-form-container">
+            @foreach(array_keys($deductions) as $i => $key)
+                <div class="d-none" id="form-deduction-{{ $i }}">
+                    @include('forms.deduction.' . $key, ['deductionsData' => $deductionsData ?? null])
+                </div>
+            @endforeach
+
+            <div class="d-flex justify-content-end mb-5 mt-3">
+                <button type="submit" class="btn navbar_btn">
+                    {{ isset($deductionsData) ? 'Update' : 'Save' }}
+                </button>
             </div>
-        @endforeach
-    </div>
+        </div>
+    </form>
 </section>
 
 <script>
@@ -85,19 +99,108 @@ document.addEventListener("DOMContentLoaded", function () {
         item.addEventListener("click", () => {
             const index = item.getAttribute("data-index");
             const formToShow = document.getElementById(`form-deduction-${index}`);
-
-            if (!formToShow) return;
-
-            if (formToShow.classList.contains("d-none")) {
+            if (formToShow && formToShow.classList.contains("d-none")) {
                 formToShow.classList.remove("d-none");
                 item.classList.add("active");
 
                 const target = document.getElementById("deduction-forms_title");
-                if (target) {
-                    target.scrollIntoView({ behavior: "smooth", block: "start" });
-                }
+                if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
             }
         });
     });
+
+    const toggleBtn = document.getElementById('toggleDeductionBtn');
+    toggleBtn.addEventListener('click', () => {
+        document.querySelectorAll('.deduction-item.hidden').forEach(el => el.classList.remove('hidden'));
+        toggleBtn.style.display = 'none';
+    });
+
+    // AJAX submit
+    const form = document.getElementById('deduction-form');
+
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        document.querySelectorAll('.text-danger').forEach(el => el.remove());
+
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span> Processing...';
+        submitBtn.disabled = true;
+
+        try {
+            const formData = new FormData(form);
+            const url = form.action;
+
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json'
+                },
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                showToast('success', data.message);
+
+                if (data.deductionId && !form.action.includes('update')) {
+                    form.action = form.action.replace('deduction.store', `deduction.update/${data.deductionId}`);
+                    submitBtn.textContent = 'Update Deduction';
+                }
+            } else {
+                if (data.errors) {
+                    for (const [field, errors] of Object.entries(data.errors)) {
+                        const input = form.querySelector(`[name="${field}"]`);
+                        if (input) {
+                            const errorDiv = document.createElement('div');
+                            errorDiv.className = 'text-danger mt-1';
+                            errorDiv.textContent = errors[0];
+                            input.closest('.mb-3').appendChild(errorDiv);
+                        }
+                    }
+                }
+                showToast('error', data.message || 'An error occurred');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            showToast('error', 'Network error. Please try again.');
+        } finally {
+            submitBtn.innerHTML = originalBtnText;
+            submitBtn.disabled = false;
+        }
+    });
+
+    function showToast(type, message) {
+        const toast = document.createElement('div');
+        toast.className = `toast align-items-center text-white bg-${type === 'success' ? 'success' : 'danger'} border-0`;
+        toast.setAttribute('role', 'alert');
+        toast.setAttribute('aria-live', 'assertive');
+        toast.setAttribute('aria-atomic', 'true');
+
+        toast.innerHTML = `
+            <div class="d-flex">
+                <div class="toast-body">${message}</div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        `;
+
+        const toastContainer = document.getElementById('toast-container') || createToastContainer();
+        toastContainer.appendChild(toast);
+
+        const bsToast = new bootstrap.Toast(toast);
+        bsToast.show();
+        setTimeout(() => bsToast.hide(), 5000);
+    }
+
+    function createToastContainer() {
+        const container = document.createElement('div');
+        container.id = 'toast-container';
+        container.className = 'toast-container position-fixed bottom-0 end-0 p-3';
+        container.style.zIndex = '1100';
+        document.body.appendChild(container);
+        return container;
+    }
 });
 </script>

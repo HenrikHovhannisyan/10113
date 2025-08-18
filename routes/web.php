@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\SiteInfoController;
 use App\Http\Controllers\TaxReturnController;
 use App\Http\Controllers\Forms\BasicInfoFormController;
 use App\Http\Controllers\Forms\IncomeController;
+use App\Http\Controllers\Forms\DeductionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +43,7 @@ Route::resource('tax-returns', TaxReturnController::class);
 Route::resource('basic-info', BasicInfoFormController::class);
 Route::resource('income', IncomeController::class);
 Route::resource('other', OtherController::class);
+Route::resource('deduction', DeductionController::class);
 
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {

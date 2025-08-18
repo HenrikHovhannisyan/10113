@@ -1,4 +1,4 @@
-<form>
+<section>
   <div class="d-flex align-items-center justify-content-between mb-3">
     <h4 class="form_title">Car expenses + parking + tolls</h4>
     <img src="{{ asset('img/icons/help.png') }}" alt="Help">
@@ -68,14 +68,9 @@
           <label class="form-check-label custom-label" for="hasReceiptsNo">No</label>
         </div>
       </div>
-
-      <div class="col-12 mb-3 mt-4">
-        <p class="choosing-business-type-text">Total parking and tolls:</p>
-        <p class="choosing-business-type-text text-secondary" id="totalParkingTolls">00.00$</p>
-      </div>
     </div>
   </div>
-</form>
+</section>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
