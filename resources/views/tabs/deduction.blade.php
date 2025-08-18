@@ -109,12 +109,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    const toggleBtn = document.getElementById('toggleDeductionBtn');
-    toggleBtn.addEventListener('click', () => {
-        document.querySelectorAll('.deduction-item.hidden').forEach(el => el.classList.remove('hidden'));
-        toggleBtn.style.display = 'none';
-    });
-
     // AJAX submit
     const form = document.getElementById('deduction-form');
 
