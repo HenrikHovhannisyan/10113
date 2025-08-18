@@ -38,6 +38,14 @@ class OtherController extends Controller
             'spouse_details' => $request->input('spouse_details', null),
             'private_health_insurance' => $request->input('private_health_insurance', null),
             'part_year_tax_free_threshold' => $request->input('part_year_tax_free_threshold', null),
+            'under_18' => $request->input('under_18', null),
+            'working_holiday_maker_net_income' => $request->input('working_holiday_maker_net_income', null),
+            'superannuation_income_stream_offset' => $request->input('superannuation_income_stream_offset', null),
+            'superannuation_contributions_spouse' => $request->input('superannuation_contributions_spouse', null),
+            'tax_losses_earlier_income_years' => $request->input('tax_losses_earlier_income_years', null),
+            'dependent_invalid_and_carer' => $request->input('dependent_invalid_and_carer', null),
+            'superannuation_co_contribution' => $request->input('superannuation_co_contribution', null),
+            'other_tax_offsets_refundable' => $request->input('other_tax_offsets_refundable', null),
         ];
 
 
