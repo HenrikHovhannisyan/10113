@@ -135,11 +135,17 @@ document.addEventListener("DOMContentLoaded", function () {
         etpContainer.querySelectorAll(".etp-block").forEach((block, index) => {
             block.dataset.index = index;
             block.querySelectorAll("input, select").forEach(el => {
-                if (el.name) el.name = el.name.replace(/termination_payments\[\d+\]/, `termination_payments[${index}]`);
+                if (el.name) {
+                    el.name = el.name.replace(/termination_payments\[\d+\]/, `termination_payments[${index}]`);
+                }
             });
-            block.querySelectorAll(".etpFileInput").forEach(input => input.value = '');
-            block.querySelectorAll(".etpFileName").forEach(p => p.textContent = 'No file chosen');
         });
+    }
+
+    function clearBlockValues(block) {
+        block.querySelectorAll("input").forEach(input => input.value = '');
+        block.querySelectorAll("select").forEach(select => select.selectedIndex = 0);
+        block.querySelectorAll(".etpFileName").forEach(p => p.textContent = 'No file chosen');
     }
 
     btnAdd.addEventListener("click", () => {
@@ -147,11 +153,10 @@ document.addEventListener("DOMContentLoaded", function () {
         tempDiv.innerHTML = template;
         const newBlock = tempDiv.firstElementChild;
 
-        newBlock.querySelectorAll("input").forEach(input => input.value = '');
-        newBlock.querySelectorAll("select").forEach(select => select.selectedIndex = 0);
+        clearBlockValues(newBlock); 
         etpContainer.appendChild(newBlock);
         refreshIndices();
-        attachFileTriggers();
+        attachFileTriggers(newBlock);
     });
 
     btnDelete.addEventListener("click", () => {
@@ -162,12 +167,12 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    function attachFileTriggers() {
-        etpContainer.querySelectorAll(".triggerETPFile").forEach(btn => {
+    function attachFileTriggers(context = etpContainer) {
+        context.querySelectorAll(".triggerETPFile").forEach(btn => {
             btn.onclick = () => btn.previousElementSibling.click();
         });
 
-        etpContainer.querySelectorAll(".etpFileInput").forEach(input => {
+        context.querySelectorAll(".etpFileInput").forEach(input => {
             input.onchange = () => {
                 const display = input.closest(".row").querySelector(".etpFileName");
                 display.textContent = input.files.length ? input.files[0].name : "No file chosen";
@@ -178,3 +183,4 @@ document.addEventListener("DOMContentLoaded", function () {
     attachFileTriggers();
 });
 </script>
+
