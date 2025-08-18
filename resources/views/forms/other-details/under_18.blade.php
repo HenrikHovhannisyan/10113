@@ -1,3 +1,8 @@
+@php
+    $under18 = $others->under_18 ?? [];
+    $under18Code = $under18['under_18_code'] ?? '';
+@endphp
+
 <section>
     <div class="d-flex align-items-center justify-content-between mb-3">
         <h4 class="form_title">Under 18</h4>
@@ -11,10 +16,14 @@
         <label class="choosing-business-type-text mb-2" for="under_18_code">
             Under 18 action code
         </label>
-        <select name="under_18_code" id="under_18_code" class="form-control">
+        <select name="under_18[under_18_code]"  id="under_18_code" class="form-control">
             <option value="">Choose</option>
-            <option value="A">A: Excepted person under 18 years</option>
-            <option value="M">M: Person under 18 years at 30 June 2025</option>
+            <option value="A: Excepted person under 18 years" {{ $under18Code ==='A: Excepted person under 18 years' ? 'selected' : '' }}>
+                A: Excepted person under 18 years
+            </option>
+            <option value="M: Person under 18 years at 30 June 2025" {{ $under18Code ==='M: Person under 18 years at 30 June 2025' ? 'selected' : '' }}>
+                M: Person under 18 years at 30 June 2025
+            </option>
         </select>
     </div>
 
@@ -22,7 +31,8 @@
         <label class="choosing-business-type-text mb-2" for="under_18_amount">
             Under 18
         </label>
-        <input type="number" step="0.01" class="form-control" id="under_18_amount" name="under_18_amount" placeholder="00.00$">
+        <input type="number" step="0.01" class="form-control" id="under_18_amount" placeholder="00.00$"
+               name="under_18[under_18_amount]" value="{{ $under18['under_18_amount'] ?? '' }}">
     </div>
 
 </div>
