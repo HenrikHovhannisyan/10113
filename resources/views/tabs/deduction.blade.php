@@ -70,6 +70,7 @@
 
 <section class="choosing-business-type_section">
     <h2 class="choosing-business-type-title" id="deduction-forms_title">Let’s add the details</h2>
+    
     <form id="deduction-form" action="{{ isset($deductions) ? route('deduction.update', $deductions->id) : route('deduction.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         @if(isset($deductions))
