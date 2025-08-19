@@ -1,4 +1,4 @@
-<form>
+<section>
   <div class="d-flex align-items-center justify-content-between mb-3">
     <h4 class="form_title">
         Work-related Uniform, Occupation Specific or Protective Clothing
@@ -58,12 +58,6 @@
     </button>
   </div>
 
-  <div class="row mb-3">
-    <div class="col-md-6">
-      <label class="choosing-business-type-text">Your uniform expenses total is:</label>
-      <p class="choosing-business-type-text text-secondary" id="uniformTotal">00.00$</p>
-    </div>
-  </div>
 
   <div class="col-12 mt-4 mb-3">
     <label class="choosing-business-type-text">Attach a simple breakdown of your expenses (optional)</label>
@@ -106,20 +100,13 @@
       </div>
     </div>
 
-    <div class="row mb-3">
-      <div class="col-md-6">
-        <label class="choosing-business-type-text">Your laundry expenses total is:</label>
-        <p class="choosing-business-type-text text-secondary" id="laundryTotal">00.00$</p>
-      </div>
-    </div>
   </div>
-</form>
+</section>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("uniformContainer");
   const addBtn = document.getElementById("addUniformBtn");
-  const totalDisplay = document.getElementById("uniformTotal");
 
   const uniformFileInput = document.getElementById("uniformFileInput");
   const uniformTrigger = document.getElementById("triggerUniformFile");
@@ -148,7 +135,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const val = parseFloat(input.value);
       if (!isNaN(val)) total += val;
     });
-    totalDisplay.textContent = total.toFixed(2) + "$";
   }
 
   document.querySelectorAll(".uniform-block").forEach(initUniformBlock);

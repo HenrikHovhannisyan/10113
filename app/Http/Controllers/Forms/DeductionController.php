@@ -46,6 +46,18 @@ class DeductionController extends Controller
             'other'              => $request->input('other', []),
         ];
 
+        // Handle uniforms receipt file
+        if ($request->hasFile('uniforms_receipt')) {
+            $file = $request->file('uniforms_receipt');
+            $data['uniforms']['receipt'] = $file->store('deductions/uniforms', 'public');
+        } elseif ($id) {
+            $existing = Deduction::findOrFail($id);
+            $oldUniforms = $existing->uniforms ?? [];
+            if (isset($oldUniforms['receipt'])) {
+                $data['uniforms']['receipt'] = $oldUniforms['receipt'];
+            }
+        }
+
         if ($id) {
             $deduction = Deduction::findOrFail($id);
             $deduction->update($data);
