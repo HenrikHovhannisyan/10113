@@ -29,7 +29,7 @@
         @endphp
 
         @foreach($incomeItems as $key => $label)
-            <div class="income-item" data-index="{{ $loop->index }}">
+            <div class="income-item @if(isset($incomes) && $incomes->$key !== null) active @endif" data-index="{{ $loop->index }}">
                 <div class="other-details-label">
                     <p>{{ $label }}</p>
                     <img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr">
@@ -77,8 +77,8 @@ document.addEventListener("DOMContentLoaded", function () {
     items.forEach((item) => {
         item.addEventListener("click", () => {
             const index = item.getAttribute("data-index");
-
             const formToShow = document.getElementById(`income-form-${index}`);
+
             if (formToShow && formToShow.classList.contains("d-none")) {
                 formToShow.classList.remove("d-none");
                 item.classList.add("active");
@@ -91,16 +91,24 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
-</script>
 
-<script>
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('income-form');
 
     form.addEventListener('submit', async function (e) {
         e.preventDefault();
 
+        // Clear old errors
         document.querySelectorAll('.text-danger').forEach(el => el.remove());
+
+        // Disable inputs in hidden sections
+        const hiddenInputs = [];
+        document.querySelectorAll('.d-none input, .d-none select, .d-none textarea').forEach(el => {
+            if (!el.disabled) {
+                el.disabled = true;
+                hiddenInputs.push(el);
+            }
+        });
 
         const submitBtn = form.querySelector('button[type="submit"]');
         const originalBtnText = submitBtn.innerHTML;
@@ -110,10 +118,9 @@ document.addEventListener('DOMContentLoaded', function () {
         try {
             const formData = new FormData(form);
             const url = form.action;
-            const method = 'POST';
 
             const response = await fetch(url, {
-                method: method,
+                method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
                     'Accept': 'application/json'
@@ -148,6 +155,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Error:', error);
             showToast('error', 'Network error. Please try again.');
         } finally {
+            hiddenInputs.forEach(el => el.disabled = false);
             submitBtn.innerHTML = originalBtnText;
             submitBtn.disabled = false;
         }
