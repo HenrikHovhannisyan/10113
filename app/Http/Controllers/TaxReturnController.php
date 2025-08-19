@@ -62,8 +62,8 @@ class TaxReturnController extends Controller
     {
         $basicInfo = $taxReturn->basicInfos()->latest()->first();
         $incomes = $taxReturn->incomes()->latest()->first();
-        $others= $taxReturn->others()->latest()->first();
-        return view('pages.tax-returns.create', compact('taxReturn', 'basicInfo', 'incomes', 'others'));
+        $other= $taxReturn->other()->first();
+        return view('pages.tax-returns.create', compact('taxReturn', 'basicInfo', 'incomes', 'other'));
     }
 
     /**

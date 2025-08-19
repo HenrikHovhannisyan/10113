@@ -57,7 +57,7 @@ class TaxReturn extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function others()
+    public function other()
     {
         return $this->hasMany(Other::class);
     }

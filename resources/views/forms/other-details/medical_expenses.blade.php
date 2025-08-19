@@ -1,3 +1,7 @@
+@php
+    $medicalExpenses = $others->medical_expenses_offset ?? [];
+@endphp
+
 <section>
     <div class="d-flex align-items-center justify-content-between mb-3">
         <h4 class="form_title">Net Medical Expenses Tax Offset</h4>
@@ -16,14 +20,18 @@
                 <label class="choosing-business-type-text mb-2" for="total_allowable_expenses">
                     T5(a): Total Allowable Medical Expenses Paid
                 </label>
-                <input type="number" step="0.01" class="form-control" id="total_allowable_expenses" name="total_allowable_expenses" placeholder="00.00$">
+                <input type="number" step="0.01" class="form-control" id="total_allowable_expenses"
+                       name="medical_expenses_offset[total_allowable_expenses]" placeholder="00.00$"
+                       value="{{ $medicalExpenses['total_allowable_expenses'] ?? ''}}">
             </div>
 
             <div class="col-md-6">
                 <label class="choosing-business-type-text mb-2" for="total_refunds">
                     T5(b): Total refunds received/receivable from Medicare or your private health fund
                 </label>
-                <input type="number" step="0.01" class="form-control" id="total_refunds" name="total_refunds" placeholder="00.00$">
+                <input type="number" step="0.01" class="form-control" id="total_refunds"
+                       name="medical_expenses_offset[total_refunds]" placeholder="00.00$"
+                       value="{{ $medicalExpenses['total_refunds'] ?? ''}}">
             </div>
         </div>
 
@@ -31,7 +39,9 @@
             <label class="choosing-business-type-text mb-2" for="net_medical_expenses">
                 Total net medical expenses for disability aids, attendant care or aged care
             </label>
-            <input type="number" step="0.01" class="form-control" id="net_medical_expenses" name="net_medical_expenses" placeholder="00.00$">
+            <input type="number" step="0.01" class="form-control" id="net_medical_expenses"
+                   name="medical_expenses_offset[net_medical_expenses]" placeholder="00.00$"
+                   value="{{ $medicalExpenses['net_medical_expenses'] ?? ''}}">
         </div>
 
         <div class="mt-3">
@@ -42,7 +52,15 @@
             <button type="button" class="btn btn_add" id="medical_expense_file_trigger">
                 <img src="{{ asset('img/icons/plus.png') }}" alt="plus"> Choose file
             </button>
-            <p id="medical_expense_file_name" class="choosing-business-type-text text-muted mb-0 mt-2">No file chosen</p>
+            <p id="medical_expense_file_name" class="choosing-business-type-text text-muted mb-0 mt-2">
+                @if(!empty($others->attach['medical_expense_file']))
+                    <a href="{{ Storage::disk('public')->url($others->attach['medical_expense_file']) }}" target="_blank">
+                        {{ basename($others->attach['medical_expense_file']) }}
+                    </a>
+                @else
+                    No file chosen
+                @endif
+            </p>
         </div>
     </div>
 <section>
