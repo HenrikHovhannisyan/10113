@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Storage;
 class StripePaymentController extends Controller
 {
 
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -31,15 +30,15 @@ class StripePaymentController extends Controller
      */
     public function payment(Request $request, $id)
     {
-        $tax = TaxReturn::query()->where('id', $id)
-            ->where('user_id', Auth::id())
+        $tax = TaxReturn::query()->where('id', '=', $id)
+            ->where('user_id', '=', Auth::id())
             ->first();
+
+
 
         if(!$tax) {
            return redirect()->route('home')->with('error', 'Tax not found!');
         }
-
-
 
         if($tax->payment_status == 'paid') {
             return redirect()->route('home')->with('error', 'You already paid this tax!');
@@ -91,10 +90,10 @@ class StripePaymentController extends Controller
                 ]
             ]);
 
-            $tax->update([
-                'payment_status' => 'paid',
-                'payment_reference' => $charge->id ?? null
-            ]);
+//            $tax->update([
+//                'payment_status' => 'paid',
+//                'payment_reference' => $charge->id ?? null
+//            ]);
 
             Transaction::create([
                 'user_id' => Auth::id(),
@@ -117,6 +116,7 @@ class StripePaymentController extends Controller
             DB::rollBack();
             return back()->with('error', $e->getError()->message);
         } catch (\Exception $e) {
+            dd($e->getMessage());
             DB::rollBack();
             return back()->with('error', 'Payment failed: ' . $e->getMessage());
         }

@@ -13,70 +13,66 @@ class SendTaxFormsToManagers
 {
     public function handle(TaxPaymentSucceeded $event)
     {
-//        $tax = $event->tax->load('forms', 'user');
-
-        $user = (object)[
-            'id' => 1,
-            'name' => 'John Doe',
-            'email' => 'john@example.com'
-        ];
-
-        // Fake tax return
-        $tax = (object)[
-            'id' => 123,
-            'user' => $user,
-            'payment_status' => 'paid',
-            'payment_reference' => 'ch_fake_' . uniqid(),
-            'forms' => collect([
-                (object)[
-                    'id' => 1,
-                    'user' => $user,
-                    'created_at' => Carbon::now()->subDays(2),
-                    'data' => [
-                        'name' => 'Form A',
-                        'amount' => 250.75,
-                        'description' => 'Office expenses'
-                    ]
-                ],
-                (object)[
-                    'id' => 2,
-                    'user' => $user,
-                    'created_at' => Carbon::now()->subDay(),
-                    'data' => [
-                        'name' => 'Form B',
-                        'amount' => 132.40,
-                        'description' => 'Travel reimbursement'
-                    ]
-                ]
-            ])
-        ];
-
+        $tax = $event->tax->load('user', 'other');
 
         $pdfFiles = [];
 
-        foreach ($tax->forms as $form) {
-            $pdf = PDF::loadView('pdf.form_template', ['form' => $form]);
+        // Generate PDF for each form
+//        foreach ($tax->forms as $form) {
+//            $pdf = PDF::loadView('pdf.form_template', ['form' => $form]);
+//
+//            $fileName = 'form_' . $form->id . '.pdf';
+//            $filePath = 'forms/' . $fileName;
+//
+//            Storage::put('public/' . $filePath, $pdf->output());
+//
+//            $pdfFiles[] = storage_path('app/public/' . $filePath);
+//        }
 
-            $fileName = 'form_' . $form->id . '.pdf';
-            $filePath = 'forms/' . $fileName;
+        // Collect attachments from "other.attach"
+        $otherFiles = [];
+        if ($tax->other && !empty($tax->other->attach)) {
+            $attachData = is_array($tax->other->attach)
+                ? $tax->other->attach
+                : json_decode($tax->other->attach, true);
 
-            Storage::put('public/' . $filePath, $pdf->output());
-
-            $pdfFiles[] = storage_path('app/public/' . $filePath);
+            if ($attachData) {
+                foreach ($attachData as $key => $files) {
+                    if (is_array($files)) {
+                        foreach ($files as $file) {
+                            $fullPath = storage_path('app/public/' . $file);
+                            if (file_exists($fullPath)) {
+                                $otherFiles[] = $fullPath;
+                            }
+                        }
+                    } else {
+                        $fullPath = storage_path('app/public/' . $files);
+                        if (file_exists($fullPath)) {
+                            $otherFiles[] = $fullPath;
+                        }
+                    }
+                }
+            }
         }
 
+        // Merge PDFs + Other attachments
+        $allFiles = array_merge($pdfFiles, $otherFiles);
+
+        // Manager emails
         $managerEmails = explode(',', env('MANAGER_EMAILS', 'manager1@example.com'));
 
         foreach ($managerEmails as $email) {
-            Mail::to(trim($email))->send(new FormsSubmittedWithAttachments($tax, $pdfFiles));
+            Mail::to(trim($email))->send(
+                new FormsSubmittedWithAttachments($tax, $allFiles, $tax->other)
+            );
         }
 
-        // Cleanup
-        foreach ($pdfFiles as $file) {
-            if (file_exists($file)) {
-                unlink($file);
-            }
-        }
+        // Cleanup generated PDFs (keep original uploads)
+//        foreach ($pdfFiles as $file) {
+//            if (file_exists($file)) {
+//                unlink($file);
+//            }
+//        }
     }
 }
 

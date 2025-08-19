@@ -46,6 +46,8 @@ class OtherController extends Controller
             'dependent_invalid_and_carer' => $request->input('dependent_invalid_and_carer', null),
             'superannuation_co_contribution' => $request->input('superannuation_co_contribution', null),
             'other_tax_offsets_refundable' => $request->input('other_tax_offsets_refundable', null),
+            'medicare_reduction_exemption' => $request->input('medicare_reduction_exemption', null),
+            'medical_expenses_offset' => $request->input('medical_expenses_offset', null),
         ];
 
 
@@ -80,22 +82,37 @@ class OtherController extends Controller
 
         if ($request->has('private_health_insurance')) {
             $phiFiles = $request->file('private_health_insurance', []);
-
             foreach ($phiFiles as $key => $file) {
                 if ($file) {
-                    // Delete old file if it exists
                     if (!empty($attach['private_health_insurance'][$key])) {
                         $oldFile = $attach['private_health_insurance'][$key];
                         if (Storage::disk('public')->exists($oldFile)) {
                             Storage::disk('public')->delete($oldFile);
                         }
                     }
-
-                    // Store new file
                     $path = $file->store('attachments', 'public');
                     $attach['private_health_insurance'][$key] = $path;
                 }
             }
+        }
+
+        if ($request->hasFile('medicare_certificate')) {
+            if (!empty($attach['medicare_certificate'])) {
+                if (Storage::disk('public')->exists($attach['medicare_certificate'])) {
+                    Storage::disk('public')->delete($attach['medicare_certificate']);
+                }
+            }
+            $attach['medicare_certificate'] = $request->file('medicare_certificate')->store('attachments', 'public');
+        }
+
+
+        if ($request->hasFile('medical_expense_file')) {
+            if (!empty($attach['medical_expense_file'])) {
+                if (Storage::disk('public')->exists($attach['medical_expense_file'])) {
+                    Storage::disk('public')->delete($attach['medical_expense_file']);
+                }
+            }
+            $attach['medical_expense_file'] = $request->file('medical_expense_file')->store('attachments', 'public');
         }
 
         $data['attach'] = $attach;

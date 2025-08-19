@@ -8,53 +8,107 @@ use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Barryvdh\DomPDF\Facade\Pdf; // Ensure barryvdh/laravel-dompdf is installed
 
 class FormsSubmittedWithAttachments extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $tax;
-    public $files;
+    public $other;
 
-    /**
-     * Create a new message instance.
-     */
-    public function __construct($tax, $files)
+    public $files = [];
+
+    public function __construct($tax, $files = [], $other = null)
     {
-        $this->tax = $tax;
+        $this->tax   = $tax;
         $this->files = $files;
+
+        // Normalize $other
+        if ($other instanceof \Illuminate\Database\Eloquent\Collection) {
+            $this->other = $other->toArray();
+        } elseif ($other instanceof \Illuminate\Database\Eloquent\Model) {
+            $this->other = [$other->toArray()];
+        } elseif (is_array($other)) {
+            $this->other = $other;
+        } else {
+            $this->other = [];
+        }
     }
 
-    /**
-     * Define the envelope (subject, etc).
-     */
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Tax Forms Submitted',
+            subject: 'Tax Forms Submitted - Tax ID #' . $this->tax->id,
         );
     }
 
-    /**
-     * Define the email view and data passed to it.
-     */
     public function content(): Content
     {
         return new Content(
-            view: 'emails.forms_submitted',
+            view: 'emails.forms_submitted', // optional for email body
             with: [
-                'tax' => $this->tax,
+                'tax'   => $this->tax,
+                'other' => $this->other,
             ],
         );
     }
 
     /**
-     * Attach multiple PDF files to the email.
+     * @return array
      */
     public function attachments(): array
     {
-        return collect($this->files)->map(function ($filePath) {
-            return Attachment::fromPath($filePath);
-        })->all();
+        $attachments = [];
+
+        // Attach files passed in $files array
+        foreach ($this->files as $file) {
+            if ($file && file_exists($file)) {
+                $attachments[] = Attachment::fromPath($file);
+            }
+        }
+
+        // Attach files from $other['attach'] JSON
+        foreach ($this->other as $item) {
+            if (!empty($item['attach'])) {
+                // If stored as JSON string, decode it
+                $attachFiles = is_string($item['attach']) ? json_decode($item['attach'], true) : $item['attach'];
+
+                if (is_array($attachFiles)) {
+                    foreach ($attachFiles as $filePath) {
+                        // Make sure the path exists
+                        if ($filePath && file_exists($filePath)) {
+                            $attachments[] = Attachment::fromPath($filePath);
+                        }
+                    }
+                }
+            }
+        }
+
+        // Generate PDF from $other data and attach
+        if (!empty($this->other)) {
+            $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.other_data', [
+                'other' => $this->other,
+                'tax'   => $this->tax
+            ]);
+            $attachments[] = Attachment::fromData(fn() => $pdf->output(), 'OtherFormData.pdf');
+        }
+
+        return $attachments;
     }
+
+
+    /**
+     * Convert snake_case keys to human-readable labels recursively.
+     */
+    private function humanizeKeys(array $data): array
+    {
+        $result = [];
+        foreach ($data as $key => $value) {
+            $label = ucwords(str_replace('_', ' ', $key));
+            $result[$label] = is_array($value) ? $this->humanizeKeys($value) : $value;
+        }
+        return $result;
+    }
+
 }

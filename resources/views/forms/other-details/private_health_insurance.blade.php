@@ -124,7 +124,7 @@
                             <label class="choosing-business-type-text">Health insurer ID</label>
                             <select name="private_health_insurance[statements][{{ $idx }}][health_insurer_id]" class="form-select border-dark">
                                 <option value="">Choose</option>
-                                <option value="ACA - ACA Health Benefits Fund" {{ ($s['health_insurer_id'] ?? '')==='ACA - ACA Health Benefits Fund' ? 'selected' : '' }}>ACA - ACA Health Benefits Fund</option>
+                                <option value="ACA - ACA Health Benefits Fund" {{ ($s['health_insurer_id'] ?? '') ==='ACA - ACA Health Benefits Fund' ? 'selected' : '' }}>ACA - ACA Health Benefits Fund</option>
                                 <option value="MYO - AIA Health Insurance" {{ ($s['health_insurer_id'] ?? '')==='MYO - AIA Health Insurance' ? 'selected' : '' }}>MYO - AIA Health Insurance</option>
                                 <option value="AHM - Australian Health Management Group" {{ ($s['health_insurer_id'] ?? '')==='AHM - Australian Health Management Group' ? 'selected' : '' }}>AHM - Australian Health Management Group</option>
                                 <option value="AUF - Australian Unity Health Limited" {{ ($s['health_insurer_id'] ?? '')==='AUF - Australian Unity Health Limited' ? 'selected' : '' }}>AUF - Australian Unity Health Limited</option>

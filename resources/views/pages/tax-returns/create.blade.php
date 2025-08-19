@@ -43,8 +43,8 @@
             </div>
 
             <div class="tab-pane fade" id="other-details" role="tabpanel" aria-labelledby="other-details-tab">
-                @if(isset($others))
-                    @include('tabs.other-details', ['others' => $others])
+                @if(isset($other))
+                    @include('tabs.other-details', ['others' => $other])
                 @else
                     @include('tabs.other-details')
                 @endif
