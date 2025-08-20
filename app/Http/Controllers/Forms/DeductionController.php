@@ -20,7 +20,6 @@ class DeductionController extends Controller
             ], 404);
         }
 
-        // Получаем новые данные из запроса
         $data = [
             'car_expenses'       => $request->input('car_expenses', []),
             'travel_expenses'    => $request->input('travel_expenses', []),
@@ -48,11 +47,9 @@ class DeductionController extends Controller
         ];
 
         if ($id) {
-            // Если обновление — получаем старые данные
             $deduction = Deduction::findOrFail($id);
             $existing = $deduction->toArray();
 
-            // Сливаем старые данные с новыми (оставляем старые, если новых нет)
             foreach ($data as $key => $value) {
                 if (empty($value) && isset($existing[$key])) {
                     $data[$key] = $existing[$key];
