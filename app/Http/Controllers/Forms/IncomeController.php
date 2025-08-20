@@ -20,38 +20,42 @@ class IncomeController extends Controller
             ], 404);
         }
 
-        $data = [
-            'salary'                 => $request->input('salary', []),
-            'interests'              => $request->input('interests', []),
-            'dividends'              => $request->input('dividends', []),
-            'government_allowances'  => $request->input('government_allowances', []),
-            'government_pensions'    => $request->input('government_pensions', []),
-            'capital_gains'          => $request->input('capital_gains', []),
-            'managed_funds'          => $request->input('managed_funds', []),
-            'termination_payments'   => $request->input('termination_payments', []),
-            'rent'                   => $request->input('rent', []),
-            'partnerships'           => $request->input('partnerships', []),
-            'annuities'              => $request->input('annuities', []),
-            'superannuation'         => $request->input('superannuation', []),
-            'super_lump_sums'        => $request->input('super_lump_sums', []),
-            'ess'                    => $request->input('ess', []),
-            'personal_services'      => $request->input('personal_services', []),
-            'business_income'        => $request->input('business_income', []),
-            'business_losses'        => $request->input('business_losses', []),
-            'foreign_income'         => $request->input('foreign_income', []),
-            'other_income'           => $request->input('other_income', []),
+        // Если обновляем, берем существующую запись
+        $existing = $id ? Income::findOrFail($id) : null;
+
+        $fields = [
+            'salary',
+            'interests',
+            'dividends',
+            'government_allowances',
+            'government_pensions',
+            'capital_gains',
+            'managed_funds',
+            'termination_payments',
+            'rent',
+            'partnerships',
+            'annuities',
+            'superannuation',
+            'super_lump_sums',
+            'ess',
+            'personal_services',
+            'business_income',
+            'business_losses',
+            'foreign_income',
+            'other_income'
         ];
+
+        $data = [];
+        foreach ($fields as $field) {
+            $data[$field] = $request->input($field, $existing->$field ?? []);
+        }
 
         // === Capital Gains File Handling ===
         if ($request->hasFile('capital_gains.cgt_attachment')) {
             $file = $request->file('capital_gains.cgt_attachment');
             $data['capital_gains']['cgt_attachment'] = $file->store('capital_gains', 'public');
-        } elseif ($id) {
-            $existing = Income::findOrFail($id);
-            $oldCapitalGains = $existing->capital_gains ?? [];
-            if (isset($oldCapitalGains['cgt_attachment'])) {
-                $data['capital_gains']['cgt_attachment'] = $oldCapitalGains['cgt_attachment'];
-            }
+        } elseif ($existing) {
+            $data['capital_gains'] = $existing->capital_gains ?? [];
         }
 
         // === Managed Funds File Handling ===
@@ -62,16 +66,12 @@ class IncomeController extends Controller
                 $paths[] = $file->store('managed_funds', 'public');
             }
             $data['managed_funds']['managed_fund_files'] = $paths;
-        } elseif ($id) {
-            $existing = Income::findOrFail($id);
-            $oldManagedFunds = $existing->managed_funds ?? [];
-            if (isset($oldManagedFunds['managed_fund_files'])) {
-                $data['managed_funds']['managed_fund_files'] = $oldManagedFunds['managed_fund_files'];
-            }
+        } elseif ($existing) {
+            $data['managed_funds'] = $existing->managed_funds ?? [];
         }
 
-        // === Termination Payments (ETP) File Handling ===
-        $etps = $data['termination_payments'];
+        // === Termination Payments File Handling ===
+        $etps = $data['termination_payments'] ?? [];
         foreach ($etps as $index => &$etp) {
             if ($request->hasFile("termination_payments.$index.etp_files")) {
                 $files = $request->file("termination_payments.$index.etp_files");
@@ -80,8 +80,7 @@ class IncomeController extends Controller
                     $paths[] = $file->store('termination_payments', 'public');
                 }
                 $etp['etp_files'] = $paths;
-            } elseif ($id) {
-                $existing = Income::findOrFail($id);
+            } elseif ($existing) {
                 $oldETPs = $existing->termination_payments ?? [];
                 if (isset($oldETPs[$index]['etp_files'])) {
                     $etp['etp_files'] = $oldETPs[$index]['etp_files'];
@@ -90,8 +89,8 @@ class IncomeController extends Controller
         }
         $data['termination_payments'] = $etps;
 
-        // === Rent Received File Handling ===
-        $rents = $data['rent'];
+        // === Rent File Handling ===
+        $rents = $data['rent'] ?? [];
         foreach ($rents as $index => &$rent) {
             if ($request->hasFile("rent.$index.rent_files")) {
                 $files = $request->file("rent.$index.rent_files");
@@ -100,8 +99,7 @@ class IncomeController extends Controller
                     $paths[] = $file->store('rent', 'public');
                 }
                 $rent['rent_files'] = $paths;
-            } elseif ($id) {
-                $existing = Income::findOrFail($id);
+            } elseif ($existing) {
                 $oldRents = $existing->rent ?? [];
                 if (isset($oldRents[$index]['rent_files'])) {
                     $rent['rent_files'] = $oldRents[$index]['rent_files'];
@@ -110,10 +108,10 @@ class IncomeController extends Controller
         }
         $data['rent'] = $rents;
 
-        // === Save or Update Income ===
-        if ($id) {
-            $income = Income::findOrFail($id);
-            $income->update($data);
+        // === Сохраняем или обновляем ===
+        if ($existing) {
+            $existing->update($data);
+            $income = $existing;
             $message = 'Income data updated successfully!';
         } else {
             $income = Income::create(array_merge($data, [
@@ -128,7 +126,6 @@ class IncomeController extends Controller
             'incomeId' => $income->id
         ]);
     }
-
 
     public function store(Request $request)
     {

@@ -29,7 +29,9 @@
         @endphp
 
         @foreach($incomeItems as $key => $label)
-            <div class="income-item @if(isset($incomes) && $incomes->$key !== null) active @endif" data-index="{{ $loop->index }}">
+            <div class="income-item 
+    @if(isset($incomes) && !empty((array)$incomes->$key)) active @endif" 
+    data-index="{{ $loop->index }}">
                 <div class="other-details-label">
                     <p>{{ $label }}</p>
                     <img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr">
