@@ -1,4 +1,4 @@
-<form>
+<section>
   <div class="d-flex align-items-center justify-content-between mb-3">
     <h4 class="form_title">Deduction For Project Pool</h4>
     <img src="{{ asset('img/icons/help.png') }}" alt="Help">
@@ -12,9 +12,10 @@
       step="0.01"
       class="form-control border-dark"
       id="project_pool_deduction"
-      name="project_pool_deduction"
+      name="project_pool[project_pool_deduction]"
+      value="{{ old('project_pool.project_pool_deduction', $deductions->project_pool['project_pool_deduction'] ?? '') }}"
       placeholder="00.00$"
     />
     </div>
   </div>
-</form>
+</section>
