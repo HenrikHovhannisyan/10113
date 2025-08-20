@@ -33,8 +33,9 @@
             ];
         @endphp
 
-        @foreach(array_slice($deductionsItems, 0, 9) as $key => $label)
-            <div class="deduction-item @if(isset($deductions) && $deductions->$key !== null) active @endif" data-index="{{ $loop->index }}">
+        @foreach(array_slice($deductionsItems, 0, 9, true) as $key => $label)
+            <div class="deduction-item @if(isset($deductions) && !empty($deductions->$key)) active @endif"
+     data-index="{{ $loop->index }}">
                 <div class="deduction-label">
                     <p>{{ $label }}</p>
                     <img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr">
@@ -49,8 +50,9 @@
     <div id="more-deductions-section" class="d-none">
         <h4 class="form_title mt-4">Is there anything else you can claim?</h4>
         <div class="select_deduction_container select_deduction_container1 mt-0">
-            @foreach(array_slice($deductionsItems, 9) as $key => $label)
-                <div class="deduction-item @if(isset($deductions) && $deductions->$key !== null) active @endif" data-index="{{ $loop->index + 9 }}">
+            @foreach(array_slice($deductionsItems, 9, null, true) as $key => $label)
+                <div class="deduction-item @if(isset($deductions) && !empty($deductions->$key)) active @endif"
+     data-index="{{ $loop->index + 9 }}">
                     <div class="deduction-label">
                         <p>{{ $label }}</p>
                         <img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr">
@@ -70,6 +72,7 @@
 
 <section class="choosing-business-type_section">
     <h2 class="choosing-business-type-title" id="deduction-forms_title">Let’s add the details</h2>
+    
     <form id="deduction-form" action="{{ isset($deductions) ? route('deduction.update', $deductions->id) : route('deduction.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         @if(isset($deductions))
@@ -93,7 +96,6 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    // Обработка кликов по карточкам вычетов
     const items = document.querySelectorAll(".deduction-item");
     items.forEach((item) => {
         item.addEventListener("click", () => {
@@ -114,7 +116,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // Обработка кнопки Show More
     const moreSection = document.getElementById('more-deductions-section');
     const toggleBtn = document.getElementById('toggleDeductionBtn');
 
@@ -130,16 +131,13 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Обработка отправки формы
     const form = document.getElementById('deduction-form');
     if (form) {
         form.addEventListener('submit', async function (e) {
             e.preventDefault();
 
-            // Clear old errors
             document.querySelectorAll('.text-danger').forEach(el => el.remove());
 
-            // Disable hidden inputs
             const hiddenInputs = [];
             document.querySelectorAll('.d-none input, .d-none select, .d-none textarea').forEach(el => {
                 if (!el.disabled) {

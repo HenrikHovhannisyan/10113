@@ -20,47 +20,70 @@ class DeductionController extends Controller
             ], 404);
         }
 
-        $data = [
-            'car_expenses'       => $request->input('car_expenses', []),
-            'travel_expenses'    => $request->input('travel_expenses', []),
-            'mobile_phone'       => $request->input('mobile_phone', []),
-            'internet_access'    => $request->input('internet_access', []),
-            'computer'           => $request->input('computer', []),
-            'gifts'              => $request->input('gifts', []),
-            'home_office'        => $request->input('home_office', []),
-            'books'              => $request->input('books', []),
-            'tax_affairs'        => $request->input('tax_affairs', []),
-            'uniforms'           => $request->input('uniforms', []),
-            'education'          => $request->input('education', []),
-            'tools'              => $request->input('tools', []),
-            'superannuation'     => $request->input('superannuation', []),
-            'office_occupancy'   => $request->input('office_occupancy', []),
-            'union_fees'         => $request->input('union_fees', []),
-            'sun_protection'     => $request->input('sun_protection', []),
-            'low_value_pool'     => $request->input('low_value_pool', []),
-            'interest_deduction' => $request->input('interest_deduction', []),
-            'dividend_deduction' => $request->input('dividend_deduction', []),
-            'upp'                => $request->input('upp', []),
-            'project_pool'       => $request->input('project_pool', []),
-            'investment_scheme'  => $request->input('investment_scheme', []),
-            'other'              => $request->input('other', []),
+        $existing = $id ? Deduction::findOrFail($id) : null;
+
+        $fields = [
+            'car_expenses',
+            'travel_expenses',
+            'mobile_phone',
+            'internet_access',
+            'computer',
+            'gifts',
+            'home_office',
+            'books',
+            'tax_affairs',
+            'uniforms',
+            'education',
+            'tools',
+            'superannuation',
+            'office_occupancy',
+            'union_fees',
+            'sun_protection',
+            'low_value_pool',
+            'interest_deduction',
+            'dividend_deduction',
+            'upp',
+            'project_pool',
+            'investment_scheme',
+            'other'
         ];
 
-        // Handle uniforms receipt file
-        if ($request->hasFile('uniforms_receipt')) {
-            $file = $request->file('uniforms_receipt');
-            $data['uniforms']['receipt'] = $file->store('deductions/uniforms', 'public');
-        } elseif ($id) {
-            $existing = Deduction::findOrFail($id);
-            $oldUniforms = $existing->uniforms ?? [];
-            if (isset($oldUniforms['receipt'])) {
-                $data['uniforms']['receipt'] = $oldUniforms['receipt'];
-            }
+        $data = [];
+        foreach ($fields as $field) {
+            $data[$field] = $request->input($field, $existing->$field ?? []);
         }
 
-        if ($id) {
-            $deduction = Deduction::findOrFail($id);
-            $deduction->update($data);
+        // === File Handling for Union Fees ===
+        if ($request->hasFile('union_fees.file')) {
+            $file = $request->file('union_fees.file');
+            $data['union_fees']['file'] = $file->store('union_fees', 'public');
+        } elseif ($existing) {
+            $data['union_fees'] = $existing->union_fees ?? [];
+        }
+
+        // === Sun Protection File Handling ===
+        if ($request->hasFile('sun_protection.sun_file')) {
+            $file = $request->file('sun_protection.sun_file');
+            $data['sun_protection']['sun_file'] = $file->store('sun_protection', 'public');
+        } elseif ($existing) {
+            $data['sun_protection'] = $existing->sun_protection ?? [];
+        }
+
+        // === Low Value Pool Files Handling ===
+        if ($request->hasFile('low_value_pool.files')) {
+            $files = $request->file('low_value_pool.files');
+            $paths = [];
+            foreach ($files as $file) {
+                $paths[] = $file->store('low_value_pool', 'public');
+            }
+            $data['low_value_pool']['files'] = $paths;
+        } elseif ($existing) {
+            $data['low_value_pool'] = $existing->low_value_pool ?? [];
+        }
+
+        if ($existing) {
+            $existing->update($data);
+            $deduction = $existing;
             $message = 'Deduction data updated successfully!';
         } else {
             $deduction = Deduction::create(array_merge($data, [

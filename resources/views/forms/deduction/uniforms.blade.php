@@ -61,7 +61,7 @@
 
   <div class="col-12 mt-4 mb-3">
     <label class="choosing-business-type-text">Attach a simple breakdown of your expenses (optional)</label>
-    <input type="file" name="uniform_receipt" id="uniformFileInput" class="d-none" /><br>
+    <input type="file" name="uniforms[uniform_receipt]" id="uniformFileInput" class="d-none" /><br>
     <button type="button" class="btn btn_add" id="triggerUniformFile">
       <img src="{{ asset('img/icons/plus.png') }}" alt="plus"> Choose file
     </button>
@@ -84,7 +84,7 @@
         </p>
       <div class="col-md-6 mb-3">
         <label class="choosing-business-type-text">Please select whether you wash your uniform separately or mixed with other non-work clothes</label>
-        <select class="form-control border-dark" name="laundry_type">
+        <select class="form-control border-dark" name="uniforms[laundry_type]">
           <option value="" disabled selected>Choose</option>
           <option value="Separate Wash">Separate Wash</option>
           <option value="Mixed Wash">Mixed Wash</option>
@@ -92,11 +92,11 @@
       </div>
       <div class="col-md-6 mb-3">
         <label class="choosing-business-type-text mt-0 mt-md-4">How many loads of laundry you do per week</label>
-        <input type="number" step="1" class="form-control border-dark" name="laundry_loads" placeholder="00.00$">
+        <input type="number" step="1" class="form-control border-dark" name="uniforms[laundry_loads]" placeholder="00.00$">
       </div>
       <div class="col-md-6 mb-3">
         <label class="choosing-business-type-text">How many weeks of the year did you work?</label>
-        <input type="number" step="1" class="form-control border-dark" name="weeks_worked" placeholder="00.00$">
+        <input type="number" step="1" class="form-control border-dark" name="uniforms[weeks_worked]" placeholder="00.00$">
       </div>
     </div>
 

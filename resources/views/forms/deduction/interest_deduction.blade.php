@@ -1,4 +1,4 @@
-<form>
+<section>
   <div class="d-flex align-items-center justify-content-between mb-3">
     <h4 class="form_title">Interest Deductions</h4>
     <img src="{{ asset('img/icons/help.png') }}" alt="Help">
@@ -13,12 +13,14 @@
     </p>
     <div class="col-md-6 mb-3">
       <label class="choosing-business-type-text">Interest deduction description</label>
-      <input type="text" class="form-control border-dark" name="interest_description" placeholder="...">
+      <input type="text" class="form-control border-dark" name="interest_deduction[interest_description]" value="{{ old('interest_deduction.interest_description', $deductions->interest_deduction['interest_description'] ?? '') }}" placeholder="...">
+
     </div>
 
     <div class="col-md-6 mb-3">
       <label class="choosing-business-type-text">Total amount you paid</label>
-      <input type="text" class="form-control border-dark" name="interest_amount" placeholder="00.00$">
+      <input type="text" class="form-control border-dark" name="interest_deduction[interest_amount]" value="{{ old('interest_deduction.interest_amount', $deductions->interest_deduction['interest_amount'] ?? '') }}" placeholder="00.00$">
+
     </div>
   </div>
-</form>
+</section>
