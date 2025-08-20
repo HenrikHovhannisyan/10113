@@ -53,6 +53,14 @@ class DeductionController extends Controller
             $data[$field] = $request->input($field, $existing->$field ?? []);
         }
 
+        // === File Handling for Union Fees ===
+        if ($request->hasFile('union_fees.file')) {
+            $file = $request->file('union_fees.file');
+            $data['union_fees']['file'] = $file->store('union_fees', 'public');
+        } elseif ($existing) {
+            $data['union_fees'] = $existing->union_fees ?? [];
+        }
+
         // === Sun Protection File Handling ===
         if ($request->hasFile('sun_protection.sun_file')) {
             $file = $request->file('sun_protection.sun_file');
@@ -61,6 +69,7 @@ class DeductionController extends Controller
             $data['sun_protection'] = $existing->sun_protection ?? [];
         }
 
+        // === Low Value Pool Files Handling ===
         if ($request->hasFile('low_value_pool.files')) {
             $files = $request->file('low_value_pool.files');
             $paths = [];
