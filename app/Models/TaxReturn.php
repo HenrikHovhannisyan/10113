@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Forms\BasicInfoForm;
 use App\Models\Forms\Income;
+use App\Models\Forms\Deduction;
 
 class TaxReturn extends Model
 {
@@ -53,6 +54,10 @@ class TaxReturn extends Model
         return $this->hasMany(Income::class);
     }
 
+    public function deductions()
+    {
+        return $this->hasMany(Deduction::class);
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
