@@ -45,7 +45,7 @@ class DeductionController extends Controller
             'investment_scheme'  => $request->input('investment_scheme', []),
             'other'              => $request->input('other', []),
         ];
-        
+
         if ($id) {
             $deduction = Deduction::findOrFail($id);
             $deduction->update($data);

@@ -33,8 +33,9 @@
             ];
         @endphp
 
-        @foreach(array_slice($deductionsItems, 0, 9) as $key => $label)
-            <div class="deduction-item @if(isset($deductions) && !empty($deductions->$key)) active @endif" data-index="{{ $loop->index }}">
+        @foreach(array_slice($deductionsItems, 0, 9, true) as $key => $label)
+            <div class="deduction-item @if(isset($deductions) && !empty($deductions->$key)) active @endif"
+     data-index="{{ $loop->index }}">
                 <div class="deduction-label">
                     <p>{{ $label }}</p>
                     <img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr">
@@ -49,8 +50,9 @@
     <div id="more-deductions-section" class="d-none">
         <h4 class="form_title mt-4">Is there anything else you can claim?</h4>
         <div class="select_deduction_container select_deduction_container1 mt-0">
-            @foreach(array_slice($deductionsItems, 9) as $key => $label)
-                <div class="deduction-item @if(isset($deductions) && filled($deductions->$key)) active @endif" data-index="{{ $loop->index }}">
+            @foreach(array_slice($deductionsItems, 9, null, true) as $key => $label)
+                <div class="deduction-item @if(isset($deductions) && !empty($deductions->$key)) active @endif"
+     data-index="{{ $loop->index + 9 }}">
                     <div class="deduction-label">
                         <p>{{ $label }}</p>
                         <img src="{{ asset('img/icons/hr.png') }}" class="img-fluid" alt="hr">
