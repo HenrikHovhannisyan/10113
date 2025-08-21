@@ -1,4 +1,4 @@
-<form>
+<section>
   <!-- Education-Related Car Expense -->
   <div class="d-flex align-items-center justify-content-between mb-3">
     <h4 class="form_title">Education-Related Car Expense</h4>
@@ -8,32 +8,72 @@
   <div class="grin_box_border mb-3">
     <label class="form-label d-block">Did you use your vehicle for travel between your home or work and your classes?</label>
     <div class="form-check form-check-inline">
-      <input class="form-check-input custom-radio" type="radio" name="car_travel" id="car_travel_yes" value="yes">
+      <input 
+        class="form-check-input custom-radio" 
+        type="radio" 
+        name="education[car_travel]" 
+        id="car_travel_yes" 
+        value="yes"
+        {{ old('education.car_travel', $deductions->education['car_travel'] ?? '') === 'yes' ? 'checked' : '' }}
+      >
       <label class="form-check-label custom-label" for="car_travel_yes">Yes</label>
     </div>
     <div class="form-check form-check-inline">
-      <input class="form-check-input custom-radio" type="radio" name="car_travel" id="car_travel_no" value="no">
+      <input 
+        class="form-check-input custom-radio" 
+        type="radio" 
+        name="education[car_travel]" 
+        id="car_travel_no" 
+        value="no"
+        {{ old('education.car_travel', $deductions->education['car_travel'] ?? '') === 'no' ? 'checked' : '' }}
+      >
       <label class="form-check-label custom-label" for="car_travel_no">No</label>
     </div>
 
-    <div id="car_travel_block" class="mt-3" style="display: none;">
+    <div id="car_travel_block" class="mt-3" style="display: {{ old('education.car_travel', $deductions->education['car_travel'] ?? '') === 'yes' ? 'block' : 'none' }};">
       <div class="row">
         <div class="col-md-6 mb-3">
           <label class="form-label">In a few words, why do you use your car for Education?</label>
-          <input type="text" class="form-control" name="car_education_reason" placeholder="abc">
+          <input 
+            type="text" 
+            class="form-control" 
+            name="education[car_education_reason]" 
+            placeholder="abc"
+            value="{{ old('education.car_education_reason', $deductions->education['car_education_reason'] ?? '') }}"
+          >
         </div>
         <div class="col-md-6 mb-3">
           <label class="form-label">Number of kilometres travelled for education?</label>
-          <input type="text" class="form-control" name="car_kilometres" placeholder="0 km">
+          <input 
+            type="text" 
+            class="form-control" 
+            name="education[car_kilometres]" 
+            placeholder="0 km"
+            value="{{ old('education.car_kilometres', $deductions->education['car_kilometres'] ?? '') }}"
+          >
         </div>
         <div class="col-md-6 mb-3">
           <label class="form-label d-block">Is the vehicle registered in your name?</label>
           <div class="form-check form-check-inline">
-            <input class="form-check-input custom-radio" type="radio" name="vehicle_owned" id="vehicle_owned_yes" value="yes">
+            <input 
+              class="form-check-input custom-radio" 
+              type="radio" 
+              name="education[vehicle_owned]" 
+              id="vehicle_owned_yes" 
+              value="yes"
+              {{ old('education.vehicle_owned', $deductions->education['vehicle_owned'] ?? '') === 'yes' ? 'checked' : '' }}
+            >
             <label class="form-check-label custom-label" for="vehicle_owned_yes">Yes</label>
           </div>
           <div class="form-check form-check-inline">
-            <input class="form-check-input custom-radio" type="radio" name="vehicle_owned" id="vehicle_owned_no" value="no">
+            <input 
+              class="form-check-input custom-radio" 
+              type="radio" 
+              name="education[vehicle_owned]" 
+              id="vehicle_owned_no" 
+              value="no"
+              {{ old('education.vehicle_owned', $deductions->education['vehicle_owned'] ?? '') === 'no' ? 'checked' : '' }}
+            >
             <label class="form-check-label custom-label" for="vehicle_owned_no">No</label>
           </div>
         </div>
@@ -50,141 +90,183 @@
   <div class="grin_box_border mb-3">
     <label class="form-label d-block">Did you pay for self-education expenses that are directly related to your current employment?</label>
     <div class="form-check form-check-inline">
-      <input class="form-check-input custom-radio" type="radio" name="edu_expense" id="edu_expense_yes" value="yes">
+      <input 
+        class="form-check-input custom-radio" 
+        type="radio" 
+        name="education[edu_expense]" 
+        id="edu_expense_yes" 
+        value="yes"
+        {{ old('education.edu_expense', $deductions->education['edu_expense'] ?? '') === 'yes' ? 'checked' : '' }}
+      >
       <label class="form-check-label custom-label" for="edu_expense_yes">Yes</label>
     </div>
     <div class="form-check form-check-inline">
-      <input class="form-check-input custom-radio" type="radio" name="edu_expense" id="edu_expense_no" value="no">
+      <input 
+        class="form-check-input custom-radio" 
+        type="radio" 
+        name="education[edu_expense]" 
+        id="edu_expense_no" 
+        value="no"
+        {{ old('education.edu_expense', $deductions->education['edu_expense'] ?? '') === 'no' ? 'checked' : '' }}
+      >
       <label class="form-check-label custom-label" for="edu_expense_no">No</label>
     </div>
 
-    <div id="edu_expense_block" class="mt-3" style="display: none;">
+    <div id="edu_expense_block" class="mt-3" style="display: {{ old('education.edu_expense', $deductions->education['edu_expense'] ?? '') === 'yes' ? 'block' : 'none' }};">
       <div class="col-md-6 mb-3">
         <label class="form-label">Why did you do this education?</label>
-        <select name="edu_reason" class="form-select">
+        <select name="education[edu_reason]" class="form-select">
           <option value="">Choose</option>
-          <option value="skill">Maintains or improves a skill or specific knowledge</option>
-          <option value="income">Leads to increased income</option>
-          <option value="other">Other circumstances​</option>
+          <option value="skill" {{ old('education.edu_reason', $deductions->education['edu_reason'] ?? '') === 'skill' ? 'selected' : '' }}>Maintains or improves a skill or specific knowledge</option>
+          <option value="income" {{ old('education.edu_reason', $deductions->education['edu_reason'] ?? '') === 'income' ? 'selected' : '' }}>Leads to increased income</option>
+          <option value="other" {{ old('education.edu_reason', $deductions->education['edu_reason'] ?? '') === 'other' ? 'selected' : '' }}>Other circumstances​</option>
         </select>
       </div>
 
       <div id="edu_expense_items">
+        @php
+          $eduExpenses = old('education.expenses', isset($deductions->education['expenses']) ? $deductions->education['expenses'] : []);
+          $eduCount = count($eduExpenses) > 0 ? count($eduExpenses) : 1;
+        @endphp
+
+        @for($i = 0; $i < $eduCount; $i++)
         <div class="grin_box_border p-3 mb-3 edu-expense-item">
-    <div class="col-md-6 mb-3">
-    <label class="form-label">Type of education expense</label>
-    <select name="edu_expense_type[]" class="form-select edu-expense-type">
-      <option value="">Choose</option>
-      <option value="fees">Education Fees​​</option>
-      <option value="books">Books stationery consumables</option>
-      <option value="laptop">Laptop Computer</option>
-      <option value="desktop">Desktop Computer</option>
-      <option value="tablet">Tablet Computer</option>
-      <option value="other">Other</option>
-      <option value="repair">Repair expenses​​</option>
-    </select>
-  </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Type of education expense</label>
+            <select name="education[expenses][{{ $i }}][type]" class="form-select edu-expense-type">
+              <option value="">Choose</option>
+              <option value="fees" {{ old("education.expenses.$i.type", $eduExpenses[$i]['type'] ?? '') === 'fees' ? 'selected' : '' }}>Education Fees​​</option>
+              <option value="books" {{ old("education.expenses.$i.type", $eduExpenses[$i]['type'] ?? '') === 'books' ? 'selected' : '' }}>Books stationery consumables</option>
+              <option value="laptop" {{ old("education.expenses.$i.type", $eduExpenses[$i]['type'] ?? '') === 'laptop' ? 'selected' : '' }}>Laptop Computer</option>
+              <option value="desktop" {{ old("education.expenses.$i.type", $eduExpenses[$i]['type'] ?? '') === 'desktop' ? 'selected' : '' }}>Desktop Computer</option>
+              <option value="tablet" {{ old("education.expenses.$i.type", $eduExpenses[$i]['type'] ?? '') === 'tablet' ? 'selected' : '' }}>Tablet Computer</option>
+              <option value="other" {{ old("education.expenses.$i.type", $eduExpenses[$i]['type'] ?? '') === 'other' ? 'selected' : '' }}>Other</option>
+              <option value="repair" {{ old("education.expenses.$i.type", $eduExpenses[$i]['type'] ?? '') === 'repair' ? 'selected' : '' }}>Repair expenses​​</option>
+            </select>
+          </div>
 
-  <!-- Это поле скроем для Laptop -->
-  <div class="col-md-6 mb-3 amount-paid-block">
-    <label class="form-label">Amount you paid for this item</label>
-    <input type="number" step="0.01" class="form-control edu-amount" name="edu_amount[]" placeholder="00.00$">
-  </div>
+          <div class="col-md-6 mb-3 amount-paid-block" style="{{ old("education.expenses.$i.type", $eduExpenses[$i]['type'] ?? '') === 'laptop' ? 'display: none;' : '' }}">
+            <label class="form-label">Amount you paid for this item</label>
+            <input 
+              type="number" 
+              step="0.01" 
+              class="form-control edu-amount" 
+              name="education[expenses][{{ $i }}][amount]" 
+              placeholder="00.00$"
+              value="{{ old("education.expenses.$i.amount", $eduExpenses[$i]['amount'] ?? '') }}"
+            >
+          </div>
 
-  <!-- Дополнительные поля для Laptop (изначально скрыты) -->
-  <div class="laptop-extra-fields" style="display:none;">
+          <div class="laptop-extra-fields" style="{{ old("education.expenses.$i.type", $eduExpenses[$i]['type'] ?? '') === 'laptop' ? 'display: block;' : 'display: none;' }}">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Total Amount you paid for this item</label>
+                <input 
+                  type="number" 
+                  step="0.01" 
+                  class="form-control laptop-total-amount" 
+                  name="education[expenses][{{ $i }}][laptop_total_amount]" 
+                  placeholder="00.00$"
+                  value="{{ old("education.expenses.$i.laptop_total_amount", $eduExpenses[$i]['laptop_total_amount'] ?? '') }}"
+                >
+              </div>
 
-    <div class="row">
-        <div class="col-md-6 mb-3">
-      <label class="form-label">Total Amount you paid for this item</label>
-      <input type="number" step="0.01" class="form-control laptop-total-amount" name="laptop_total_amount[]" placeholder="00.00$">
-    </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">What Percent of use was for education purposes?</label>
+                <input 
+                  type="number" 
+                  step="0.01" 
+                  min="0" 
+                  max="100" 
+                  class="form-control laptop-percent-use" 
+                  name="education[expenses][{{ $i }}][laptop_percent_use]" 
+                  placeholder="0%"
+                  value="{{ old("education.expenses.$i.laptop_percent_use", $eduExpenses[$i]['laptop_percent_use'] ?? '') }}"
+                >
+              </div>
+            </div>
 
-    <div class="col-md-6 mb-3">
-      <label class="form-label">What Percent of use was for education purposes?</label>
-      <input type="number" step="0.01" min="0" max="100" class="form-control laptop-percent-use" name="laptop_percent_use[]" placeholder="0%">
-    </div>
-    </div>
-
-    <div class="row">
-        <!-- Date of purchase -->
-        <div class="col-md-4 mb-3">
-          <label class="choosing-business-type-text">Day</label>
-          <select name="laptop_purchase_day" class="form-control border-dark">
-            <option value="">Day</option>
-            @for ($i = 1; $i <= 31; $i++)
-              <option value="{{ $i }}">{{ $i }}</option>
-            @endfor
-          </select>
+            <div class="row">
+              <div class="col-md-4 mb-3">
+                <label class="choosing-business-type-text">Day</label>
+                <select name="education[expenses][{{ $i }}][laptop_purchase_day]" class="form-control border-dark">
+                  <option value="">Day</option>
+                  @for ($d = 1; $d <= 31; $d++)
+                    <option value="{{ $d }}" {{ old("education.expenses.$i.laptop_purchase_day", $eduExpenses[$i]['laptop_purchase_day'] ?? '') == $d ? 'selected' : '' }}>{{ $d }}</option>
+                  @endfor
+                </select>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="choosing-business-type-text">Month</label>
+                <select name="education[expenses][{{ $i }}][laptop_purchase_month]" class="form-control border-dark">
+                  <option value="">Month</option>
+                  @for ($m = 1; $m <= 12; $m++)
+                    <option value="{{ $m }}" {{ old("education.expenses.$i.laptop_purchase_month", $eduExpenses[$i]['laptop_purchase_month'] ?? '') == $m ? 'selected' : '' }}>{{ DateTime::createFromFormat('!m', $m)->format('F') }}</option>
+                  @endfor
+                </select>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="choosing-business-type-text">Year</label>
+                <select name="education[expenses][{{ $i }}][laptop_purchase_year]" class="form-control border-dark">
+                  <option value="">Year</option>
+                  @for ($y = date('Y'); $y >= 1990; $y--)
+                    <option value="{{ $y }}" {{ old("education.expenses.$i.laptop_purchase_year", $eduExpenses[$i]['laptop_purchase_year'] ?? '') == $y ? 'selected' : '' }}>{{ $y }}</option>
+                  @endfor
+                </select>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="col-md-4 mb-3">
-          <label class="choosing-business-type-text">Month</label>
-          <select name="laptop_purchase_month" class="form-control border-dark">
-            <option value="">Month</option>
-            @for ($i = 1; $i <= 12; $i++)
-              <option value="{{ $i }}">{{ DateTime::createFromFormat('!m', $i)->format('F') }}</option>
-            @endfor
-          </select>
-        </div>
-        <div class="col-md-4 mb-3">
-          <label class="choosing-business-type-text">Year</label>
-          <select name="laptop_purchase_year" class="form-control border-dark">
-            <option value="">Year</option>
-            @for ($i = date('Y'); $i >= 1990; $i--)
-              <option value="{{ $i }}">{{ $i }}</option>
-            @endfor
-          </select>
-        </div>
-    </div>
-  </div>
-</div>
-
+        @endfor
       </div>
 
       <div class="mb-3">
         <button type="button" class="btn btn_add" id="addEduExpense">
-            <img src="{{ asset('img/icons/plus.png') }}" alt="plus">Add another education expense
+          <img src="{{ asset('img/icons/plus.png') }}" alt="plus">Add another education expense
         </button>
       </div>
-
-      <div class="mb-3">
-        <label class="form-label">Your total education claim based on the above:</label>
-        <p class="choosing-business-type-text text-secondary" id="edu_total">00.00$</p>
-      </div>
+      
       <!-- File upload -->
-        <div class="row mb-3 align-items-end">
-            <p class="choosing-business-type-text">
-                Attach a simple breakdown of your expenses (optional)
-            </p>
-            <div class="col-md-6 mb-3">
-                <input type="file" name="edu_file" id="eduFileInput" class="d-none">
-                <button type="button" class="btn btn_add" id="triggerEduFile">
-                <img src="{{ asset('img/icons/plus.png') }}" alt="plus">
-                Choose file
-                </button>
-            </div>
-            <div class="col-md-6 mb-3">
-                <p id="eduFileName" class="choosing-business-type-text text-muted mb-0">
-                No file chosen
-                </p>
-            </div>
+      <div class="row mb-3 align-items-end">
+        <p class="choosing-business-type-text">
+          Attach a simple breakdown of your expenses (optional)
+        </p>
+        <div class="col-md-6 mb-3">
+          <input type="file" name="education[edu_file]" id="eduFileInput" class="d-none">
+          <button type="button" class="btn btn_add" id="triggerEduFile">
+            <img src="{{ asset('img/icons/plus.png') }}" alt="plus">
+            Choose file
+          </button>
         </div>
+        <div class="col-md-6 mb-3">
+          <p id="eduFileName" class="choosing-business-type-text text-muted mb-0">
+            @if(!empty($deductions->education['edu_file']))
+              <a href="{{ asset('storage/'.$deductions->education['edu_file']) }}" target="_blank" class="btn btn-outline-success">
+                <i class="fa-solid fa-file"></i>
+                View file
+              </a>
+            @else
+              No file chosen
+            @endif
+          </p>
+        </div>
+      </div>
     </div>
   </div>
-</form>
+</section>
 
 <!-- JS -->
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   // Show/hide car travel block
-  document.querySelectorAll('input[name="car_travel"]').forEach(input => {
+  document.querySelectorAll('input[name="education[car_travel]"]').forEach(input => {
     input.addEventListener('change', function () {
       document.getElementById('car_travel_block').style.display = this.value === 'yes' ? 'block' : 'none';
     });
   });
 
   // Show/hide education block
-  document.querySelectorAll('input[name="edu_expense"]').forEach(input => {
+  document.querySelectorAll('input[name="education[edu_expense]"]').forEach(input => {
     input.addEventListener('change', function () {
       document.getElementById('edu_expense_block').style.display = this.value === 'yes' ? 'block' : 'none';
     });
@@ -200,6 +282,16 @@ document.addEventListener('DOMContentLoaded', function () {
       const val = parseFloat(input.value);
       if (!isNaN(val)) total += val;
     });
+    
+    // Calculate laptop expenses
+    document.querySelectorAll('.laptop-total-amount').forEach((input, index) => {
+      const totalAmount = parseFloat(input.value) || 0;
+      const percentUse = parseFloat(document.querySelectorAll('.laptop-percent-use')[index].value) || 0;
+      if (!isNaN(totalAmount) && !isNaN(percentUse)) {
+        total += totalAmount * (percentUse / 100);
+      }
+    });
+    
     totalField.textContent = total.toFixed(2) + "$";
   }
 
@@ -220,6 +312,8 @@ document.addEventListener('DOMContentLoaded', function () {
   function initEduBlock(block) {
     const typeSelect = block.querySelector('.edu-expense-type');
     const amountInput = block.querySelector('.edu-amount');
+    const laptopTotalInput = block.querySelector('.laptop-total-amount');
+    const laptopPercentInput = block.querySelector('.laptop-percent-use');
 
     toggleLaptopFields(block);
 
@@ -229,22 +323,33 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     amountInput.addEventListener('input', updateEduTotal);
+    if (laptopTotalInput) laptopTotalInput.addEventListener('input', updateEduTotal);
+    if (laptopPercentInput) laptopPercentInput.addEventListener('input', updateEduTotal);
   }
 
   eduContainer.querySelectorAll('.edu-expense-item').forEach(initEduBlock);
 
   addEduBtn.addEventListener('click', function () {
-    const first = eduContainer.querySelector('.edu-expense-item');
+    const blocks = eduContainer.querySelectorAll('.edu-expense-item');
+    const newIndex = blocks.length;
+    const first = blocks[0];
     const clone = first.cloneNode(true);
 
+    // Clear all values
     clone.querySelectorAll('input').forEach(input => {
       input.value = '';
     });
-
     clone.querySelectorAll('select').forEach(select => {
       select.selectedIndex = 0;
     });
 
+    // Update names with new index
+    clone.querySelectorAll('[name]').forEach(el => {
+      const name = el.getAttribute('name');
+      el.setAttribute('name', name.replace(/education\[expenses\]\[\d+\]/, `education[expenses][${newIndex}]`));
+    });
+
+    // Reset display states
     clone.querySelector('.laptop-extra-fields').style.display = 'none';
     clone.querySelector('.amount-paid-block').style.display = 'block';
 
@@ -264,7 +369,8 @@ document.addEventListener('DOMContentLoaded', function () {
       ? eduFileInput.files[0].name
       : "No file chosen";
   });
+
+  // Initialize total on page load
+  updateEduTotal();
 });
 </script>
-
-

@@ -81,6 +81,14 @@ class DeductionController extends Controller
             $data['low_value_pool'] = $existing->low_value_pool ?? [];
         }
 
+        // === Education File Handling ===
+        if ($request->hasFile('education.edu_file')) {
+            $file = $request->file('education.edu_file');
+            $data['education']['edu_file'] = $file->store('education', 'public');
+        } elseif ($existing) {
+            $data['education'] = $existing->education ?? [];
+        }
+
         if ($existing) {
             $existing->update($data);
             $deduction = $existing;
