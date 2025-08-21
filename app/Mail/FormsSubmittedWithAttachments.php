@@ -19,21 +19,32 @@ class FormsSubmittedWithAttachments extends Mailable
 
     public $files = [];
 
+
+    /**
+     * @param $tax
+     * @param $files
+     * @param $other
+     */
     public function __construct($tax, $files = [], $other = null)
     {
         $this->tax   = $tax;
         $this->files = $files;
 
-        // Normalize $other
         if ($other instanceof \Illuminate\Database\Eloquent\Collection) {
-            $this->other = $other->toArray();
+            $raw = $other->toArray();
         } elseif ($other instanceof \Illuminate\Database\Eloquent\Model) {
-            $this->other = [$other->toArray()];
+            $raw = [$other->toArray()];
         } elseif (is_array($other)) {
-            $this->other = $other;
+            $raw = $other;
         } else {
-            $this->other = [];
+            $raw = [];
         }
+
+        // Normalize every record
+        $this->other = array_values(array_filter(array_map(
+            fn($item) => $this->cleanAndHumanize((array)$item),
+            $raw
+        )));
     }
 
     public function envelope(): Envelope
@@ -99,16 +110,46 @@ class FormsSubmittedWithAttachments extends Mailable
 
 
     /**
-     * Convert snake_case keys to human-readable labels recursively.
+     * @var array|string[]
      */
-    private function humanizeKeys(array $data): array
+    private array $hiddenKeys = ['id', 'created_at', 'updated_at', 'attach'];
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    private function cleanAndHumanize(array $data): array
     {
-        $result = [];
+        $out = [];
+
         foreach ($data as $key => $value) {
-            $label = ucwords(str_replace('_', ' ', $key));
-            $result[$label] = is_array($value) ? $this->humanizeKeys($value) : $value;
+            // skip hidden keys
+            if (in_array(strtolower($key), $this->hiddenKeys, true)) {
+                continue;
+            }
+
+            // skip null/empty values
+            if (is_null($value) || $value === '' || (is_array($value) && empty($value))) {
+                continue;
+            }
+
+            // humanize label
+            $label = ucwords(preg_replace('/[_\-]+/', ' ', (string)$key));
+
+            if (is_array($value)) {
+                $nested = $this->cleanAndHumanize($value);
+                // keep section only if it has content after cleaning
+                if (!empty($nested)) {
+                    $out[$label] = $nested;
+                }
+            } else {
+                $out[$label] = $value;
+            }
         }
-        return $result;
+
+        return $out;
     }
 
 }
+
+
