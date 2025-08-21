@@ -97,6 +97,14 @@ class DeductionController extends Controller
             $data['uniforms'] = $existing->uniforms ?? [];
         }
 
+        // === Books File Handling ===
+        if ($request->hasFile('books.books_file')) {
+            $file = $request->file('books.books_file');
+            $data['books']['books_file'] = $file->store('books', 'public');
+        } elseif ($existing) {
+            $data['books'] = $existing->books ?? [];
+        }
+
         if ($existing) {
             $existing->update($data);
             $deduction = $existing;
