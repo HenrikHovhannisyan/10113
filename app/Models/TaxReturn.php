@@ -59,11 +59,12 @@ class TaxReturn extends Model
         return $this->hasMany(Deduction::class);
     }
 
+
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function other()
     {
-        return $this->hasMany(Other::class);
+        return $this->hasOne(Other::class);
     }
 }
