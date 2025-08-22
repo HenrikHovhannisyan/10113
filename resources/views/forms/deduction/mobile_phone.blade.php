@@ -1,29 +1,42 @@
-<form>
+<section id="mobilePhoneForm">
   <div class="d-flex align-items-center justify-content-between mb-3">
     <h4 class="form_title">Mobile Phone</h4>
     <img src="{{ asset('img/icons/help.png') }}" alt="Help">
   </div>
 
   <div id="mobileExpenseContainer">
-    <p class="choosing-business-type-text">
-        Do you use your mobile phone for work purposes? Are you sometimes required to call clients or other staff members on your personal mobile phone? If you answered “yes”, then you might be able to claim the cost of these calls. (If your employer paid for it, don’t claim it.)
-    </p>
-    <div class="grin_box_border mb-3 mobile-expense-block">
+    @php
+      $mobileExpenses = old('mobile_phone.expenses', $deductions->mobile_phone['expenses'] ?? []);
+      $mobileCount = count($mobileExpenses) > 0 ? count($mobileExpenses) : 1;
+    @endphp
+
+    @for($i = 0; $i < $mobileCount; $i++)
+    <div class="grin_box_border mb-3 mobile-expense-block" data-index="{{ $i }}">
       <div class="row">
         <div class="col-md-6 mb-3">
-          <label class="choosing-business-type-text">Why do you use your mobile for work? (eg. “I manage shift workers all hours”)</label>
-          <input type="text" class="form-control border-dark reason" name="mobile_reason[]" placeholder='00.00$”'>
+          <label class="choosing-business-type-text">Why do you use your mobile for work?</label>
+          <input type="text" class="form-control border-dark reason" 
+                 name="mobile_phone[expenses][{{ $i }}][reason]" 
+                 value="{{ $mobileExpenses[$i]['reason'] ?? '' }}">
         </div>
         <div class="col-md-6 mb-3">
-          <label class="choosing-business-type-text">What % of your mobile calls are related to your work? (eg. 30%)</label>
-          <input type="text" class="form-control border-dark percentage" name="mobile_percentage[]" placeholder="0%">
+          <label class="choosing-business-type-text">What % of your mobile calls are related to your work?</label>
+          <input type="text" class="form-control border-dark percentage" 
+                 name="mobile_phone[expenses][{{ $i }}][percentage]" 
+                 value="{{ $mobileExpenses[$i]['percentage'] ?? '' }}">
         </div>
         <div class="col-md-6 mb-3">
-          <label class="choosing-business-type-text">Total of your mobile bills for the year (July 2024 - June 2025)</label>
-          <input type="number" step="0.01" class="form-control border-dark mobile-total" name="mobile_total[]" placeholder="00.00$">
+          <label class="choosing-business-type-text">Total of your mobile bills for the year</label>
+          <input type="number" step="0.01" class="form-control border-dark mobile-total" 
+                 name="mobile_phone[expenses][{{ $i }}][total]" 
+                 value="{{ $mobileExpenses[$i]['total'] ?? '' }}">
         </div>
       </div>
+      <div class="mb-2">
+        <button type="button" class="btn btn_delete deleteMobileExpense">Delete</button>
+      </div>
     </div>
+    @endfor
   </div>
 
   <div class="mb-3">
@@ -31,59 +44,67 @@
       <img src="{{ asset('img/icons/plus.png') }}" alt="plus"> Add another mobile expense
     </button>
   </div>
-
-  <div class="row mb-3">
-    <div class="col-md-6">
-      <label class="choosing-business-type-text">Estimated final amount of your claim:</label>
-      <p class="choosing-business-type-text text-secondary" id="mobileClaim">00.00$</p>
-    </div>
-  </div>
-</form>
+</section>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   const container = document.getElementById("mobileExpenseContainer");
   const addBtn = document.getElementById("addMobileExpense");
-  const totalDisplay = document.getElementById("mobileClaim");
 
-  function updateMobileClaim() {
-    let totalClaim = 0;
+  const blockTemplate = `
+    <div class="grin_box_border mb-3 mobile-expense-block" data-index="__INDEX__">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="choosing-business-type-text">Why do you use your mobile for work?</label>
+          <input type="text" class="form-control border-dark reason" name="mobile_phone[expenses][__INDEX__][reason]" value="">
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="choosing-business-type-text">What % of your mobile calls are related to your work?</label>
+          <input type="text" class="form-control border-dark percentage" name="mobile_phone[expenses][__INDEX__][percentage]" value="">
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="choosing-business-type-text">Total of your mobile bills for the year</label>
+          <input type="number" step="0.01" class="form-control border-dark mobile-total" name="mobile_phone[expenses][__INDEX__][total]" value="">
+        </div>
+      </div>
+      <div class="mb-2">
+        <button type="button" class="btn btn_delete deleteMobileExpense">Delete</button>
+      </div>
+    </div>
+  `;
+
+  function refreshIndices() {
     const blocks = container.querySelectorAll(".mobile-expense-block");
-
-    blocks.forEach(block => {
-      const totalInput = block.querySelector(".mobile-total");
-      const percentInput = block.querySelector(".percentage");
-
-      let total = parseFloat(totalInput.value) || 0;
-      let percent = parseFloat(percentInput.value) || 0;
-
-      if (percent > 0 && percent <= 100) {
-        totalClaim += (total * percent) / 100;
-      }
+    blocks.forEach((block, index) => {
+      block.dataset.index = index;
+      block.querySelectorAll('input').forEach(input => {
+        input.name = input.name.replace(/\d+/, index);
+      });
     });
-
-    totalDisplay.textContent = totalClaim.toFixed(2) + "$";
   }
 
-  function initMobileBlock(block) {
-    const percentInput = block.querySelector(".percentage");
-    const totalInput = block.querySelector(".mobile-total");
-
-    percentInput.addEventListener("input", updateMobileClaim);
-    totalInput.addEventListener("input", updateMobileClaim);
+  function attachDeleteButtons() {
+    container.querySelectorAll(".deleteMobileExpense").forEach(btn => {
+      btn.onclick = () => {
+        const blocks = container.querySelectorAll(".mobile-expense-block");
+        if (blocks.length > 1) {
+          btn.closest(".mobile-expense-block").remove();
+          refreshIndices();
+        } else {
+          alert("You must have at least one mobile expense.");
+        }
+      };
+    });
   }
-
-  document.querySelectorAll(".mobile-expense-block").forEach(initMobileBlock);
 
   addBtn.addEventListener("click", () => {
-    const blocks = container.querySelectorAll(".mobile-expense-block");
-    const lastBlock = blocks[blocks.length - 1];
-    const clone = lastBlock.cloneNode(true);
-
-    clone.querySelectorAll("input").forEach(input => input.value = "");
-
-    container.appendChild(clone);
-    initMobileBlock(clone);
+    const newIndex = container.querySelectorAll(".mobile-expense-block").length;
+    const newBlockHTML = blockTemplate.replace(/__INDEX__/g, newIndex);
+    container.insertAdjacentHTML('beforeend', newBlockHTML);
+    refreshIndices();
+    attachDeleteButtons();
   });
+
+  attachDeleteButtons();
 });
 </script>
