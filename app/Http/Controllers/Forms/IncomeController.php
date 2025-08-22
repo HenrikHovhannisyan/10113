@@ -20,7 +20,6 @@ class IncomeController extends Controller
             ], 404);
         }
 
-        // Если обновляем, берем существующую запись
         $existing = $id ? Income::findOrFail($id) : null;
 
         $fields = [
@@ -108,7 +107,6 @@ class IncomeController extends Controller
         }
         $data['rent'] = $rents;
 
-        // === Сохраняем или обновляем ===
         if ($existing) {
             $existing->update($data);
             $income = $existing;
