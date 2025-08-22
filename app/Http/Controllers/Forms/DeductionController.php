@@ -22,7 +22,6 @@ class DeductionController extends Controller
 
         $existing = $id ? Deduction::findOrFail($id) : null;
 
-        // Поля для обычных данных
         $fields = [
             'car_expenses',
             'travel_expenses',
@@ -57,6 +56,7 @@ class DeductionController extends Controller
         // === Single files (key => storage folder) ===
         $fileFields = [
             'computer.computer_file'   => 'computer',
+            'travel_expenses.travel_file'   => 'travel_expenses',
             'union_fees.file'          => 'union_fees',
             'sun_protection.sun_file'  => 'sun_protection',
             'education.edu_file'       => 'education',
