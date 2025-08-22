@@ -105,6 +105,14 @@ class DeductionController extends Controller
             $data['books'] = $existing->books ?? [];
         }
 
+        // === Home Office File Handling ===
+        if ($request->hasFile('home_office.home_receipt')) {
+            $file = $request->file('home_office.home_receipt');
+            $data['home_office']['home_receipt'] = $file->store('home_office', 'public');
+        } elseif ($existing) {
+            $data['home_office'] = $existing->home_office ?? [];
+        }
+
         if ($existing) {
             $existing->update($data);
             $deduction = $existing;
