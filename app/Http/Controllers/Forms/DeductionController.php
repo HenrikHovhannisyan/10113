@@ -81,6 +81,38 @@ class DeductionController extends Controller
             $data['low_value_pool'] = $existing->low_value_pool ?? [];
         }
 
+        // === Education File Handling ===
+        if ($request->hasFile('education.edu_file')) {
+            $file = $request->file('education.edu_file');
+            $data['education']['edu_file'] = $file->store('education', 'public');
+        } elseif ($existing) {
+            $data['education'] = $existing->education ?? [];
+        }
+
+        // === Uniforms File Handling ===
+        if ($request->hasFile('uniforms.uniform_receipt')) {
+            $file = $request->file('uniforms.uniform_receipt');
+            $data['uniforms']['uniform_receipt'] = $file->store('uniforms', 'public');
+        } elseif ($existing) {
+            $data['uniforms'] = $existing->uniforms ?? [];
+        }
+
+        // === Books File Handling ===
+        if ($request->hasFile('books.books_file')) {
+            $file = $request->file('books.books_file');
+            $data['books']['books_file'] = $file->store('books', 'public');
+        } elseif ($existing) {
+            $data['books'] = $existing->books ?? [];
+        }
+
+        // === Home Office File Handling ===
+        if ($request->hasFile('home_office.home_receipt')) {
+            $file = $request->file('home_office.home_receipt');
+            $data['home_office']['home_receipt'] = $file->store('home_office', 'public');
+        } elseif ($existing) {
+            $data['home_office'] = $existing->home_office ?? [];
+        }
+
         if ($existing) {
             $existing->update($data);
             $deduction = $existing;
