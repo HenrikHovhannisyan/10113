@@ -30,7 +30,7 @@
           <label class="choosing-business-type-text">Specify if 'Other'</label>
           <input type="text" class="form-control border-dark other-description"
                  name="travel_expenses[expenses][{{ $i }}][other]"
-                 placeholder="Specify other expense"
+                 placeholder="What do you do for a living?"
                  value="{{ $expenses[$i]['other'] ?? '' }}"
                  {{ ($expenses[$i]['reason'] ?? '') !== 'Other' ? 'disabled' : '' }}>
         </div>
@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
         <div class="col-md-6 mb-3">
           <label class="choosing-business-type-text">Specify if 'Other'</label>
-          <input type="text" class="form-control border-dark other-description" name="travel_expenses[expenses][__INDEX__][other]" placeholder="Specify other expense" disabled>
+          <input type="text" class="form-control border-dark other-description" name="travel_expenses[expenses][__INDEX__][other]" placeholder="What do you do for a living?" disabled>
         </div>
         <div class="col-md-6 mb-3">
           <label class="choosing-business-type-text">Total amount you paid for this item</label>
