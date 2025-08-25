@@ -28,8 +28,6 @@ class TaxReturnController extends Controller
             ->latest()
             ->get();
 
-        // dd($completedForms, $incompleteForm);
-
         return view('pages.tax-returns.index', compact('incompleteForm', 'completedForms'));
     }
 
