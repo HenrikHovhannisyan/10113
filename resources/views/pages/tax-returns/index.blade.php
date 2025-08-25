@@ -38,22 +38,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>2024</td>
-                        <td>Lodged</td>
-                    </tr>
-                    <tr>
-                        <td>2023</td>
-                        <td>Lodged</td>
-                    </tr>
-                    <tr>
-                        <td>2022</td>
-                        <td>Lodged</td>
-                    </tr>
-                    <tr>
-                        <td>2021</td>
-                        <td>Lodged</td>
-                    </tr>
+                    @if($incompleteForm)
+                        <tr>
+                            <td>{{ $incompleteForm->updated_at->format('Y') }}</td>
+                            <td class="text-capitalize">{{ $incompleteForm->form_status }}</td>
+                        </tr>
+                    @endif
+                    @foreach($completedForms as $form)
+                        <tr>
+                            <td>{{ $form->updated_at->format('Y') }}</td>
+                            <td class="text-capitalize">{{ $form->form_status }}</td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

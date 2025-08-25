@@ -23,7 +23,14 @@ class TaxReturnController extends Controller
             ->latest()
             ->first();
 
-        return view('pages.tax-returns.index', compact('incompleteForm'));
+        $completedForms = TaxReturn::where('user_id', auth()->id())
+            ->where('form_status', 'complete')
+            ->latest()
+            ->get();
+
+        // dd($completedForms, $incompleteForm);
+
+        return view('pages.tax-returns.index', compact('incompleteForm', 'completedForms'));
     }
 
     /**
