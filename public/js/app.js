@@ -77,9 +77,6 @@ prevBtn?.addEventListener("click", () => {
     }
 });
 
-confirmBtn?.addEventListener("click", () => {
-    alert("Form confirmed!");
-});
 
 updateTab(currentTab);
 

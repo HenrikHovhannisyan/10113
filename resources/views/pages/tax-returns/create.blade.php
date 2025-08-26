@@ -57,7 +57,9 @@
                 <p>Back</p>
             </button>
             <button class="btn navbar_btn" id="nextBtn" type="button">Next</button>
-            <button class="btn navbar_btn d-none" id="confirmBtn" type="button">Confirm</button>
+            <a href="{{ route('payment', ['id' => $taxReturn->id]) }}"  class="btn navbar_btn d-none" id="confirmBtn">
+                Payment
+            </a>
         </div>
     </div>
 </div>
