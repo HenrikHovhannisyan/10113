@@ -11,6 +11,7 @@ return new class extends Migration
         Schema::create('incomes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('tax_return_id')->constrained()->onDelete('cascade');
+            $table->json('attach')->nullable();
 
             $table->json('salary')->nullable(); // Salary / Wages
             $table->json('interests')->nullable(); // Interest

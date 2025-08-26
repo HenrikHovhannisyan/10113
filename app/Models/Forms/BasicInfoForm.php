@@ -11,6 +11,7 @@ class BasicInfoForm extends Model
     use HasFactory;
 
     protected $fillable = [
+        'attach',
         'tax_return_id',
         'first_name',
         'last_name',

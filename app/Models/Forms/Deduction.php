@@ -11,6 +11,7 @@ class Deduction extends Model
     use HasFactory;
 
     protected $fillable = [
+        'attach',
         'tax_return_id',
         'car_expenses',
         'travel_expenses',
@@ -38,6 +39,7 @@ class Deduction extends Model
     ];
 
     protected $casts = [
+        'attach' => 'array',
         'car_expenses' => 'array',
         'travel_expenses' => 'array',
         'mobile_phone' => 'array',

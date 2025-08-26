@@ -12,33 +12,31 @@ class SendTaxFormsToManagers
     {
         $tax = $event->tax->load('user', 'other', 'basicInfo', 'deduction', 'income');
 
-        $pdfFiles = []; // (if you want to generate PDFs for forms, you can uncomment later)
+        $pdfFiles = [];
+        $allFiles = [];
 
-        $otherFiles = [];
+        // List of links that can have attach
+        $relationsWithAttach = ['other', 'basicInfo', 'deduction', 'income'];
 
-        // Collect attachments from "other.attach" JSON column
+        foreach ($relationsWithAttach as $relation) {
+            if ($tax->$relation && !empty($tax->$relation->attach)) {
+                $attachData = is_array($tax->$relation->attach)
+                    ? $tax->$relation->attach
+                    : json_decode($tax->$relation->attach, true);
 
-        if ($tax->other && !empty($tax->other->attach)) {
-            $attachData = is_array($tax->other->attach)
-                ? $tax->other->attach
-                : json_decode($tax->other->attach, true);
-
-            if ($attachData && is_array($attachData)) {
-                foreach ($attachData as $label => $relativePath) {
-
-                    $fullPath = storage_path('app/public/' . ltrim($relativePath, '/'));
-                    if ($relativePath && file_exists($fullPath)) {
-                        $otherFiles[] = $fullPath;
+                if ($attachData && is_array($attachData)) {
+                    foreach ($attachData as $label => $relativePath) {
+                        $fullPath = storage_path('app/public/' . ltrim($relativePath, '/'));
+                        if ($relativePath && file_exists($fullPath)) {
+                            $allFiles[] = $fullPath;
+                        }
                     }
                 }
             }
         }
 
-        // Merge PDFs + Other attachments
-        $allFiles = array_merge($pdfFiles, $otherFiles);
+        $allFiles = array_merge($pdfFiles, $allFiles);
 
-
-        // Manager emails from .env
         $managerEmails = explode(',', env('MANAGER_EMAILS', 'manager1@example.com'));
 
         foreach ($managerEmails as $email) {

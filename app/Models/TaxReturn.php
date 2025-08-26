@@ -44,21 +44,29 @@ class TaxReturn extends Model
         return $this->payment_status === 'paid';
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function basicInfos()
     {
-        return $this->hasMany(BasicInfoForm::class);
+        return $this->hasOne(BasicInfoForm::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function incomes()
     {
-        return $this->hasMany(Income::class);
+        return $this->hasOne(Income::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function deductions()
     {
-        return $this->hasMany(Deduction::class);
+        return $this->hasOne(Deduction::class);
     }
-
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne

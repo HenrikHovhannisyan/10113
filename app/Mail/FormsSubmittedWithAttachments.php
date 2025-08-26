@@ -17,26 +17,41 @@ class FormsSubmittedWithAttachments extends Mailable
     public $tax;
     public $other;
     public $files = [];
+    public $basicInfo;
+    public $deduction;
+    public $income;
 
-    public function __construct($tax, $files = [], $other = null)
+    public function __construct($tax, $files = [], $other = null, $basicInfo = null, $deduction = null, $income = null)
     {
         $this->tax   = $tax;
         $this->files = $files;
 
-        if ($other instanceof \Illuminate\Database\Eloquent\Collection) {
-            $raw = $other->toArray();
-        } elseif ($other instanceof \Illuminate\Database\Eloquent\Model) {
-            $raw = [$other->toArray()];
-        } elseif (is_array($other)) {
-            $raw = $other;
+        $this->other      = $this->prepareData($other);
+        $this->basicInfo  = $this->prepareData($basicInfo);
+        $this->deduction  = $this->prepareData($deduction);
+        $this->income     = $this->prepareData($income);
+    }
+
+    private function prepareData($data, $humanize = true): array
+    {
+        if ($data instanceof \Illuminate\Database\Eloquent\Collection) {
+            $raw = $data->toArray();
+        } elseif ($data instanceof \Illuminate\Database\Eloquent\Model) {
+            $raw = [$data->toArray()];
+        } elseif (is_array($data)) {
+            $raw = $data;
         } else {
             $raw = [];
         }
 
-        $this->other = array_values(array_filter(array_map(
-            fn($item) => $this->cleanAndHumanize((array)$item),
-            $raw
-        )));
+        if ($humanize) {
+            return array_values(array_filter(array_map(
+                fn($item) => $this->cleanAndHumanize((array)$item),
+                $raw
+            )));
+        }
+
+        return $raw;
     }
 
     public function envelope(): Envelope
@@ -51,8 +66,11 @@ class FormsSubmittedWithAttachments extends Mailable
         return new Content(
             view: 'emails.forms_submitted',
             with: [
-                'tax'   => $this->tax,
-                'other' => $this->other,
+                'tax'        => $this->tax,
+                'other'      => $this->other,
+                'basicInfo'  => $this->basicInfo,
+                'deduction'  => $this->deduction,
+                'income'     => $this->income,
             ],
         );
     }
@@ -61,28 +79,25 @@ class FormsSubmittedWithAttachments extends Mailable
     {
         $attachments = [];
 
-        // ✅ Attach all files from Listener
         foreach ($this->files as $file) {
             if ($file && file_exists($file)) {
-                $fileName = basename($file); // keep original name
-                $attachments[] = Attachment::fromPath($file)->as($fileName);
+                $attachments[] = Attachment::fromPath($file)->as(basename($file));
             }
         }
 
-        // ✅ Generate PDF summary of $other data
-        if (!empty($this->other)) {
-            $pdf = Pdf::loadView('pdf.other_data', [
-                'other' => $this->other,
-                'tax'   => $this->tax
-            ]);
+        $forms = [
+            'OtherFormData.pdf' => ['data' => $this->other, 'view' => 'pdf.other_data'],
+            'BasicInfo.pdf'     => ['data' => $this->basicInfo, 'view' => 'pdf.basic_info'],
+            'Deduction.pdf'     => ['data' => $this->deduction, 'view' => 'pdf.deduction'],
+            'Income.pdf'        => ['data' => $this->income, 'view' => 'pdf.income'],
+        ];
 
-            $pdfContent = $pdf->output();
-
-            if (!empty($pdfContent)) {
-                $attachments[] = Attachment::fromData(
-                    fn () => $pdfContent,
-                    'OtherFormData.pdf'
-                )->withMime('application/pdf');
+        foreach ($forms as $fileName => $form) {
+            if (!empty($form['data'])) {
+                $pdfContent = Pdf::loadView($form['view'], ['tax' => $this->tax, strtolower(pathinfo($fileName, PATHINFO_FILENAME)) => $form['data']])->output();
+                if (!empty($pdfContent)) {
+                    $attachments[] = Attachment::fromData(fn() => $pdfContent, $fileName)->withMime('application/pdf');
+                }
             }
         }
 

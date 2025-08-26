@@ -11,6 +11,7 @@ class Income extends Model
     use HasFactory;
 
     protected $fillable = [
+        'attach',
         'managed_funds',
         'termination_payments',
         'salary',
@@ -34,6 +35,7 @@ class Income extends Model
     ];
 
     protected $casts = [
+        'attach' => 'array',
         'salary' => 'array', // Salary / Wages
         'interests' => 'array', // Interest
         'dividends' => 'array', // Dividends

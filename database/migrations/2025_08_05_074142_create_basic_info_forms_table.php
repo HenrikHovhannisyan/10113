@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('basic_info_forms', function (Blueprint $table) {
             $table->id();
             $table->foreignId('tax_return_id')->constrained()->onDelete('cascade');
+            $table->json('attach')->nullable();
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->unsignedTinyInteger('day')->nullable();

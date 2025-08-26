@@ -11,7 +11,8 @@ return new class extends Migration
         Schema::create('deductions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('tax_return_id')->constrained()->onDelete('cascade');
-
+            $table->json('attach')->nullable();
+            
             $table->json('car_expenses')->nullable(); // Car expenses + parking + tolls
             $table->json('travel_expenses')->nullable(); // Travel Expenses
             $table->json('mobile_phone')->nullable(); // Mobile Phone
