@@ -19,10 +19,8 @@ class BasicInfoFormController extends Controller
         $rules = [
             'first_name' => 'nullable|string|max:255',
             'last_name' => 'nullable|string|max:255',
-            'first_name' => 'nullable|string|max:255',
-            'last_name' => 'nullable|string|max:255',
             'day' => 'nullable|integer|min:1|max:31',
-            'month' => 'nullable|integer|min:1|max:12',
+            'month' => 'nullable|string|min:1|max:12',
             'year' => 'nullable|integer|min:1900|max:' . date('Y'),
             'phone' => 'nullable|string|max:20',
             'gender' => 'nullable|in:male,female',

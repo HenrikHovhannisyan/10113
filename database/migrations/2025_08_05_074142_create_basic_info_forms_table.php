@@ -17,9 +17,9 @@ return new class extends Migration
             $table->json('attach')->nullable();
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
-            $table->unsignedTinyInteger('day')->nullable();
-            $table->unsignedTinyInteger('month')->nullable();
-            $table->unsignedSmallInteger('year')->nullable();
+            $table->string('day')->nullable();
+            $table->string('month')->nullable();
+            $table->string('year')->nullable();
             $table->string('phone')->nullable();
             $table->enum('gender', ['male', 'female'])->nullable();
             $table->boolean('has_spouse')->nullable();
@@ -28,10 +28,10 @@ return new class extends Migration
             $table->string('visa_type')->nullable();
             $table->string('other_visa_type')->nullable();
             $table->boolean('long_stay_183')->nullable();
-            $table->unsignedTinyInteger('arrival_month')->nullable();
-            $table->unsignedSmallInteger('arrival_year')->nullable();
-            $table->unsignedTinyInteger('departure_month')->nullable();
-            $table->unsignedSmallInteger('departure_year')->nullable();
+            $table->string('arrival_month')->nullable();
+            $table->string('arrival_year')->nullable();
+            $table->string('departure_month')->nullable();
+            $table->string('departure_year')->nullable();
             $table->string('stay_purpose')->nullable();
             $table->boolean('full_tax_year')->nullable();
             $table->text('home_address')->nullable();

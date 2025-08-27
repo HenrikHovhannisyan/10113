@@ -8,41 +8,38 @@ use Illuminate\Support\Facades\Mail;
 
 class SendTaxFormsToManagers
 {
-    public function handle(TaxPaymentSucceeded $event)
+    public function handle(TaxPaymentSucceeded $event): void
     {
-        $tax = $event->tax->load('user', 'other', 'basicInfo', 'deduction', 'income');
+        $tax = $event->tax->load(['user', 'other', 'basicInfo', 'deduction', 'income']);
 
-        $pdfFiles = [];
-        $allFiles = [];
+        $allFiles = $this->collectAttachments($tax->other->attach ?? null);
 
-        // List of links that can have attach
-        $relationsWithAttach = ['other', 'basicInfo', 'deduction', 'income'];
+        $managerEmails = array_filter(
+            array_map('trim', explode(',', env('MANAGER_EMAILS', 'manager1@example.com')))
+        );
 
-        foreach ($relationsWithAttach as $relation) {
-            if ($tax->$relation && !empty($tax->$relation->attach)) {
-                $attachData = is_array($tax->$relation->attach)
-                    ? $tax->$relation->attach
-                    : json_decode($tax->$relation->attach, true);
+        foreach ($managerEmails as $email) {
+            Mail::to($email)->send(
+                new FormsSubmittedWithAttachments($tax, $allFiles, $tax->other, $tax->basicInfo)
+            );
+        }
+    }
 
-                if ($attachData && is_array($attachData)) {
-                    foreach ($attachData as $label => $relativePath) {
-                        $fullPath = storage_path('app/public/' . ltrim($relativePath, '/'));
-                        if ($relativePath && file_exists($fullPath)) {
-                            $allFiles[] = $fullPath;
-                        }
-                    }
-                }
+    private function collectAttachments($attachData): array
+    {
+        $files = [];
+
+        $data = is_array($attachData)
+            ? $attachData
+            : json_decode($attachData ?? '[]', true);
+
+        foreach ($data ?? [] as $relativePath) {
+            $fullPath = storage_path('app/public/' . ltrim($relativePath, '/'));
+            if (file_exists($fullPath)) {
+                $files[] = $fullPath;
             }
         }
 
-        $allFiles = array_merge($pdfFiles, $allFiles);
-
-        $managerEmails = explode(',', env('MANAGER_EMAILS', 'manager1@example.com'));
-
-        foreach ($managerEmails as $email) {
-            Mail::to(trim($email))->send(
-                new FormsSubmittedWithAttachments($tax, $allFiles, $tax->other)
-            );
-        }
+        return $files;
     }
 }

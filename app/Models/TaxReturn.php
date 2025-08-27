@@ -47,7 +47,7 @@ class TaxReturn extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function basicInfos()
+    public function basicInfo()
     {
         return $this->hasOne(BasicInfoForm::class);
     }
@@ -55,7 +55,7 @@ class TaxReturn extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function incomes()
+    public function income()
     {
         return $this->hasOne(Income::class);
     }
@@ -63,7 +63,7 @@ class TaxReturn extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function deductions()
+    public function deduction()
     {
         return $this->hasOne(Deduction::class);
     }

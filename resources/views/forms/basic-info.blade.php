@@ -40,7 +40,7 @@
                         <option value="">Month</option>
                         @for ($i = 1; $i <= 12; $i++)
                             @php $monthName = DateTime::createFromFormat('!m', $i)->format('F'); @endphp
-                            <option value="{{ $i }}" {{ old('month', $basicInfo->month ?? '') == $i ? 'selected' : '' }}>
+                            <option value="{{ $monthName  }}" {{ old('month', $basicInfo->month ?? '') == $monthName ? 'selected' : '' }}>
                                 {{ $monthName }}
                             </option>
                         @endfor
@@ -141,12 +141,24 @@
                     <div class="col-md-6 mb-3">
                         <select class="form-control" name="visa_type" id="visaSelect">
                             <option value="">What type of visa do you have (eg. 417, 457, NZ citizen)?</option>
-                            <option value="417" {{ old('visa_type', $basicInfo->visa_type ?? '') == '417' ? 'selected' : '' }}>417 - Working Holiday Visa</option>
-                            <option value="457" {{ old('visa_type', $basicInfo->visa_type ?? '') == '457' ? 'selected' : '' }}>457 - Temporary Work Visa New Zealand citizen</option>
-                            <option value="462" {{ old('visa_type', $basicInfo->visa_type ?? '') == '462' ? 'selected' : '' }}>462 - Work and Holiday Visa</option>
-                            <option value="416" {{ old('visa_type', $basicInfo->visa_type ?? '') == '416' ? 'selected' : '' }}>416 Special Program Visa</option>
-                            <option value="403" {{ old('visa_type', $basicInfo->visa_type ?? '') == '403' ? 'selected' : '' }}>403 - Seasonal Work Visa</option>
-                            <option value="other" {{ old('visa_type', $basicInfo->visa_type ?? '') == 'other' ? 'selected' : '' }}>Other</option>
+                            <option value="417 - Working Holiday Visa" {{ old('visa_type', $basicInfo->visa_type ?? '') == '417 - Working Holiday Visa' ? 'selected' : '' }}>
+                                417 - Working Holiday Visa
+                            </option>
+                            <option value="457 - Temporary Work Visa New Zealand citizen" {{ old('visa_type', $basicInfo->visa_type ?? '') == '457 - Temporary Work Visa New Zealand citizen' ? 'selected' : '' }}>
+                                457 - Temporary Work Visa New Zealand citizen
+                            </option>
+                            <option value="462" {{ old('462 - Work and Holiday Visa', $basicInfo->visa_type ?? '') == '462 - Work and Holiday Visa' ? 'selected' : '' }}>
+                                462 - Work and Holiday Visa
+                            </option>
+                            <option value="416 Special Program Visa" {{ old('visa_type', $basicInfo->visa_type ?? '') == '416 Special Program Visa' ? 'selected' : '' }}>
+                                416 Special Program Visa
+                            </option>
+                            <option value="403 - Seasonal Work Visa" {{ old('visa_type', $basicInfo->visa_type ?? '') == '403 - Seasonal Work Visa' ? 'selected' : '' }}>
+                                403 - Seasonal Work Visa
+                            </option>
+                            <option value="Other" {{ old('visa_type', $basicInfo->visa_type ?? '') == 'Other' ? 'selected' : '' }}>
+                                Other
+                            </option>
                         </select>
                     </div>
                     <div class="col-md-6 mb-3" id="otherVisaInput" style="display: {{ old('visa_type', $basicInfo->visa_type ?? '') == 'other' ? 'block' : 'none' }};">
@@ -180,7 +192,7 @@
                             <option value="">Month</option>
                             @for ($i = 1; $i <= 12; $i++)
                                 @php $monthName = DateTime::createFromFormat('!m', $i)->format('F'); @endphp
-                                <option value="{{ $i }}" {{ old('arrival_month', $basicInfo->arrival_month ?? '') == $i ? 'selected' : '' }}>
+                                <option value="{{ $monthName }}" {{ old('arrival_month', $basicInfo->arrival_month ?? '') == $monthName ? 'selected' : '' }}>
                                     {{ $monthName }}
                                 </option>
                             @endfor
@@ -205,7 +217,7 @@
                             <option value="">Month</option>
                             @for ($i = 1; $i <= 12; $i++)
                                 @php $monthName = DateTime::createFromFormat('!m', $i)->format('F'); @endphp
-                                <option value="{{ $i }}" {{ old('departure_month', $basicInfo->departure_month ?? '') == $i ? 'selected' : '' }}>
+                                <option value="{{ $monthName }}" {{ old('departure_month', $basicInfo->departure_month ?? '') == $monthName ? 'selected' : '' }}>
                                     {{ $monthName }}
                                 </option>
                             @endfor
@@ -227,9 +239,9 @@
                     <div class="col-md-6 mb-3">
                         <select name="stay_purpose" class="form-control border-dark">
                             <option value="">What was the primary purpose of your stay in Australia?</option>
-                            <option value="holiday" {{ old('stay_purpose', $basicInfo->stay_purpose ?? '') == 'holiday' ? 'selected' : '' }}>Holiday</option>
-                            <option value="work" {{ old('stay_purpose', $basicInfo->stay_purpose ?? '') == 'work' ? 'selected' : '' }}>Work</option>
-                            <option value="study" {{ old('stay_purpose', $basicInfo->stay_purpose ?? '') == 'study' ? 'selected' : '' }}>Study</option>
+                            <option value="Holiday" {{ old('stay_purpose', $basicInfo->stay_purpose ?? '') == 'Holiday' ? 'selected' : '' }}>Holiday</option>
+                            <option value="Work" {{ old('stay_purpose', $basicInfo->stay_purpose ?? '') == 'Work' ? 'selected' : '' }}>Work</option>
+                            <option value="Study" {{ old('stay_purpose', $basicInfo->stay_purpose ?? '') == 'Study' ? 'selected' : '' }}>Study</option>
                         </select>
                     </div>
                 </div>
@@ -340,13 +352,13 @@
                         </p>
                         <select class="form-control" name="occupation" id="occupationSelect">
                             <option value="">Choose</option>
-                            <option value="accountant" {{ old('occupation', $basicInfo->occupation ?? '') == 'accountant' ? 'selected' : '' }}>Accountant</option>
-                            <option value="manager" {{ old('occupation', $basicInfo->occupation ?? '') == 'manager' ? 'selected' : '' }}>Manager</option>
-                            <option value="nurse" {{ old('nurse', $basicInfo->occupation ?? '') == 'nurse' ? 'selected' : '' }}>Nurse</option>
-                            <option value="electrician" {{ old('electrician', $basicInfo->occupation ?? '') == 'electrician' ? 'selected' : '' }}>Electrician</option>
-                            <option value="retail_clerk" {{ old('retail_clerk', $basicInfo->occupation ?? '') == 'retail_clerk' ? 'selected' : '' }}>Retail clerk</option>
-                            <option value="student" {{ old('occupation', $basicInfo->occupation ?? '') == 'student' ? 'selected' : '' }}>Student</option>
-                            <option value="other" {{ old('occupation', $basicInfo->occupation ?? '') == 'other' ? 'selected' : '' }}>Other</option>
+                            <option value="Accountant" {{ old('occupation', $basicInfo->occupation ?? '') == 'Accountant' ? 'selected' : '' }}>Accountant</option>
+                            <option value="Manager" {{ old('occupation', $basicInfo->occupation ?? '') == 'Manager' ? 'selected' : '' }}>Manager</option>
+                            <option value="Nurse" {{ old('nurse', $basicInfo->occupation ?? '') == 'Nurse' ? 'selected' : '' }}>Nurse</option>
+                            <option value="Electrician" {{ old('electrician', $basicInfo->occupation ?? '') == 'Electrician' ? 'selected' : '' }}>Electrician</option>
+                            <option value="Retail clerk" {{ old('retail_clerk', $basicInfo->occupation ?? '') == 'Retail clerk' ? 'selected' : '' }}>Retail clerk</option>
+                            <option value="Student" {{ old('occupation', $basicInfo->occupation ?? '') == 'Student' ? 'selected' : '' }}>Student</option>
+                            <option value="Other" {{ old('occupation', $basicInfo->occupation ?? '') == 'Other' ? 'selected' : '' }}>Other</option>
                         </select>
                     </div>
                 </div>
@@ -359,7 +371,7 @@
             </div>
         </div>
     </section>
-    
+
     <div class="d-flex justify-content-end mb-5">
         <button type="submit" class="btn navbar_btn">
             {{ isset($basicInfo) ? 'Update' : 'Save' }}
@@ -372,7 +384,7 @@
         // Citizenship toggle
         const citizenshipRadios = document.querySelectorAll('input[name="australian_citizenship"]');
         const nonCitizenSection = document.getElementById('nonCitizenSection');
-        
+
         function toggleCitizenSection() {
             const selectedValue = document.querySelector('input[name="australian_citizenship"]:checked')?.value;
             nonCitizenSection.style.display = (selectedValue === 'no') ? 'block' : 'none';
@@ -381,7 +393,7 @@
         // Visa type toggle
         const visaSelect = document.getElementById('visaSelect');
         const otherVisaInput = document.getElementById('otherVisaInput');
-        
+
         function toggleVisaInput() {
             otherVisaInput.style.display = (visaSelect.value === 'other') ? 'block' : 'none';
         }
@@ -389,7 +401,7 @@
         // Postal address toggle
         const addressRadios = document.querySelectorAll('input[name="same_as_home_address"]');
         const postalAddressField = document.getElementById('postalAddressField');
-        
+
         function togglePostalAddress() {
             const selectedValue = document.querySelector('input[name="same_as_home_address"]:checked')?.value;
             postalAddressField.style.display = (selectedValue === 'no') ? 'block' : 'none';
@@ -398,7 +410,7 @@
         // Occupation toggle
         const occupationSelect = document.getElementById('occupationSelect');
         const otherOccupationField = document.getElementById('otherOccupationField');
-        
+
         function toggleOccupationField() {
             otherOccupationField.style.display = (occupationSelect.value === 'other') ? 'block' : 'none';
         }
@@ -419,10 +431,10 @@
         const form = document.getElementById('basic-info-form');
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
-            
+
             // Removing old error messages
             document.querySelectorAll('.text-danger').forEach(el => el.remove());
-            
+
             // Show loading indicator
             const submitBtn = form.querySelector('button[type="submit"]');
             const originalBtnText = submitBtn.innerHTML;
@@ -445,7 +457,7 @@
                 if (response.ok) {
                     // Successful save
                     showToast('success', data.message);
-                    
+
                     // If this is a new record creation, update the ID in the form
                     if (data.basicInfoId && !form.action.includes('update')) {
                         const newAction = form.action.replace('basic-info.store', `basic-info.update/${data.basicInfoId}`);
@@ -483,24 +495,24 @@
             toast.setAttribute('role', 'alert');
             toast.setAttribute('aria-live', 'assertive');
             toast.setAttribute('aria-atomic', 'true');
-            
+
             toast.innerHTML = `
                 <div class="d-flex">
                     <div class="toast-body">${message}</div>
                     <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
             `;
-            
+
             const toastContainer = document.getElementById('toast-container') || createToastContainer();
             toastContainer.appendChild(toast);
-            
+
             const bsToast = new bootstrap.Toast(toast);
             bsToast.show();
-            
+
             // Automatic hiding after 5 seconds
             setTimeout(() => bsToast.hide(), 5000);
         }
-        
+
         function createToastContainer() {
             const container = document.createElement('div');
             container.id = 'toast-container';

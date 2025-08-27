@@ -72,7 +72,10 @@
     <div class="record">
 
         @if(!empty($scalars))
-            <div class="section-title">General</div>
+            <div class="section-title">
+                <span>General</span>
+                <span>{{ $name }}</span>
+            </div>
             <table class="kv">
                 <tbody>
                 @foreach($scalars as $label => $value)
