@@ -21,9 +21,11 @@
             <option value="A: Excepted person under 18 years" {{ $under18Code ==='A: Excepted person under 18 years' ? 'selected' : '' }}>
                 A: Excepted person under 18 years
             </option>
-            <option value="M: Person under 18 years at 30 June 2025" {{ $under18Code ==='M: Person under 18 years at 30 June 2025' ? 'selected' : '' }}>
-                M: Person under 18 years at 30 June 2025
-            </option>
+            <option value="M: Person under 18 years at 30 June <?= date('Y') ?>" 
+    {{ $under18Code === 'M: Person under 18 years at 30 June ' . date('Y') ? 'selected' : '' }}>
+    M: Person under 18 years at 30 June <?= date('Y') ?>
+</option>
+
         </select>
     </div>
 

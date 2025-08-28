@@ -4,7 +4,9 @@
         <img src="{{ asset('img/icons/help.png') }}" alt="Help">
     </div>
 
-    <p class="choosing-business-type-text">If you had a spouse during 2024-2025, the ATO requires these details.</p>
+    <p class="choosing-business-type-text">
+    If you had a spouse during <?= date('Y') - 1 ?>-<?= date('Y') ?>, the ATO requires these details.
+    </p>
     <div class="grin_box_border mb-5">
         <p class="choosing-business-type-text mb-4">‘Spouse’ includes another person (same sex or opposite sex) who:</p>
         <p class="choosing-business-type-text">is married to you - OR -</p>
@@ -84,7 +86,9 @@
 
         {{-- Had spouse full year --}}
         <div class="mb-3">
-            <p class="choosing-business-type-text">Did you have a spouse for the full year 1 July 2024 to 30 June 2025?</p>
+            <p class="choosing-business-type-text">
+            Did you have a spouse for the full year 1 July <?= date('Y') - 1 ?> to 30 June <?= date('Y') ?>?
+            </p>
             @php
                 $fullYear = old('spouse_details.had_spouse_full_year', $others->spouse_details['had_spouse_full_year'] ?? '');
             @endphp

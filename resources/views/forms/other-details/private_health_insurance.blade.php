@@ -28,7 +28,7 @@
         <div class="row mb-3">
             <div class="col-md-6 mb-3">
                 <label for="family_status" class="choosing-business-type-text">
-                    What was your family status on 30 June 2025?
+                What was your family status on 30 June <?= date('Y') ?>?
                 </label>
                 <select id="family_status" name="private_health_insurance[family_status]" class="form-select border-dark">
                     <option value="">Choose</option>

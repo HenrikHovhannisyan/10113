@@ -65,7 +65,7 @@
       <div class="col-md-6 mb-3">
         <label class="choosing-business-type-text">
           For tools that cost more than $300 each, please list all items incl. description, cost and date of purchase
-          <small class="text-muted">(eg. “air compressor $452.12, 18 Feb 2025, Bunnings”)</small>
+          <small class="text-muted">(eg. “air compressor $452.12, 18 Feb <?= date('Y') ?>, Bunnings”)</small>
         </label>
         <textarea
           name="tools[over_300_desc]"

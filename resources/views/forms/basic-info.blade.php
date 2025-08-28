@@ -247,7 +247,9 @@
                 </div>
 
                 <div class="row mb-3">
-                    <p class="choosing-business-type-text">Did you live in Australia for the full tax year (1 July 2024 – 30 June 2025)?</p>
+                    <p class="choosing-business-type-text">
+                        Did you live in Australia for the full tax year (1 July <?= date('Y') - 1 ?> – 30 June <?= date('Y') ?>)?
+                    </p>
                     <div class="col-md-6 mb-3">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input custom-radio" type="radio" name="full_tax_year" id="taxYearYes" value="yes"

@@ -429,8 +429,8 @@
             <div class="row">
               <div class="col-12 mb-3">
                 <label class="choosing-business-type-text">
-                  Were you non-resident for part or all of the tax year from 1
-                  July 2024 to 30 June 2025? </label
+                Were you non-resident for part or all of the tax year from 1 July <?= date('Y') - 1 ?> to 30 June <?= date('Y') ?>?
+                </label
                 ><br />
                 <div class="form-check form-check-inline">
                   <input
@@ -466,8 +466,8 @@
 
               <div class="col-12 mb-3 help-debt-block" style="display:none;">
                 <label class="choosing-business-type-text">
-                  Did you have a HELP or AASL (previously known as TSL) debt
-                  on 1 June 2025? </label
+                Did you have a HELP or AASL (previously known as TSL) debt on 1 June <?= date('Y') ?>?  
+                </label
                 ><br />
                 <div class="form-check form-check-inline">
                   <input

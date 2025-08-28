@@ -9,7 +9,7 @@
         <div class="row mb-3">
             <div class="col-md-6">
                 <p class="choosing-business-type-text">
-                    For the whole period from 1 July 2024 to 30 June 2025, did you and all your dependants (including your spouse if you had one) have private hospital cover?
+                For the whole period from 1 July <?= date('Y') - 1 ?> to 30 June <?= date('Y') ?>, did you and all your dependants (including your spouse if you had one) have private hospital cover?
                 </p>
 
                 @php
