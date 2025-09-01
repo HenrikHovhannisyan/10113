@@ -15,20 +15,56 @@ class FormsSubmittedWithAttachments extends Mailable
     use Queueable, SerializesModels;
 
     public $tax;
-    public array $files;
     public array $other;
     public array $basicInfo;
+    public array $income;
+    public array $deduction;
 
+    // Separate attachment arrays
+    public array $otherFiles;
+    public array $deductionFiles;
+    public array $incomeFiles;
+
+    /**
+     * @var array|string[]
+     */
     private array $hiddenKeys = ['id', 'created_at', 'updated_at'];
 
-    public function __construct($tax, array $files = [], $other = null, $basicInfo = null)
-    {
-        $this->tax       = $tax;
-        $this->files     = $files;
+    /**
+     * @param $tax
+     * @param array $otherFiles
+     * @param array $deductionFiles
+     * @param array $incomeFiles
+     * @param $other
+     * @param $basicInfo
+     * @param $income
+     * @param $deduction
+     */
+    public function __construct(
+        $tax,
+        array $otherFiles = [],
+        array $deductionFiles = [],
+        array $incomeFiles = [],
+        $other = null,
+        $basicInfo = null,
+        $income = null,
+        $deduction = null
+    ) {
+        $this->tax           = $tax;
+
+        $this->otherFiles    = $otherFiles;
+        $this->deductionFiles = $deductionFiles;
+        $this->incomeFiles    = $incomeFiles;
+
         $this->other     = $this->normalizeAndClean($other);
         $this->basicInfo = $this->normalizeAndClean($basicInfo);
+        $this->income    = $this->normalizeAndClean($income);
+        $this->deduction = $this->normalizeAndClean($deduction);
     }
 
+    /**
+     * @return Envelope
+     */
     public function envelope(): Envelope
     {
         return new Envelope(
@@ -36,6 +72,9 @@ class FormsSubmittedWithAttachments extends Mailable
         );
     }
 
+    /**
+     * @return Content
+     */
     public function content(): Content
     {
         return new Content(
@@ -44,14 +83,34 @@ class FormsSubmittedWithAttachments extends Mailable
         );
     }
 
+    /**
+     * @return array
+     */
     public function attachments(): array
     {
         $attachments = [];
 
-        // Attach provided files
-        foreach ($this->files as $file) {
+        // Attach "Other" files
+        foreach ($this->otherFiles as $file) {
             if (file_exists($file)) {
-                $attachments[] = Attachment::fromPath($file)->as(basename($file));
+                $attachments[] = Attachment::fromPath($file)
+                    ->as('Other_' . basename($file));
+            }
+        }
+
+        // Attach "Deduction" files
+        foreach ($this->deductionFiles as $file) {
+            if (file_exists($file)) {
+                $attachments[] = Attachment::fromPath($file)
+                    ->as('Deduction_' . basename($file));
+            }
+        }
+
+        // Attach "Income" files
+        foreach ($this->incomeFiles as $file) {
+            if (file_exists($file)) {
+                $attachments[] = Attachment::fromPath($file)
+                    ->as('Income_' . basename($file));
             }
         }
 
@@ -59,12 +118,18 @@ class FormsSubmittedWithAttachments extends Mailable
         $attachments = array_merge(
             $attachments,
             $this->generatePdfAttachment($this->other, 'Other Data', 'OtherFormData.pdf'),
-            $this->generatePdfAttachment($this->basicInfo, 'Basic Info', 'BasicInfoFormData.pdf')
+            $this->generatePdfAttachment($this->basicInfo, 'Basic Info', 'BasicInfoFormData.pdf'),
+            $this->generatePdfAttachment($this->income, 'Income Info', 'IncomeFormData.pdf'),
+            $this->generatePdfAttachment($this->deduction, 'Deduction Info', 'DeductionFormData.pdf')
         );
 
         return $attachments;
     }
 
+    /**
+     * @param $data
+     * @return array
+     */
     private function normalizeAndClean($data): array
     {
         if ($data instanceof Collection) {
@@ -83,6 +148,12 @@ class FormsSubmittedWithAttachments extends Mailable
         )));
     }
 
+    /**
+     * @param array $data
+     * @param string $name
+     * @param string $fileName
+     * @return array
+     */
     private function generatePdfAttachment(array $data, string $name, string $fileName): array
     {
         if (empty($data)) {
@@ -100,6 +171,11 @@ class FormsSubmittedWithAttachments extends Mailable
             : [];
     }
 
+
+    /**
+     * @param array $data
+     * @return array
+     */
     private function cleanAndHumanize(array $data): array
     {
         $out = [];
