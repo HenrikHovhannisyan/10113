@@ -13,7 +13,6 @@
 
     @php
         $superLumpSums = old('super_lump_sums', $incomes->super_lump_sums ?? [ [] ]);
-        // фильтруем только числовые ключи для блоков
         $numericItems = array_filter($superLumpSums, fn($key) => is_int($key), ARRAY_FILTER_USE_KEY);
         $count = max(count($numericItems), 1);
     @endphp

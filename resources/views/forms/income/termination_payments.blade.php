@@ -86,20 +86,27 @@
                         <input type="text" name="termination_payments[{{ $i }}][abn]" class="form-control border-dark" placeholder="51 824 753 556" value="{{ old("termination_payments.$i.abn", $etps[$i]['abn'] ?? '') }}">
                     </div>
                 </div>
-
                 <div class="row mb-3 align-items-end">
                     <div class="col-md-6 mb-3">
-                        <input type="file" name="termination_payments[{{ $i }}][etp_files][]" class="d-none etpFileInput">
+                        <input 
+                            type="file" 
+                            name="termination_payments[{{ $i }}][etp_files][]" 
+                            class="d-none etpFileInput" 
+                            multiple
+                        >
                         <button type="button" class="btn btn_add triggerETPFile">
-                            <img src="{{ asset('img/icons/plus.png') }}" alt="plus"> Choose file
+                            <img src="{{ asset('img/icons/plus.png') }}" alt="plus"> Choose files
                         </button>
                     </div>
                     <div class="col-md-6 mb-3">
                         <p class="choosing-business-type-text text-muted mb-0 etpFileName">
-                            @if(!empty($etps[$i]['etp_files']))
-                                @foreach($etps[$i]['etp_files'] as $file)
-                                    <a href="{{ asset('storage/'.$file) }}" target="_blank" class="btn btn-outline-success">
-                                        <i class="fa-solid fa-file"></i> View file
+                            @php
+                                $files = $incomes->attach['termination_payments'][$i]['etp_files'] ?? [];
+                            @endphp
+                            @if(!empty($files))
+                                @foreach($files as $file)
+                                    <a href="{{ Storage::disk('public')->url($file) }}" target="_blank">
+                                        <i class="fa-solid fa-file"></i> {{ basename($file) }}
                                     </a>
                                 @endforeach
                             @else
@@ -108,6 +115,7 @@
                         </p>
                     </div>
                 </div>
+
             </section>
             @endfor
         </div>
@@ -166,19 +174,24 @@ document.addEventListener("DOMContentLoaded", function () {
             refreshIndices();
         }
     });
+function attachFileTriggers(context = etpContainer) {
+    context.querySelectorAll(".triggerETPFile").forEach(btn => {
+        btn.onclick = () => btn.previousElementSibling.click();
+    });
 
-    function attachFileTriggers(context = etpContainer) {
-        context.querySelectorAll(".triggerETPFile").forEach(btn => {
-            btn.onclick = () => btn.previousElementSibling.click();
-        });
+    context.querySelectorAll(".etpFileInput").forEach(input => {
+        input.onchange = () => {
+            const display = input.closest(".row").querySelector(".etpFileName");
+            if (input.files.length) {
+                const names = Array.from(input.files).map(f => f.name).join(", ");
+                display.textContent = names;
+            } else {
+                display.textContent = "No files chosen";
+            }
+        };
+    });
+}
 
-        context.querySelectorAll(".etpFileInput").forEach(input => {
-            input.onchange = () => {
-                const display = input.closest(".row").querySelector(".etpFileName");
-                display.textContent = input.files.length ? input.files[0].name : "No file chosen";
-            };
-        });
-    }
 
     attachFileTriggers();
 });

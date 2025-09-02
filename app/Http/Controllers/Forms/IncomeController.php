@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\TaxReturn;
 use App\Models\Forms\Income;
+use Illuminate\Support\Facades\Storage;
 
 class IncomeController extends Controller
 {
@@ -22,6 +23,7 @@ class IncomeController extends Controller
 
         $existing = $id ? Income::findOrFail($id) : null;
 
+        // Prepare all data fields
         $fields = [
             'salary',
             'interests',
@@ -49,67 +51,24 @@ class IncomeController extends Controller
             $data[$field] = $request->input($field, $existing->$field ?? []);
         }
 
-        // === Capital Gains File Handling ===
-        if ($request->hasFile('capital_gains.cgt_attachment')) {
-            $file = $request->file('capital_gains.cgt_attachment');
-            $data['capital_gains']['cgt_attachment'] = $file->store('capital_gains', 'public');
-        } elseif ($existing) {
-            $data['capital_gains'] = $existing->capital_gains ?? [];
+        // Handle "attach" section (files)
+        $attach = [];
+
+        // Keep existing attach data if updating
+        if ($existing) {
+            $attach = $existing->attach ?? [];
         }
 
-        // === Managed Funds File Handling ===
-        if ($request->hasFile('managed_funds.managed_fund_files')) {
-            $files = $request->file('managed_funds.managed_fund_files');
-            $paths = [];
-            foreach ($files as $file) {
-                $paths[] = $file->store('managed_funds', 'public');
-            }
-            $data['managed_funds']['managed_fund_files'] = $paths;
-        } elseif ($existing) {
-            $data['managed_funds'] = $existing->managed_funds ?? [];
-        }
+        // Handle file uploads for different sections
+        $this->handleCapitalGainsFiles($request, $attach);
+        $this->handleManagedFundsFiles($request, $attach);
+        $this->handleTerminationPaymentsFiles($request, $attach);
+        $this->handleRentFiles($request, $attach);
 
-        // === Termination Payments File Handling ===
-        $etps = $data['termination_payments'] ?? [];
-        foreach ($etps as $index => &$etp) {
-            if ($request->hasFile("termination_payments.$index.etp_files")) {
-                $files = $request->file("termination_payments.$index.etp_files");
-                $paths = [];
-                foreach ($files as $file) {
-                    $paths[] = $file->store('termination_payments', 'public');
-                }
-                $etp['etp_files'] = $paths;
-            } elseif ($existing) {
-                $oldETPs = $existing->termination_payments ?? [];
-                if (isset($oldETPs[$index]['etp_files'])) {
-                    $etp['etp_files'] = $oldETPs[$index]['etp_files'];
-                }
-            }
-        }
-        $data['termination_payments'] = $etps;
-
-        // === Rent File Handling ===
-        $rents = $data['rent'] ?? [];
-        foreach ($rents as $index => &$rent) {
-            if ($request->hasFile("rent.$index.rent_files")) {
-                $files = $request->file("rent.$index.rent_files");
-                $paths = [];
-                foreach ($files as $file) {
-                    $paths[] = $file->store('rent', 'public');
-                }
-                $rent['rent_files'] = $paths;
-            } elseif ($existing) {
-                $oldRents = $existing->rent ?? [];
-                if (isset($oldRents[$index]['rent_files'])) {
-                    $rent['rent_files'] = $oldRents[$index]['rent_files'];
-                }
-            }
-        }
-        $data['rent'] = $rents;
+        $data['attach'] = $attach;
 
         if ($existing) {
             $existing->update($data);
-            $income = $existing;
             $message = 'Income data updated successfully!';
         } else {
             $income = Income::create(array_merge($data, [
@@ -121,8 +80,88 @@ class IncomeController extends Controller
         return response()->json([
             'success'  => true,
             'message'  => $message,
-            'incomeId' => $income->id
+            'incomeId' => $existing->id ?? $income->id
         ]);
+    }
+
+    private function handleCapitalGainsFiles(Request $request, array &$attach)
+    {
+        if ($request->hasFile('capital_gains.cgt_attachment')) {
+            // Delete old file if exists
+            if (!empty($attach['capital_gains_attachment'])) {
+                Storage::disk('public')->delete($attach['capital_gains_attachment']);
+            }
+
+            // Store new file
+            $file = $request->file('capital_gains.cgt_attachment');
+            $attach['capital_gains_attachment'] = $file->store('capital_gains', 'public');
+        }
+    }
+
+    private function handleManagedFundsFiles(Request $request, array &$attach)
+    {
+        if ($request->hasFile('managed_fund_files')) {
+            // Delete old files if they exist
+            if (!empty($attach['managed_fund_files'])) {
+                foreach ($attach['managed_fund_files'] as $oldFile) {
+                    Storage::disk('public')->delete($oldFile);
+                }
+            }
+
+            // Store new files
+            $files = $request->file('managed_fund_files');
+            $paths = [];
+            foreach ($files as $file) {
+                $paths[] = $file->store('managed_funds', 'public');
+            }
+            $attach['managed_fund_files'] = $paths;
+        }
+    }
+
+    private function handleTerminationPaymentsFiles(Request $request, array &$attach)
+    {
+        $etpFiles = $request->file('termination_payments', []);
+
+        foreach ($etpFiles as $index => $files) {
+            if ($request->hasFile("termination_payments.$index.etp_files")) {
+                // Delete old files if they exist
+                if (!empty($attach['termination_payments'][$index]['etp_files'])) {
+                    foreach ($attach['termination_payments'][$index]['etp_files'] as $oldFile) {
+                        Storage::disk('public')->delete($oldFile);
+                    }
+                }
+
+                // Store new files
+                $paths = [];
+                foreach ($files['etp_files'] as $file) {
+                    $paths[] = $file->store('termination_payments', 'public');
+                }
+                $attach['termination_payments'][$index]['etp_files'] = $paths;
+            }
+        }
+    }
+
+    private function handleRentFiles(Request $request, array &$attach)
+    {
+        $rentFiles = $request->file('rent', []);
+
+        foreach ($rentFiles as $index => $files) {
+            if ($request->hasFile("rent.$index.rent_files")) {
+                // Delete old files if they exist
+                if (!empty($attach['rent'][$index]['rent_files'])) {
+                    foreach ($attach['rent'][$index]['rent_files'] as $oldFile) {
+                        Storage::disk('public')->delete($oldFile);
+                    }
+                }
+
+                // Store new files
+                $paths = [];
+                foreach ($files['rent_files'] as $file) {
+                    $paths[] = $file->store('rent', 'public');
+                }
+                $attach['rent'][$index]['rent_files'] = $paths;
+            }
+        }
     }
 
     public function store(Request $request)

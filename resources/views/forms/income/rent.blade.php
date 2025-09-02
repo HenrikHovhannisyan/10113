@@ -115,10 +115,13 @@
                     </div>
                     <div class="col-md-6 mb-3">
                         <p class="choosing-business-type-text text-muted mb-0 rentFileName">
-                            @if(!empty($rents[$i]['rent_files']))
-                                @foreach($rents[$i]['rent_files'] as $file)
-                                    <a href="{{ asset('storage/'.$file) }}" target="_blank" class="btn btn-outline-success">
-                                        <i class="fa-solid fa-file"></i> View file
+                            @php
+                                $files = $incomes->attach['rent'][$i]['rent_files'] ?? [];
+                            @endphp
+                            @if(!empty($files))
+                                @foreach($files as $file)
+                                    <a href="{{ Storage::disk('public')->url($file) }}" target="_blank">
+                                        <i class="fa-solid fa-file"></i> {{ basename($file) }}
                                     </a>
                                 @endforeach
                             @else

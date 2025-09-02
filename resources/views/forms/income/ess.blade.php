@@ -8,7 +8,7 @@
     </p>
 
     @php
-        $essData = old('ess', $incomes->ess ?? [[]]); // если пусто, хотя бы один пустой блок
+        $essData = old('ess', $incomes->ess ?? [[]]); 
     @endphp
 
     <div id="essContainer">
@@ -69,37 +69,84 @@ document.addEventListener("DOMContentLoaded", function () {
     const essContainer = document.getElementById("essContainer");
     const btnAddESS = document.getElementById("btnAddESS");
 
+    const essTemplate = `
+        <div class="grin_box_border mb-4 ess-block" data-index="0">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label>Discount from taxed upfront schemes - eligible for reduction</label>
+                    <input type="text" name="ess[0][discount_upfront_eligible]" class="form-control border-dark" placeholder="00.00$">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label>Discount from taxed upfront schemes - not eligible for reduction</label>
+                    <input type="text" name="ess[0][discount_upfront_not_eligible]" class="form-control border-dark" placeholder="00.00$">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label>Discount from deferral schemes</label>
+                    <input type="text" name="ess[0][discount_deferral]" class="form-control border-dark" placeholder="00.00$">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label>TFN amounts withheld from discount</label>
+                    <input type="text" name="ess[0][tfn_withheld]" class="form-control border-dark" placeholder="00.00$">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label>Foreign source discounts</label>
+                    <input type="text" name="ess[0][foreign_discounts]" class="form-control border-dark" placeholder="00.00$">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label>Employee share scheme foreign tax paid</label>
+                    <input type="text" name="ess[0][foreign_tax_paid]" class="form-control border-dark" placeholder="00.00$">
+                </div>
+            </div>
+            <button type="button" class="btn btn_delete remove-ess">Delete</button>
+        </div>
+    `;
+
     function updateIndices() {
         essContainer.querySelectorAll('.ess-block').forEach((block, i) => {
             block.dataset.index = i;
             block.querySelectorAll('input').forEach(input => {
-                const nameParts = input.name.split(']');
-                nameParts[0] = `ess[${i}`;
-                input.name = nameParts.join(']');
+                const fieldNameMatch = input.name.match(/\[([^\]]+)\]$/);
+                if (fieldNameMatch) {
+                    const fieldName = fieldNameMatch[1];
+                    input.name = `ess[${i}][${fieldName}]`;
+                }
             });
         });
     }
 
     btnAddESS.addEventListener("click", function () {
         const blocks = essContainer.querySelectorAll(".ess-block");
-        const lastBlock = blocks[blocks.length - 1];
-        const clone = lastBlock.cloneNode(true);
+        let newBlock;
 
-        clone.querySelectorAll("input").forEach(input => input.value = '');
-        essContainer.appendChild(clone);
+        if (blocks.length > 0) {
+            const lastBlock = blocks[blocks.length - 1];
+            newBlock = lastBlock.cloneNode(true);
+            newBlock.querySelectorAll("input").forEach(input => input.value = '');
+        } else {
+            const temp = document.createElement("div");
+            temp.innerHTML = essTemplate.trim();
+            newBlock = temp.firstChild;
+        }
+
+        essContainer.appendChild(newBlock);
         updateIndices();
     });
 
-    essContainer.addEventListener("click", function(e) {
+    essContainer.addEventListener("click", function (e) {
         if (e.target.classList.contains("remove-ess")) {
             const blocks = essContainer.querySelectorAll(".ess-block");
             if (blocks.length > 1) {
                 e.target.closest(".ess-block").remove();
                 updateIndices();
             } else {
-                alert("You must have at least one ESS block.");
+                alert("There must be at least one ESS block.");
             }
         }
     });
 });
 </script>
+
