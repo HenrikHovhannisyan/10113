@@ -76,11 +76,17 @@
 document.addEventListener("DOMContentLoaded", function () {
     const items = document.querySelectorAll(".income-item");
 
+    // 📌 Показываем формы для активных вкладок при загрузке
     items.forEach((item) => {
-        item.addEventListener("click", () => {
-            const index = item.getAttribute("data-index");
-            const formToShow = document.getElementById(`income-form-${index}`);
+        const index = item.getAttribute("data-index");
+        const formToShow = document.getElementById(`income-form-${index}`);
 
+        if (item.classList.contains("active") && formToShow) {
+            formToShow.classList.remove("d-none");
+        }
+
+        // 📌 Обработчик клика по табу
+        item.addEventListener("click", () => {
             if (formToShow && formToShow.classList.contains("d-none")) {
                 formToShow.classList.remove("d-none");
                 item.classList.add("active");
