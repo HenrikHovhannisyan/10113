@@ -4,11 +4,13 @@ namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\{Attachment, Content, Envelope};
+use Illuminate\Mail\Mailables\Content;
+use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class FormsSubmittedWithAttachments extends Mailable
 {
@@ -20,26 +22,27 @@ class FormsSubmittedWithAttachments extends Mailable
     public array $income;
     public array $deduction;
 
-    // Separate attachment arrays
+    // Uploaded file paths (not attached; used to build links)
     public array $otherFiles;
     public array $deductionFiles;
     public array $incomeFiles;
 
+    // Links for uploaded files
+    public array $otherLinks = [];
+    public array $deductionLinks = [];
+    public array $incomeLinks = [];
+
+    // Links for generated PDFs
+    public ?string $otherPdf = null;
+    public ?string $basicInfoPdf = null;
+    public ?string $incomePdf = null;
+    public ?string $deductionPdf = null;
+
     /**
      * @var array|string[]
      */
-    private array $hiddenKeys = ['id', 'created_at', 'updated_at'];
+    private array $hiddenKeys = ['id', 'created_at', 'updated_at', 'attach'];
 
-    /**
-     * @param $tax
-     * @param array $otherFiles
-     * @param array $deductionFiles
-     * @param array $incomeFiles
-     * @param $other
-     * @param $basicInfo
-     * @param $income
-     * @param $deduction
-     */
     public function __construct(
         $tax,
         array $otherFiles = [],
@@ -50,21 +53,30 @@ class FormsSubmittedWithAttachments extends Mailable
         $income = null,
         $deduction = null
     ) {
-        $this->tax           = $tax;
+        $this->tax = $tax;
 
-        $this->otherFiles    = $otherFiles;
+        $this->otherFiles     = $otherFiles;
         $this->deductionFiles = $deductionFiles;
         $this->incomeFiles    = $incomeFiles;
 
+        // Normalize and clean form data for PDFs
         $this->other     = $this->normalizeAndClean($other);
         $this->basicInfo = $this->normalizeAndClean($basicInfo);
         $this->income    = $this->normalizeAndClean($income);
         $this->deduction = $this->normalizeAndClean($deduction);
+
+        // Build public download links for the uploaded files
+        $this->otherLinks     = $this->makeDownloadLinks($this->otherFiles, 'Other');
+        $this->deductionLinks = $this->makeDownloadLinks($this->deductionFiles, 'Deduction');
+        $this->incomeLinks    = $this->makeDownloadLinks($this->incomeFiles, 'Income');
+
+        // Generate PDFs and store download links
+        $this->otherPdf     = $this->generatePdfLink($this->other, 'Other Data', 'OtherFormData.pdf', $this->otherLinks);
+        $this->basicInfoPdf = $this->generatePdfLink($this->basicInfo, 'Basic Info', 'BasicInfoFormData.pdf');
+        $this->incomePdf    = $this->generatePdfLink($this->income, 'Income Info', 'IncomeFormData.pdf', $this->incomeLinks);
+        $this->deductionPdf = $this->generatePdfLink($this->deduction, 'Deduction Info', 'DeductionFormData.pdf', $this->deductionLinks);
     }
 
-    /**
-     * @return Envelope
-     */
     public function envelope(): Envelope
     {
         return new Envelope(
@@ -72,63 +84,73 @@ class FormsSubmittedWithAttachments extends Mailable
         );
     }
 
-    /**
-     * @return Content
-     */
     public function content(): Content
     {
         return new Content(
             view: 'emails.forms_submitted',
-            with: ['tax' => $this->tax],
+            with: [
+                'tax'            => $this->tax,
+                // uploaded file links
+                'otherLinks'     => $this->otherLinks,
+                'deductionLinks' => $this->deductionLinks,
+                'incomeLinks'    => $this->incomeLinks,
+                // pdf links
+                'otherPdf'       => $this->otherPdf,
+                'basicInfoPdf'   => $this->basicInfoPdf,
+                'incomePdf'      => $this->incomePdf,
+                'deductionPdf'   => $this->deductionPdf,
+            ],
         );
     }
 
-    /**
-     * @return array
-     */
     public function attachments(): array
     {
-        $attachments = [];
-
-        // Attach "Other" files
-        foreach ($this->otherFiles as $file) {
-            if (file_exists($file)) {
-                $attachments[] = Attachment::fromPath($file)
-                    ->as('Other_' . basename($file));
-            }
-        }
-
-        // Attach "Deduction" files
-        foreach ($this->deductionFiles as $file) {
-            if (file_exists($file)) {
-                $attachments[] = Attachment::fromPath($file)
-                    ->as('Deduction_' . basename($file));
-            }
-        }
-
-        // Attach "Income" files
-        foreach ($this->incomeFiles as $file) {
-            if (file_exists($file)) {
-                $attachments[] = Attachment::fromPath($file)
-                    ->as('Income_' . basename($file));
-            }
-        }
-
-        // Generate summary PDFs
-        $attachments = array_merge(
-            $attachments,
-            $this->generatePdfAttachment($this->other, 'Other Data', 'OtherFormData.pdf'),
-            $this->generatePdfAttachment($this->basicInfo, 'Basic Info', 'BasicInfoFormData.pdf'),
-            $this->generatePdfAttachment($this->income, 'Income Info', 'IncomeFormData.pdf'),
-            $this->generatePdfAttachment($this->deduction, 'Deduction Info', 'DeductionFormData.pdf')
-        );
-
-        return $attachments;
+        // ❌ No attachments — only links in email body
+        return [];
     }
 
     /**
-     * @param $data
-     * @return array
+     * Generate PDF, save to storage, and return public link.
+     */
+    private function generatePdfLink(array $data, string $name, string $fileName, array $links = []): ?string
+    {
+        if (empty($data)) {
+            return null;
+        }
+
+        $pdfContent = Pdf::loadView('pdf.pdf_data', [
+            'formData' => $data,
+            'tax'      => $this->tax,
+            'name'     => $name,
+            'links'    => $links,
+        ])->output();
+
+        if (!$pdfContent) {
+            return null;
+        }
+
+        $path = "pdfs/{$this->tax->id}_{$fileName}";
+        Storage::disk('public')->put($path, $pdfContent);
+
+        return url("storage/{$path}");
+    }
+
+    /**
+     * Build links for uploaded files.
+     */
+    private function makeDownloadLinks(array $files, string $prefix): array
+    {
+        return array_map(function ($path) use ($prefix) {
+            $relative = str_replace(storage_path('app/public/'), '', $path);
+            return [
+                'label' => $prefix . ' - ' . basename($path),
+                'url'   => url('storage/' . ltrim($relative, '/')),
+            ];
+        }, $files);
+    }
+
+    /**
+     * Normalize and clean form data for PDFs.
      */
     private function normalizeAndClean($data): array
     {
@@ -149,32 +171,7 @@ class FormsSubmittedWithAttachments extends Mailable
     }
 
     /**
-     * @param array $data
-     * @param string $name
-     * @param string $fileName
-     * @return array
-     */
-    private function generatePdfAttachment(array $data, string $name, string $fileName): array
-    {
-        if (empty($data)) {
-            return [];
-        }
-
-        $pdfContent = Pdf::loadView('pdf.pdf_data', [
-            'other' => $data,
-            'tax'   => $this->tax,
-            'name'  => $name,
-        ])->output();
-
-        return $pdfContent
-            ? [Attachment::fromData(fn() => $pdfContent, $fileName)->withMime('application/pdf')]
-            : [];
-    }
-
-
-    /**
-     * @param array $data
-     * @return array
+     * Clean model data and make labels human-readable.
      */
     private function cleanAndHumanize(array $data): array
     {

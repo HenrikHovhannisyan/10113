@@ -1,122 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Other Form Data</title>
+    <meta charset="utf-8">
+    <title>{{ $name }} - Tax #{{ $tax->id }}</title>
     <style>
-        * { box-sizing: border-box; }
-        body { font-family: DejaVu Sans, Arial, sans-serif; font-size: 12px; color: #222; margin: 0; padding: 0; }
-        h2 { text-align: center; margin: 0 0 16px; }
-
-        .record { margin: 0 0 18px; page-break-inside: avoid; }
-
-        .section-title {
-            font-weight: bold;
-            background: #f3f4f6;
-            border: 1px solid #ddd;
-            border-bottom: none;
-            padding: 8px 10px;
-        }
-
-        table.kv {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 0 0 12px;
-            page-break-inside: auto;
-        }
-
-        table.kv tr {
-            page-break-inside: avoid;
-            page-break-after: auto;
-        }
-
-        table.kv td {
-            border: 1px solid #ddd;
-            padding: 6px 8px;
-            vertical-align: top;
-        }
-
-        table.kv td.k {
-            width: 40%;
-            font-weight: bold;
-            background: #fafafa;
-        }
-
-        table.kv tr:nth-child(even) td {
-            background: #fcfcfc;
-        }
-
-        .muted { color: #666; font-style: italic; }
+        body { font-family: DejaVu Sans, sans-serif; font-size: 12px; color: #333; }
+        h2 { font-size: 16px; margin-bottom: 10px; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        table, th, td { border: 1px solid #ddd; }
+        th, td { padding: 6px; text-align: left; vertical-align: top; }
+        ul { margin: 0; padding-left: 20px; }
     </style>
 </head>
 <body>
 
-@php
-    $splitSections = function(array $item): array {
-        $scalars = [];
-        $sections = [];
-        foreach ($item as $k => $v) {
-            if (is_array($v)) {
-                if (!empty($v)) $sections[$k] = $v;
-            } else {
-                $scalars[$k] = $v;
-            }
-        }
-        return [$scalars, $sections];
-    };
-@endphp
+<h2>{{ $name }}</h2>
+<p><strong>Tax Return ID:</strong> {{ $tax->id }}</p>
 
-@forelse($other as $index => $item)
-    @php([$scalars, $sections] = $splitSections($item))
+{{-- Display form data --}}
+@if(!empty($formData))
+    <table>
+        @foreach($formData as $row)
+            @foreach($row as $label => $value)
+                @php
+                    // Check if value is meaningful (not empty, not null, not empty array)
+                    $hasValue = !empty($value) && !(is_array($value) && empty(array_filter($value)));
+                @endphp
 
-    <div class="record">
-
-        @if(!empty($scalars))
-            <div class="section-title">
-                <span>General</span>
-                <span>{{ $name }}</span>
-            </div>
-            <table class="kv">
-                <tbody>
-                @foreach($scalars as $label => $value)
+                @if($hasValue)
                     <tr>
-                        <td class="k">{{ $label }}</td>
-                        <td class="v">{{ $value }}</td>
+                        <th>{{ $label }}</th>
+                        <td>
+                            @include('pdf.partials.value_renderer', ['value' => $value])
+                        </td>
                     </tr>
-                @endforeach
-                </tbody>
-            </table>
-        @endif
-
-        @foreach($sections as $sectionName => $rows)
-            <div class="section-title">{{ $sectionName }}</div>
-            <table class="kv">
-                <tbody>
-                @foreach($rows as $k => $v)
-                    @if(is_array($v))
-                        <tr>
-                            <td class="k" colspan="2">{{ $k }}</td>
-                        </tr>
-                        @foreach($v as $kk => $vv)
-                            <tr>
-                                <td class="k">{{ $kk }}</td>
-                                <td class="v">{{ is_array($vv) ? json_encode($vv) : $vv }}</td>
-                            </tr>
-                        @endforeach
-                    @else
-                        <tr>
-                            <td class="k">{{ $k }}</td>
-                            <td class="v">{{ $v }}</td>
-                        </tr>
-                    @endif
-                @endforeach
-                </tbody>
-            </table>
+                @endif
+            @endforeach
         @endforeach
-    </div>
-@empty
-    <p class="muted">No additional form data.</p>
-@endforelse
+    </table>
+@endif
+
+{{-- Uploaded file links --}}
+@if(!empty($links))
+    <h3>Uploaded File Links</h3>
+    <ul>
+        @foreach($links as $link)
+            <li>
+                <a href="{{ $link['url'] }}" target="_blank">{{ $link['label'] }}</a>
+            </li>
+        @endforeach
+    </ul>
+@endif
 
 </body>
 </html>

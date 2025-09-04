@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Mail;
 class SendTaxFormsToManagers
 {
 
+
+    /**
+     * @param TaxPaymentSucceeded $event
+     * @return void
+     */
     public function handle(TaxPaymentSucceeded $event): void
     {
         $tax = $event->tax->load(['user', 'other', 'basicInfo', 'deduction', 'income']);
@@ -38,6 +43,11 @@ class SendTaxFormsToManagers
         }
     }
 
+
+    /**
+     * @param $attachData
+     * @return array
+     */
     private function collectAttachments($attachData): array
     {
         $files = [];
@@ -46,10 +56,25 @@ class SendTaxFormsToManagers
             ? $attachData
             : json_decode($attachData ?? '[]', true);
 
-        foreach ($data ?? [] as $relativePath) {
-            $fullPath = storage_path('app/public/' . ltrim($relativePath, '/'));
-            if (file_exists($fullPath)) {
-                $files[] = $fullPath;
+        foreach ($data ?? [] as $item) {
+            // Handle: ["path" => "..."], ["..."], or ["0" => "..."]
+            if (is_array($item)) {
+                // If it's an associative array like ['path' => 'file.pdf']
+                if (isset($item['path'])) {
+                    $relativePath = $item['path'];
+                } else {
+                    // If it's a simple indexed array like [0 => 'file.pdf']
+                    $relativePath = reset($item);
+                }
+            } else {
+                $relativePath = $item;
+            }
+
+            if ($relativePath && is_string($relativePath)) {
+                $fullPath = storage_path('app/public/' . ltrim($relativePath, '/'));
+                if (file_exists($fullPath)) {
+                    $files[] = $fullPath;
+                }
             }
         }
 

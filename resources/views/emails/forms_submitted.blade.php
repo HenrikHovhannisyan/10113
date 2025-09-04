@@ -14,13 +14,32 @@
             <p style="line-height: 1.6;">Hello Manager,</p>
 
             <p style="line-height: 1.6;">
-                User <strong>{{ $tax->user->name }}</strong> (<a href="mailto:{{ $tax->user->email }}">{{ $tax->user->email }}</a>)
+                User <strong>{{ $tax->user->name }}</strong>
+                (<a href="mailto:{{ $tax->user->email }}">{{ $tax->user->email }}</a>)
                 has submitted Tax Return ID <strong>#{{ $tax->id }}</strong>.
             </p>
 
-            <p style="line-height: 1.6;">The related forms are attached as PDFs.</p>
+            <p style="line-height: 1.6;">The following form PDFs are available for download:</p>
 
-            <p style="line-height: 1.6;">Best regards,<br><strong>Your Application</strong></p>
+            <ul style="line-height: 1.8;">
+                @if($basicInfoPdf)
+                    <li><a href="{{ $basicInfoPdf }}" style="color: #0056b3;">Basic Info Form Data</a></li>
+                @endif
+                @if($otherPdf)
+                    <li><a href="{{ $otherPdf }}" style="color: #0056b3;">Other Form Data</a></li>
+                @endif
+                @if($incomePdf)
+                    <li><a href="{{ $incomePdf }}" style="color: #0056b3;">Income Form Data</a></li>
+                @endif
+                @if($deductionPdf)
+                    <li><a href="{{ $deductionPdf }}" style="color: #0056b3;">Deduction Form Data</a></li>
+                @endif
+            </ul>
+
+            <p style="line-height: 1.6; margin-top: 30px;">
+                Best regards,<br>
+                <strong>Your Application</strong>
+            </p>
         </td>
     </tr>
 </table>
