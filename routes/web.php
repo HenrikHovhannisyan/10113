@@ -28,12 +28,17 @@ use App\Http\Controllers\Forms\DeductionController;
 
 Route::get('/migrate', function (){
     Artisan::call('migrate');
-    dd('clear');
+    dd('migrate');
 });
 
 Route::get('/clear', function (){
     Artisan::call('optimize:clear');
-    dd('clear');
+    dd('optimize:clear');
+});
+
+Route::get('/storage-link', function (){
+    Artisan::call('storage:link');
+    dd('storage:link');
 });
 
 Auth::routes();
