@@ -72,7 +72,7 @@
 
 <section class="choosing-business-type_section">
     <h2 class="choosing-business-type-title" id="deduction-forms_title">Let’s add the details</h2>
-    
+
     <form id="deduction-form" action="{{ isset($deductions) ? route('deduction.update', $deductions->id) : route('deduction.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         @if(isset($deductions))
@@ -97,14 +97,37 @@
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const items = document.querySelectorAll(".deduction-item");
+    // items.forEach((item) => {
+    //     item.addEventListener("click", () => {
+    //         const index = item.getAttribute("data-index");
+    //         const formToShow = document.getElementById(`form-deduction-${index}`);
+    //
+    //         if (!formToShow) return;
+    //
+    //         if (formToShow.classList.contains("d-none")) {
+    //             formToShow.classList.remove("d-none");
+    //             item.classList.add("active");
+    //
+    //             const target = document.getElementById("deduction-forms_title");
+    //             if (target) {
+    //                 target.scrollIntoView({ behavior: "smooth", block: "start" });
+    //             }
+    //         }
+    //     });
+    // });
+
+
     items.forEach((item) => {
+        const index = item.getAttribute("data-index");
+        const formToShow = document.getElementById(`form-deduction-${index}`);
+
+        if (item.classList.contains("active") && formToShow) {
+            formToShow.classList.remove("d-none");
+        }
+
+        // 📌 Обработчик клика по табу
         item.addEventListener("click", () => {
-            const index = item.getAttribute("data-index");
-            const formToShow = document.getElementById(`form-deduction-${index}`);
-
-            if (!formToShow) return;
-
-            if (formToShow.classList.contains("d-none")) {
+            if (formToShow && formToShow.classList.contains("d-none")) {
                 formToShow.classList.remove("d-none");
                 item.classList.add("active");
 
@@ -168,7 +191,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 if (response.ok) {
                     showToast('success', data.message);
-                    
+
                     if (data.deductionId && !form.action.includes('update')) {
                         form.action = form.action.replace('deduction.store', `deduction.update/${data.deductionId}`);
                         submitBtn.textContent = 'Update';
@@ -211,7 +234,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
         `;
-        
+
         toastContainer.appendChild(toast);
         const bsToast = new bootstrap.Toast(toast);
         bsToast.show();

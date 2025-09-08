@@ -12,7 +12,7 @@
 
     <p class="choosing-business-type-text">Did you regularly work from home this year?</p>
     <div class="form-check form-check-inline">
-      <input class="form-check-input custom-radio" type="radio" name="home_office[worked_from_home]" id="workedFromHomeYes" value="yes" 
+      <input class="form-check-input custom-radio" type="radio" name="home_office[worked_from_home]" id="workedFromHomeYes" value="yes"
         {{ isset($deductions->home_office['worked_from_home']) && $deductions->home_office['worked_from_home'] == 'yes' ? 'checked' : '' }}>
       <label class="form-check-label custom-label" for="workedFromHomeYes">Yes</label>
     </div>
@@ -45,7 +45,7 @@
         <label class="choosing-business-type-text" for="home_office_total_hours_worked_yes">
           How many hours in total did you work from home during the year?
         </label>
-        <input type="number" min="0" id="home_office_total_hours_worked_yes" name="home_office[total_hours_worked_yes]" class="form-control" 
+        <input type="number" min="0" id="home_office_total_hours_worked_yes" name="home_office[total_hours_worked_yes]" class="form-control"
           value="{{ $deductions->home_office['total_hours_worked_yes'] ?? 0 }}" />
       </div>
 
@@ -73,8 +73,8 @@
           <img src="{{ asset('img/icons/plus.png') }}" alt="plus" /> Choose file
         </button>
         <p id="hoursWorkedFileName_YES" class="choosing-business-type-text text-muted mb-0 mt-2">
-          @if(!empty($deductions->home_office['hours_worked_record_file_yes']))
-            <a href="{{ asset('storage/'.$deductions->home_office['hours_worked_record_file_yes']) }}" target="_blank" class="btn btn-outline-success">
+          @if(!empty($deductions->attach['home_office']['hours_worked_record_file_yes']))
+            <a href="{{ asset('storage/'.$deductions->attach['home_office']['hours_worked_record_file_yes']) }}" target="_blank" class="btn btn-outline-success">
               <i class="fa-solid fa-file"></i> View file
             </a>
           @else
@@ -88,12 +88,12 @@
         <label>Type of expense</label>
         <select name="home_office[expense_type_yes_1]" class="form-control expense-type-select-yes">
           <option value="">Choose</option>
-          <option value="telephone" {{ isset($deductions->home_office['expense_type_yes_1']) && $deductions->home_office['expense_type_yes_1'] == 'telephone' ? 'selected' : '' }}>Home Telephone Bills</option>
-          <option value="furniture_over_300" {{ isset($deductions->home_office['expense_type_yes_1']) && $deductions->home_office['expense_type_yes_1'] == 'furniture_over_300' ? 'selected' : '' }}>Office furniture over $300</option>
-          <option value="furniture_under_300" {{ isset($deductions->home_office['expense_type_yes_1']) && $deductions->home_office['expense_type_yes_1'] == 'furniture_under_300' ? 'selected' : '' }}>Office furniture under $300 (e.g. chair)</option>
-          <option value="equipment_under_300" {{ isset($deductions->home_office['expense_type_yes_1']) && $deductions->home_office['expense_type_yes_1'] == 'equipment_under_300' ? 'selected' : '' }}>Office equipment under $300 (e.g. mouse)</option>
-          <option value="repairs" {{ isset($deductions->home_office['expense_type_yes_1']) && $deductions->home_office['expense_type_yes_1'] == 'repairs' ? 'selected' : '' }}>Repairs to office equipment & furniture</option>
-          <option value="stationery" {{ isset($deductions->home_office['expense_type_yes_1']) && $deductions->home_office['expense_type_yes_1'] == 'stationery' ? 'selected' : '' }}>Printing and Stationery</option>
+          <option value="Home Telephone Bills" {{ isset($deductions->home_office['expense_type_yes_1']) && $deductions->home_office['expense_type_yes_1'] == 'Home Telephone Bills' ? 'selected' : '' }}>Home Telephone Bills</option>
+          <option value="Office furniture over $300" {{ isset($deductions->home_office['expense_type_yes_1']) && $deductions->home_office['expense_type_yes_1'] == 'Office furniture over $300' ? 'selected' : '' }}>Office furniture over $300</option>
+          <option value="Office furniture under $300 (e.g. chair)" {{ isset($deductions->home_office['expense_type_yes_1']) && $deductions->home_office['expense_type_yes_1'] == 'Office furniture under $300 (e.g. chair)' ? 'selected' : '' }}>Office furniture under $300 (e.g. chair)</option>
+          <option value="Office equipment under $300 (e.g. mouse)" {{ isset($deductions->home_office['expense_type_yes_1']) && $deductions->home_office['expense_type_yes_1'] == 'Office equipment under $300 (e.g. mouse)' ? 'selected' : '' }}>Office equipment under $300 (e.g. mouse)</option>
+          <option value="Repairs to office equipment & furniture" {{ isset($deductions->home_office['expense_type_yes_1']) && $deductions->home_office['expense_type_yes_1'] == 'repairs' ? 'selected' : '' }}>Repairs to office equipment & furniture</option>
+          <option value="Printing and Stationery" {{ isset($deductions->home_office['expense_type_yes_1']) && $deductions->home_office['expense_type_yes_1'] == 'stationery' ? 'selected' : '' }}>Printing and Stationery</option>
         </select>
 
         <div class="purchase-date-yes" style="display:none; margin-top:10px;">
@@ -127,20 +127,20 @@
         </div>
 
         <label style="margin-top:10px;">What % of this expense is related to your work?</label>
-        <input type="text" name="home_office[expense_percentage_yes_1]" placeholder="0%" class="form-control" 
+        <input type="text" name="home_office[expense_percentage_yes_1]" placeholder="0%" class="form-control"
           value="{{ $deductions->home_office['expense_percentage_yes_1'] ?? '' }}">
 
         <label style="margin-top:10px;">What sort of records do you have for this expense?</label>
         <select name="home_office[expense_record_type_yes_1]" class="form-control">
           <option value="">Choose</option>
-          <option value="I" {{ isset($deductions->home_office['expense_record_type_yes_1']) && $deductions->home_office['expense_record_type_yes_1'] == 'I' ? 'selected' : '' }}>I: Invoice / Receipt</option>
-          <option value="L" {{ isset($deductions->home_office['expense_record_type_yes_1']) && $deductions->home_office['expense_record_type_yes_1'] == 'L' ? 'selected' : '' }}>L: Log book</option>
-          <option value="A" {{ isset($deductions->home_office['expense_record_type_yes_1']) && $deductions->home_office['expense_record_type_yes_1'] == 'A' ? 'selected' : '' }}>A: Allowance received</option>
-          <option value="C" {{ isset($deductions->home_office['expense_record_type_yes_1']) && $deductions->home_office['expense_record_type_yes_1'] == 'C' ? 'selected' : '' }}>C: Actual recorded cost</option>
+          <option value="I: Invoice / Receipt" {{ isset($deductions->home_office['expense_record_type_yes_1']) && $deductions->home_office['expense_record_type_yes_1'] == 'I: Invoice / Receipt' ? 'selected' : '' }}>I: Invoice / Receipt</option>
+          <option value="L: Log book" {{ isset($deductions->home_office['expense_record_type_yes_1']) && $deductions->home_office['expense_record_type_yes_1'] == 'L: Log book' ? 'selected' : '' }}>L: Log book</option>
+          <option value="A: Allowance received" {{ isset($deductions->home_office['expense_record_type_yes_1']) && $deductions->home_office['expense_record_type_yes_1'] == 'A: Allowance received' ? 'selected' : '' }}>A: Allowance received</option>
+          <option value="C: Actual recorded cost" {{ isset($deductions->home_office['expense_record_type_yes_1']) && $deductions->home_office['expense_record_type_yes_1'] == 'C: Actual recorded cost' ? 'selected' : '' }}>C: Actual recorded cost</option>
         </select>
 
         <label style="margin-top:10px;">Total cost of this item</label>
-        <input type="text" name="home_office[expense_cost_yes_1]" placeholder="00.00$" class="form-control" 
+        <input type="text" name="home_office[expense_cost_yes_1]" placeholder="00.00$" class="form-control"
           value="{{ $deductions->home_office['expense_cost_yes_1'] ?? '' }}">
       </div>
     </div>
@@ -195,19 +195,19 @@
               @endfor
             </select>
           </div>
-          
+
           <div class="grin_box_border p-3 mb-3">
             <div class="col-md-6">
               <div class="form-group mb-2">
                 <label class="choosing-business-type-text">Type of expense</label>
                 <select name="home_office[expense_type_1]" class="form-control border-dark expense-type">
                   <option value="">Choose</option>
-                  <option value="telephone" {{ isset($deductions->home_office['expense_type_1']) && $deductions->home_office['expense_type_1'] == 'telephone' ? 'selected' : '' }}>Home Telephone Bills</option>
-                  <option value="furniture_over_300" {{ isset($deductions->home_office['expense_type_1']) && $deductions->home_office['expense_type_1'] == 'furniture_over_300' ? 'selected' : '' }}>Office furniture over $300</option>
-                  <option value="furniture_under_300" {{ isset($deductions->home_office['expense_type_1']) && $deductions->home_office['expense_type_1'] == 'furniture_under_300' ? 'selected' : '' }}>Office furniture under $300 (e.g. chair)</option>
-                  <option value="equipment_under_300" {{ isset($deductions->home_office['expense_type_1']) && $deductions->home_office['expense_type_1'] == 'equipment_under_300' ? 'selected' : '' }}>Office equipment under $300 (e.g. mouse)</option>
-                  <option value="repairs" {{ isset($deductions->home_office['expense_type_1']) && $deductions->home_office['expense_type_1'] == 'repairs' ? 'selected' : '' }}>Repairs to office equipment & furniture</option>
-                  <option value="stationery" {{ isset($deductions->home_office['expense_type_1']) && $deductions->home_office['expense_type_1'] == 'stationery' ? 'selected' : '' }}>Printing and Stationery</option>
+                  <option value="Home Telephone Bills" {{ isset($deductions->home_office['expense_type_1']) && $deductions->home_office['expense_type_1'] == 'Home Telephone Bills' ? 'selected' : '' }}>Home Telephone Bills</option>
+                  <option value="Office furniture over $300" {{ isset($deductions->home_office['expense_type_1']) && $deductions->home_office['expense_type_1'] == 'Office furniture over $300' ? 'selected' : '' }}>Office furniture over $300</option>
+                  <option value="Office furniture under $300 (e.g. chair)" {{ isset($deductions->home_office['expense_type_1']) && $deductions->home_office['expense_type_1'] == 'Office furniture under $300 (e.g. chair)' ? 'selected' : '' }}>Office furniture under $300 (e.g. chair)</option>
+                  <option value="Office equipment under $300 (e.g. mouse)" {{ isset($deductions->home_office['expense_type_1']) && $deductions->home_office['expense_type_1'] == 'Office equipment under $300 (e.g. mouse)' ? 'selected' : '' }}>Office equipment under $300 (e.g. mouse)</option>
+                  <option value="Repairs to office equipment & furniture" {{ isset($deductions->home_office['expense_type_1']) && $deductions->home_office['expense_type_1'] == 'Repairs to office equipment & furniture' ? 'selected' : '' }}>Repairs to office equipment & furniture</option>
+                  <option value="Printing and Stationery" {{ isset($deductions->home_office['expense_type_1']) && $deductions->home_office['expense_type_1'] == 'Printing and Stationery' ? 'selected' : '' }}>Printing and Stationery</option>
                 </select>
               </div>
 
@@ -251,10 +251,10 @@
                 <label class="choosing-business-type-text">What sort of records do you have for this expense?</label>
                 <select name="home_office[expense_record_type_1]" class="form-control border-dark">
                   <option value="">Choose</option>
-                  <option value="I" {{ isset($deductions->home_office['expense_record_type_1']) && $deductions->home_office['expense_record_type_1'] == 'I' ? 'selected' : '' }}>I: Invoice / Receipt</option>
-                  <option value="L" {{ isset($deductions->home_office['expense_record_type_1']) && $deductions->home_office['expense_record_type_1'] == 'L' ? 'selected' : '' }}>L: Log book</option>
-                  <option value="A" {{ isset($deductions->home_office['expense_record_type_1']) && $deductions->home_office['expense_record_type_1'] == 'A' ? 'selected' : '' }}>A: Allowance received</option>
-                  <option value="C" {{ isset($deductions->home_office['expense_record_type_1']) && $deductions->home_office['expense_record_type_1'] == 'C' ? 'selected' : '' }}>C: Actual recorded cost</option>
+                  <option value="I: Invoice / Receipt" {{ isset($deductions->home_office['expense_record_type_1']) && $deductions->home_office['expense_record_type_1'] == 'I: Invoice / Receipt' ? 'selected' : '' }}>I: Invoice / Receipt</option>
+                  <option value="L: Log book" {{ isset($deductions->home_office['expense_record_type_1']) && $deductions->home_office['expense_record_type_1'] == 'L: Log book' ? 'selected' : '' }}>L: Log book</option>
+                  <option value="A: Allowance received" {{ isset($deductions->home_office['expense_record_type_1']) && $deductions->home_office['expense_record_type_1'] == 'A: Allowance received' ? 'selected' : '' }}>A: Allowance received</option>
+                  <option value="C: Actual recorded cost" {{ isset($deductions->home_office['expense_record_type_1']) && $deductions->home_office['expense_record_type_1'] == 'C: Actual recorded cost' ? 'selected' : '' }}>C: Actual recorded cost</option>
                 </select>
               </div>
 
@@ -277,8 +277,8 @@
             <img src="{{ asset('img/icons/plus.png') }}" alt="plus" /> Choose file
           </button>
           <p id="homeSelectedFile" class="choosing-business-type-text text-muted mb-0 mt-2">
-            @if(!empty($deductions->home_office['home_receipt']))
-              <a href="{{ asset('storage/'.$deductions->home_office['home_receipt']) }}" target="_blank" class="btn btn-outline-success">
+            @if(!empty($deductions->attach['home_office']['home_receipt']))
+              <a href="{{ asset('storage/'.$deductions->attach['home_office']['home_receipt']) }}" target="_blank" class="btn btn-outline-success">
                 <i class="fa-solid fa-file"></i> View file
               </a>
             @else
@@ -301,15 +301,15 @@ document.addEventListener("DOMContentLoaded", () => {
     toggleHoursRecordBlock();
     toggleHoursDetailBlocks();
     toggleTypicalHoursYesBlock();
-    toggleOtherExpensesBlocks();
-    toggleOtherExpensesBlocks_YES();
-    
+    // toggleOtherExpensesBlocks();
+    // toggleOtherExpensesBlocks_YES();
+
     // Show furniture date fields if needed
     const expenseType = document.querySelector('.expense-type');
     if (expenseType && expenseType.value === 'furniture_over_300') {
       document.getElementById('furnitureDate_1').style.display = 'block';
     }
-    
+
     const expenseTypeYes = document.querySelector('.expense-type-select-yes');
     if (expenseTypeYes && expenseTypeYes.value === 'furniture_over_300') {
       document.querySelector('.purchase-date-yes').style.display = 'block';

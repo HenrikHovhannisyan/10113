@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Forms\Deduction;
 use App\Models\TaxReturn;
+use Illuminate\Support\Facades\Storage;
 
 class DeductionController extends Controller
 {
@@ -53,38 +54,34 @@ class DeductionController extends Controller
             $data[$field] = $request->input($field, $existing->$field ?? []);
         }
 
-        // === Single files (key => storage folder) ===
-        $fileFields = [
-            'computer.computer_file'   => 'computer',
-            'travel_expenses.travel_file'   => 'travel_expenses',
-            'union_fees.file'          => 'union_fees',
-            'sun_protection.sun_file'  => 'sun_protection',
-            'education.edu_file'       => 'education',
-            'uniforms.uniform_receipt' => 'uniforms',
-            'books.books_file'         => 'books',
-            'home_office.home_receipt' => 'home_office',
-        ];
+        // Keep file structure like IncomeController does
+        $attach = $existing ? ($existing->attach ?? []) : [];
 
-        foreach ($fileFields as $input => $folder) {
-            [$field, $key] = explode('.', $input);
-            if ($request->hasFile($input)) {
-                $data[$field][$key] = $request->file($input)->store($folder, 'public');
-            } elseif ($existing) {
-                $data[$field] = $existing->$field ?? [];
-            }
-        }
+        // Single file fields (overwrite if new file provided)
+        $this->handleSingleFile($request, $attach, 'computer.computer_file', 'computer');
+        $this->handleSingleFile($request, $attach, 'travel_expenses.travel_file', 'travel_expenses');
+        $this->handleSingleFile($request, $attach, 'union_fees.file', 'union_fees');
+        $this->handleSingleFile($request, $attach, 'sun_protection.sun_file', 'sun_protection');
+        $this->handleSingleFile($request, $attach, 'education.edu_file', 'education');
+        $this->handleSingleFile($request, $attach, 'uniforms.uniform_receipt', 'uniforms');
+        $this->handleSingleFile($request, $attach, 'books.books_file', 'books');
+        $this->handleSingleFile($request, $attach, 'home_office.home_receipt', 'home_office');
 
-        // === Low Value Pool (multiple files) ===
+        // Multiple file field: Low Value Pool
         if ($request->hasFile('low_value_pool.files')) {
-            $files = $request->file('low_value_pool.files');
+            if (!empty($attach['low_value_pool']['files'])) {
+                foreach ($attach['low_value_pool']['files'] as $oldFile) {
+                    Storage::disk('public')->delete($oldFile);
+                }
+            }
             $paths = [];
-            foreach ($files as $file) {
+            foreach ($request->file('low_value_pool.files') as $file) {
                 $paths[] = $file->store('low_value_pool', 'public');
             }
-            $data['low_value_pool']['files'] = $paths;
-        } elseif ($existing) {
-            $data['low_value_pool'] = $existing->low_value_pool ?? [];
+            $attach['low_value_pool']['files'] = $paths;
         }
+
+        $data['attach'] = $attach;
 
         if ($existing) {
             $existing->update($data);
@@ -102,6 +99,20 @@ class DeductionController extends Controller
             'message'     => $message,
             'deductionId' => $deduction->id
         ]);
+    }
+
+    private function handleSingleFile(Request $request, array &$attach, string $input, string $folder)
+    {
+        [$field, $key] = explode('.', $input);
+
+        if ($request->hasFile($input)) {
+            // Delete old if exists
+            if (!empty($attach[$field][$key])) {
+                Storage::disk('public')->delete($attach[$field][$key]);
+            }
+
+            $attach[$field][$key] = $request->file($input)->store($folder, 'public');
+        }
     }
 
     public function store(Request $request)

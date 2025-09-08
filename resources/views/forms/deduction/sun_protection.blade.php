@@ -45,8 +45,8 @@
 
         <div class="col-md-6 mb-3">
             <p id="sunFileName" class="choosing-business-type-text text-muted mb-0">
-                @if(!empty($sunProtection['sun_file']))
-                    <a href="{{ asset('storage/'.$sunProtection['sun_file']) }}" target="_blank" class="btn btn-outline-success">
+                @if(!empty($deductions->attach['sun_protection']['sun_file']))
+                    <a href="{{ asset('storage/'.$deductions->attach['sun_protection']['sun_file']) }}" target="_blank" class="btn btn-outline-success">
                         <i class="fa-solid fa-file"></i> View file
                     </a>
                 @else

@@ -34,7 +34,7 @@
     <div class="row">
       <div class="col-md-6 mb-3">
         <label class="choosing-business-type-text">
-          In a few words, describe the tools and how they relate to your work. 
+          In a few words, describe the tools and how they relate to your work.
           <small class="text-muted">(eg. “Assorted hand tools and power tool bits required for my work”)</small>
         </label>
         <textarea
@@ -94,13 +94,13 @@
     <div class="row">
       <div class="col-md-6 mb-3">
         <label class="choosing-business-type-text">
-          What sort of records or evidence do you have? 
+          What sort of records or evidence do you have?
           <small class="text-muted">(eg. an invoice or receipt)</small>
         </label>
         <select name="tools[evidence]" class="form-select border-dark">
           <option value="">Choose</option>
-          <option value="invoice" {{ ($tools['evidence'] ?? '') === 'invoice' ? 'selected' : '' }}>I: Invoice / Receipt</option>
-          <option value="recorded" {{ ($tools['evidence'] ?? '') === 'recorded' ? 'selected' : '' }}>C: Actual recorded cost</option>
+          <option value="I: Invoice / Receipt" {{ ($tools['evidence'] ?? '') === 'I: Invoice / Receipt' ? 'selected' : '' }}>I: Invoice / Receipt</option>
+          <option value="C: Actual recorded cost" {{ ($tools['evidence'] ?? '') === 'C: Actual recorded cost' ? 'selected' : '' }}>C: Actual recorded cost</option>
         </select>
       </div>
     </div>

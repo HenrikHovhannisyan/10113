@@ -25,9 +25,9 @@
                 </label>
                 <select name="union_fees[evidence_type]" class="form-control border-dark">
                     <option value="">Choose</option>
-                    <option value="payg" {{ (isset($unionFees['evidence_type']) && $unionFees['evidence_type']=='payg') ? 'selected' : '' }}>PAYG</option>
-                    <option value="invoice" {{ (isset($unionFees['evidence_type']) && $unionFees['evidence_type']=='invoice') ? 'selected' : '' }}>Invoice / receipt</option>
-                    <option value="actual" {{ (isset($unionFees['evidence_type']) && $unionFees['evidence_type']=='actual') ? 'selected' : '' }}>Actual recorded cost</option>
+                    <option value="PAYG" {{ (isset($unionFees['evidence_type']) && $unionFees['evidence_type']=='PAYG') ? 'selected' : '' }}>PAYG</option>
+                    <option value="Invoice / receipt" {{ (isset($unionFees['evidence_type']) && $unionFees['evidence_type']=='Invoice / receipt') ? 'selected' : '' }}>Invoice / receipt</option>
+                    <option value="Actual recorded cost" {{ (isset($unionFees['evidence_type']) && $unionFees['evidence_type']=='Actual recorded cost') ? 'selected' : '' }}>Actual recorded cost</option>
                 </select>
             </div>
         </div>
@@ -48,8 +48,8 @@
 
         <div class="col-md-6 mb-3">
             <p id="unionFileName" class="choosing-business-type-text text-muted mb-0">
-                @if(!empty($unionFees['file']))
-                    <a href="{{ asset('storage/'.$unionFees['file']) }}" target="_blank" class="btn btn-outline-success">
+                @if(!empty($deductions->attach['union_fees']['file']))
+                    <a href="{{ asset('storage/'.$deductions->attach['union_fees']['file']) }}" target="_blank" class="btn btn-outline-success">
                         <i class="fa-solid fa-file"></i> View file
                     </a>
                 @else

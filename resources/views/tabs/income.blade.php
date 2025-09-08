@@ -29,8 +29,8 @@
         @endphp
 
         @foreach($incomeItems as $key => $label)
-            <div class="income-item 
-    @if(isset($incomes) && !empty((array)$incomes->$key)) active @endif" 
+            <div class="income-item
+    @if(isset($incomes) && !empty((array)$incomes->$key)) active @endif"
     data-index="{{ $loop->index }}">
                 <div class="other-details-label">
                     <p>{{ $label }}</p>
@@ -76,7 +76,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const items = document.querySelectorAll(".income-item");
 
-    // 📌 Показываем формы для активных вкладок при загрузке
     items.forEach((item) => {
         const index = item.getAttribute("data-index");
         const formToShow = document.getElementById(`income-form-${index}`);
@@ -85,7 +84,6 @@ document.addEventListener("DOMContentLoaded", function () {
             formToShow.classList.remove("d-none");
         }
 
-        // 📌 Обработчик клика по табу
         item.addEventListener("click", () => {
             if (formToShow && formToShow.classList.contains("d-none")) {
                 formToShow.classList.remove("d-none");

@@ -31,21 +31,21 @@
         <label>Type of expense</label>
         <select name="books[expenses][{{ $i }}][type]" class="form-control border-dark">
           <option value="">Choose</option>
-          <option value="books" {{ ($booksExpenses[$i]['type'] ?? '') === 'books' ? 'selected' : '' }}>Books and journals</option>
-          <option value="seminars" {{ ($booksExpenses[$i]['type'] ?? '') === 'seminars' ? 'selected' : '' }}>Seminars</option>
-          <option value="newspapers" {{ ($booksExpenses[$i]['type'] ?? '') === 'newspapers' ? 'selected' : '' }}>Newspapers</option>
-          <option value="subscriptions" {{ ($booksExpenses[$i]['type'] ?? '') === 'subscriptions' ? 'selected' : '' }}>Subscriptions</option>
-          <option value="meals" {{ ($booksExpenses[$i]['type'] ?? '') === 'meals' ? 'selected' : '' }}>Award overtime meal allowance</option>
-          <option value="other" {{ ($booksExpenses[$i]['type'] ?? '') === 'other' ? 'selected' : '' }}>Other</option>
+          <option value="Books and journals" {{ ($booksExpenses[$i]['type'] ?? '') === 'Books and journals' ? 'selected' : '' }}>Books and journals</option>
+          <option value="Seminars" {{ ($booksExpenses[$i]['type'] ?? '') === 'Seminars' ? 'selected' : '' }}>Seminars</option>
+          <option value="Newspapers" {{ ($booksExpenses[$i]['type'] ?? '') === 'Newspapers' ? 'selected' : '' }}>Newspapers</option>
+          <option value="Subscriptions" {{ ($booksExpenses[$i]['type'] ?? '') === 'Subscriptions' ? 'selected' : '' }}>Subscriptions</option>
+          <option value="Award overtime meal allowance" {{ ($booksExpenses[$i]['type'] ?? '') === 'Award overtime meal allowance' ? 'selected' : '' }}>Award overtime meal allowance</option>
+          <option value="Other" {{ ($booksExpenses[$i]['type'] ?? '') === 'Other' ? 'selected' : '' }}>Other</option>
         </select>
       </div>
 
       <div class="form-group mb-2">
         <label>Describe this item in a few words</label>
-        <input type="text" 
-               name="books[expenses][{{ $i }}][description]" 
-               class="form-control border-dark" 
-               placeholder="..." 
+        <input type="text"
+               name="books[expenses][{{ $i }}][description]"
+               class="form-control border-dark"
+               placeholder="..."
                value="{{ $booksExpenses[$i]['description'] ?? '' }}">
       </div>
 
@@ -53,19 +53,19 @@
         <label>What sort of records do you have for this expense?</label>
         <select name="books[expenses][{{ $i }}][record_type]" class="form-control border-dark">
           <option value="">Choose</option>
-          <option value="invoice" {{ ($booksExpenses[$i]['record_type'] ?? '') === 'invoice' ? 'selected' : '' }}>Invoice / receipt</option>
-          <option value="payg" {{ ($booksExpenses[$i]['record_type'] ?? '') === 'payg' ? 'selected' : '' }}>PAYG summary</option>
-          <option value="allowance" {{ ($booksExpenses[$i]['record_type'] ?? '') === 'allowance' ? 'selected' : '' }}>Allowance received</option>
-          <option value="recorded" {{ ($booksExpenses[$i]['record_type'] ?? '') === 'recorded' ? 'selected' : '' }}>Actual recorded cost</option>
+          <option value="Invoice / receipt" {{ ($booksExpenses[$i]['record_type'] ?? '') === 'Invoice / receipt' ? 'selected' : '' }}>Invoice / receipt</option>
+          <option value="PAYG summary" {{ ($booksExpenses[$i]['record_type'] ?? '') === 'PAYG summary' ? 'selected' : '' }}>PAYG summary</option>
+          <option value="Allowance received" {{ ($booksExpenses[$i]['record_type'] ?? '') === 'Allowance received' ? 'selected' : '' }}>Allowance received</option>
+          <option value="Actual recorded cost" {{ ($booksExpenses[$i]['record_type'] ?? '') === 'Actual recorded cost' ? 'selected' : '' }}>Actual recorded cost</option>
         </select>
       </div>
 
       <div class="form-group mb-2">
         <label>Cost of this item</label>
-        <input type="text" 
-               name="books[expenses][{{ $i }}][cost]" 
-               class="form-control border-dark" 
-               placeholder="00.00$" 
+        <input type="text"
+               name="books[expenses][{{ $i }}][cost]"
+               class="form-control border-dark"
+               placeholder="00.00$"
                value="{{ $booksExpenses[$i]['cost'] ?? '' }}">
       </div>
     </div>
@@ -82,8 +82,8 @@
       <img src="{{ asset('img/icons/plus.png') }}" alt="plus"> Choose file
     </button>
     <p id="booksFileName" class="choosing-business-type-text text-muted mt-2 mb-0">
-      @if(!empty($deductions->books['books_file']))
-        <a href="{{ asset('storage/'.$deductions->books['books_file']) }}" target="_blank" class="btn btn-outline-success">
+      @if(!empty($deductions->attach['books']['books_file']))
+        <a href="{{ asset('storage/'.$deductions->attach['books']['books_file']) }}" target="_blank" class="btn btn-outline-success">
           <i class="fa-solid fa-file"></i>
           View file
         </a>

@@ -9,33 +9,33 @@
     <p class="choosing-business-type-text">
       Includes the purchase of work uniforms with logos, or protective clothing. You cannot claim ordinary clothing, business suits, etc.
     </p>
-    
+
     @php
       $uniformItems = old('uniforms.items', isset($deductions->uniforms['items']) ? $deductions->uniforms['items'] : []);
       $uniformCount = count($uniformItems) > 0 ? count($uniformItems) : 1;
     @endphp
-    
+
     @for($i = 0; $i < $uniformCount; $i++)
     <div class="grin_box_border mb-3 uniform-block">
       <div class="mb-3">
         <label class="choosing-business-type-text">Do you have a receipt for every uniform item you are claiming below?</label><br>
         <div class="form-check form-check-inline">
-          <input 
-            class="form-check-input custom-radio" 
-            type="radio" 
-            name="uniforms[items][{{ $i }}][has_receipt]" 
-            id="has_receipt_{{ $i }}_yes" 
+          <input
+            class="form-check-input custom-radio"
+            type="radio"
+            name="uniforms[items][{{ $i }}][has_receipt]"
+            id="has_receipt_{{ $i }}_yes"
             value="yes"
             {{ old("uniforms.items.$i.has_receipt", $uniformItems[$i]['has_receipt'] ?? '') === 'yes' ? 'checked' : '' }}
           >
           <label class="form-check-label custom-label" for="has_receipt_{{ $i }}_yes">Yes</label>
         </div>
         <div class="form-check form-check-inline">
-          <input 
-            class="form-check-input custom-radio" 
-            type="radio" 
-            name="uniforms[items][{{ $i }}][has_receipt]" 
-            id="has_receipt_{{ $i }}_no" 
+          <input
+            class="form-check-input custom-radio"
+            type="radio"
+            name="uniforms[items][{{ $i }}][has_receipt]"
+            id="has_receipt_{{ $i }}_no"
             value="no"
             {{ old("uniforms.items.$i.has_receipt", $uniformItems[$i]['has_receipt'] ?? '') === 'no' ? 'checked' : '' }}
           >
@@ -61,10 +61,10 @@
         </div>
         <div class="col-md-6 mb-3">
           <label class="choosing-business-type-text">If 'Other', please specify</label>
-          <input 
-            type="text" 
-            class="form-control border-dark other-uniform" 
-            name="uniforms[items][{{ $i }}][other_type]" 
+          <input
+            type="text"
+            class="form-control border-dark other-uniform"
+            name="uniforms[items][{{ $i }}][other_type]"
             placeholder="Please enter the type of uniform you are claiming"
             value="{{ old("uniforms.items.$i.other_type", $uniformItems[$i]['other_type'] ?? '') }}"
             {{ old("uniforms.items.$i.type", $uniformItems[$i]['type'] ?? '') === 'Other' ? '' : 'disabled' }}
@@ -72,11 +72,11 @@
         </div>
         <div class="col-md-6 mb-3">
           <label class="choosing-business-type-text">Total amount you paid for this item</label>
-          <input 
-            type="number" 
-            step="0.01" 
-            class="form-control border-dark uniform-amount" 
-            name="uniforms[items][{{ $i }}][amount]" 
+          <input
+            type="number"
+            step="0.01"
+            class="form-control border-dark uniform-amount"
+            name="uniforms[items][{{ $i }}][amount]"
             placeholder="00.00$"
             value="{{ old("uniforms.items.$i.amount", $uniformItems[$i]['amount'] ?? '') }}"
           >
@@ -99,8 +99,8 @@
       <img src="{{ asset('img/icons/plus.png') }}" alt="plus"> Choose file
     </button>
     <p id="uniformSelectedFile" class="choosing-business-type-text text-muted mt-2 mb-0">
-      @if(!empty($deductions->uniforms['uniform_receipt']))
-        <a href="{{ asset('storage/'.$deductions->uniforms['uniform_receipt']) }}" target="_blank" class="btn btn-outline-success">
+      @if(!empty($deductions->attach['uniforms']['uniform_receipt']))
+        <a href="{{ asset('storage/'.$deductions->attach['uniforms']['uniform_receipt']) }}" target="_blank" class="btn btn-outline-success">
           <i class="fa-solid fa-file"></i>
           View file
         </a>
@@ -115,17 +115,17 @@
     <h4 class="form_title">Laundry Expenses</h4>
     <img src="{{ asset('img/icons/help.png') }}" alt="Help">
   </div>
-  
+
   <p class="choosing-business-type-text">
     If you entered any work uniform above that you regularly wash, you can also usually claim the cost of laundering those items up to $150 per year.
   </p>
-  
+
   <div class="grin_box_border mt-4">
     <div class="row mb-3">
       <p class="choosing-business-type-text mb-3">
         Please complete the fields below and we will calculate your laundry claim for you.
       </p>
-      
+
       <div class="col-md-6 mb-3">
         <label class="choosing-business-type-text">Please select whether you wash your uniform separately or mixed with other non-work clothes</label>
         <select class="form-control border-dark" name="uniforms[laundry][laundry_type]">
@@ -134,26 +134,26 @@
           <option value="Mixed Wash" {{ old('uniforms.laundry.laundry_type', $deductions->uniforms['laundry']['laundry_type'] ?? '') === 'Mixed Wash' ? 'selected' : '' }}>Mixed Wash</option>
         </select>
       </div>
-      
+
       <div class="col-md-6 mb-3">
         <label class="choosing-business-type-text mt-0 mt-md-4">How many loads of laundry you do per week</label>
-        <input 
-          type="number" 
-          step="1" 
-          class="form-control border-dark" 
-          name="uniforms[laundry][laundry_loads]" 
+        <input
+          type="number"
+          step="1"
+          class="form-control border-dark"
+          name="uniforms[laundry][laundry_loads]"
           placeholder="00.00$"
           value="{{ old('uniforms.laundry.laundry_loads', $deductions->uniforms['laundry']['laundry_loads'] ?? '') }}"
         >
       </div>
-      
+
       <div class="col-md-6 mb-3">
         <label class="choosing-business-type-text">How many weeks of the year did you work?</label>
-        <input 
-          type="number" 
-          step="1" 
-          class="form-control border-dark" 
-          name="uniforms[laundry][weeks_worked]" 
+        <input
+          type="number"
+          step="1"
+          class="form-control border-dark"
+          name="uniforms[laundry][weeks_worked]"
           placeholder="00.00$"
           value="{{ old('uniforms.laundry.weeks_worked', $deductions->uniforms['laundry']['weeks_worked'] ?? '') }}"
         >
@@ -178,7 +178,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (typeSelect && otherInput) {
       // Set initial state
       otherInput.disabled = typeSelect.value !== "Other";
-      
+
       typeSelect.addEventListener("change", () => {
         otherInput.disabled = typeSelect.value !== "Other";
         if (otherInput.disabled) otherInput.value = "";
@@ -213,11 +213,11 @@ document.addEventListener("DOMContentLoaded", () => {
       input.value = "";
       if (input.classList.contains("other-uniform")) input.disabled = true;
     });
-    
+
     clone.querySelectorAll("select").forEach(select => {
       select.selectedIndex = 0;
     });
-    
+
     clone.querySelectorAll('input[type="radio"]').forEach(radio => {
       radio.checked = false;
     });
@@ -234,7 +234,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (id.includes('has_receipt')) {
         const newId = id.replace(/_(\d+)_/, `_${newIndex}_`);
         el.setAttribute('id', newId);
-        
+
         // Update corresponding label's for attribute
         const label = el.nextElementSibling;
         if (label && label.tagName === 'LABEL') {

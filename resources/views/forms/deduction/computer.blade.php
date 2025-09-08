@@ -5,8 +5,8 @@
   </div>
 
   <p class="choosing-business-type-text mb-4">
-    Are you required to do some of your work on your personal computer? Did you pay for the computer yourself? 
-    If you answered “yes”, then you might be able to claim part of the cost as a deduction. 
+    Are you required to do some of your work on your personal computer? Did you pay for the computer yourself?
+    If you answered “yes”, then you might be able to claim part of the cost as a deduction.
     Includes desktop, laptop, tablet, iPad or printer that cost more than $300.
   </p>
 
@@ -100,8 +100,8 @@
         <label>What sort of records do you have for this item?</label>
         <select name="computer[expenses][{{ $i }}][record]" class="form-control border-dark">
           <option value="">Choose</option>
-          <option value="invoice" {{ ($computerExpenses[$i]['record'] ?? '') === 'invoice' ? 'selected' : '' }}>Invoice / receipt</option>
-          <option value="recorded" {{ ($computerExpenses[$i]['record'] ?? '') === 'recorded' ? 'selected' : '' }}>Actual recorded cost</option>
+          <option value="Invoice / receipt" {{ ($computerExpenses[$i]['record'] ?? '') === 'Invoice / receipt' ? 'selected' : '' }}>Invoice / receipt</option>
+          <option value="Actual recorded cost" {{ ($computerExpenses[$i]['record'] ?? '') === 'Actual recorded cost' ? 'selected' : '' }}>Actual recorded cost</option>
         </select>
       </div>
 
@@ -127,16 +127,16 @@
     <button type="button" class="btn btn_add" id="triggerComputerFile">
       <img src="{{ asset('img/icons/plus.png') }}" alt="plus"> Choose file
     </button>
-    <p id="computerFileName" class="choosing-business-type-text text-muted mt-2 mb-0">
-      @if(!empty($deductions->computer['computer_file']))
-        <a href="{{ asset('storage/'.$deductions->computer['computer_file']) }}" target="_blank" class="btn btn-outline-success">
-          <i class="fa-solid fa-file"></i>
-          View file
-        </a>
-      @else
-        No file chosen
-      @endif
-    </p>
+      <p id="computerFileName" class="choosing-business-type-text text-muted mt-2 mb-0">
+          @if(!empty($deductions->attach['computer']['computer_file']))
+              <a href="{{ asset('storage/'.$deductions->attach['computer']['computer_file']) }}" target="_blank" class="btn btn-outline-success">
+                  <i class="fa-solid fa-file"></i>
+                  View file
+              </a>
+          @else
+              No file chosen
+          @endif
+      </p>
   </div>
 </section>
 

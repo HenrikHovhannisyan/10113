@@ -77,8 +77,8 @@
       <img src="{{ asset('img/icons/plus.png') }}" alt="plus" /> Choose file
     </button>
     <p id="travelSelectedFile" class="choosing-business-type-text text-muted mb-0 mt-2">
-      @if(!empty($deductions->travel_expenses['travel_file']))
-        <a href="{{ asset('storage/'.$deductions->travel_expenses['travel_file']) }}" target="_blank" class="btn btn-outline-success">
+      @if(!empty($deductions->attach['travel_expenses']['travel_file']))
+        <a href="{{ asset('storage/'.$deductions->attach['travel_expenses']['travel_file']) }}" target="_blank" class="btn btn-outline-success">
           <i class="fa-solid fa-file"></i> View file
         </a>
       @else

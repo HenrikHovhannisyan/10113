@@ -12,7 +12,7 @@
     $carExpenses = old('car_expenses', isset($deductions) ? $deductions->car_expenses ?? [] : []);
     $vehicles = $carExpenses['vehicles'] ?? [];
     $vehicleCount = count($vehicles) > 0 ? count($vehicles) : 1;
-    
+
     $parkingCost = $carExpenses['parking_cost'] ?? '';
     $tollsCost = $carExpenses['tolls_cost'] ?? '';
     $hasReceipts = $carExpenses['has_receipts'] ?? '';
@@ -125,9 +125,9 @@
                   @endphp
                   <select id="purchaseType_{{ $i }}" name="car_expenses[vehicles][{{ $i }}][purchase_type]" class="form-select border-dark">
                     <option value="">Choose</option>
-                    <option value="purchased_outright" {{ $purchaseType === 'purchased_outright' ? 'selected' : '' }}>Purchased outright</option>
-                    <option value="borrowed_or_hire_purchase" {{ $purchaseType === 'borrowed_or_hire_purchase' ? 'selected' : '' }}>Borrowed money or hire purchase</option>
-                    <option value="lease_agreement" {{ $purchaseType === 'lease_agreement' ? 'selected' : '' }}>Lease agreement</option>
+                    <option value="Purchased outright" {{ $purchaseType === 'Purchased outright' ? 'selected' : '' }}>Purchased outright</option>
+                    <option value="Borrowed money or hire purchase" {{ $purchaseType === 'Borrowed money or hire purchase' ? 'selected' : '' }}>Borrowed money or hire purchase</option>
+                    <option value="Lease agreement" {{ $purchaseType === 'Lease agreement' ? 'selected' : '' }}>Lease agreement</option>
                   </select>
                 </div>
 
@@ -157,7 +157,7 @@
                         <option value="">Month</option>
                         @for ($m = 1; $m <= 12; $m++)
                           @php $monthName = DateTime::createFromFormat('!m', $m)->format('F'); @endphp
-                          <option value="{{ $m }}" {{ ($purchaseDateOutright['month'] ?? '') == $m ? 'selected' : '' }}>{{ $monthName }}</option>
+                          <option value="{{ $monthName }}" {{ ($purchaseDateOutright['month'] ?? '') == $monthName ? 'selected' : '' }}>{{ $monthName }}</option>
                         @endfor
                       </select>
                     </div>
@@ -193,7 +193,7 @@
                         <option value="">Month</option>
                         @for ($m = 1; $m <= 12; $m++)
                           @php $monthName = DateTime::createFromFormat('!m', $m)->format('F'); @endphp
-                          <option value="{{ $m }}" {{ ($purchaseDateBorrowed['month'] ?? '') == $m ? 'selected' : '' }}>{{ $monthName }}</option>
+                          <option value="{{ $monthName }}" {{ ($purchaseDateBorrowed['month'] ?? '') == $monthName ? 'selected' : '' }}>{{ $monthName }}</option>
                         @endfor
                       </select>
                     </div>
@@ -237,7 +237,7 @@
                         <option value="">Month</option>
                         @for ($m = 1; $m <= 12; $m++)
                           @php $monthName = DateTime::createFromFormat('!m', $m)->format('F'); @endphp
-                          <option value="{{ $m }}" {{ ($purchaseDateLease['month'] ?? '') == $m ? 'selected' : '' }}>{{ $monthName }}</option>
+                          <option value="{{ $monthName }}" {{ ($purchaseDateLease['month'] ?? '') == $monthName ? 'selected' : '' }}>{{ $monthName }}</option>
                         @endfor
                       </select>
                     </div>
