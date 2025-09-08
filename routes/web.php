@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Forms\OtherController;
 use App\Http\Controllers\StripePaymentController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -23,6 +24,17 @@ use App\Http\Controllers\Forms\DeductionController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+
+Route::get('/migrate', function (){
+    Artisan::call('migrate');
+    dd('clear');
+});
+
+Route::get('/clear', function (){
+    Artisan::call('optimize:clear');
+    dd('clear');
+});
 
 Auth::routes();
 Route::get('/next', [HomeController::class, function () {
