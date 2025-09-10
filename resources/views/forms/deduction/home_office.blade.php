@@ -72,6 +72,9 @@
         <button type="button" class="btn btn_add" id="triggerHoursWorkedFile_YES">
           <img src="{{ asset('img/icons/plus.png') }}" alt="plus" /> Choose file
         </button>
+          <p class="text-muted mt-1 mb-0">
+              Allowed file types: PDF, JPG, PNG. Maximum file size: 5 MB.
+          </p>
         <p id="hoursWorkedFileName_YES" class="choosing-business-type-text text-muted mb-0 mt-2">
           @if(!empty($deductions->attach['home_office']['hours_worked_record_file_yes']))
             <a href="{{ asset('storage/'.$deductions->attach['home_office']['hours_worked_record_file_yes']) }}" target="_blank" class="btn btn-outline-success">
@@ -276,6 +279,9 @@
           <button type="button" class="btn btn_add" id="triggerHomeFile">
             <img src="{{ asset('img/icons/plus.png') }}" alt="plus" /> Choose file
           </button>
+            <p class="text-muted mt-1 mb-0">
+                Allowed file types: PDF, JPG, PNG. Maximum file size: 5 MB.
+            </p>
           <p id="homeSelectedFile" class="choosing-business-type-text text-muted mb-0 mt-2">
             @if(!empty($deductions->attach['home_office']['home_receipt']))
               <a href="{{ asset('storage/'.$deductions->attach['home_office']['home_receipt']) }}" target="_blank" class="btn btn-outline-success">

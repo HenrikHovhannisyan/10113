@@ -85,6 +85,9 @@
                     <button type="button" class="btn btn_add" id="statementFileTrigger">
                         <img src="{{ asset('img/icons/plus.png') }}" alt="plus"> Choose file
                     </button>
+                    <p class="text-muted mt-1 mb-0">
+                        Allowed file types: PDF, JPG, PNG. Maximum file size: 5 MB.
+                    </p>
                 </div>
                 <div class="col-md-6 mb-3">
                     <p id="statementFileName" class="choosing-business-type-text text-muted mb-0">
@@ -223,6 +226,9 @@
                     <button type="button" class="btn btn_add" id="privateHealthTrigger">
                         <img src="{{ asset('img/icons/plus.png') }}" alt="plus"> Choose file
                     </button>
+                    <p class="text-muted mt-1 mb-0">
+                        Allowed file types: PDF, JPG, PNG. Maximum file size: 5 MB.
+                    </p>
                 </div>
                 <div class="col-md-6 mb-3">
                     <p id="privateHealthFileName" class="choosing-business-type-text text-muted mb-0">

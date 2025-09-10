@@ -76,6 +76,9 @@
     <button type="button" class="btn btn_add" id="triggerTravelFile">
       <img src="{{ asset('img/icons/plus.png') }}" alt="plus" /> Choose file
     </button>
+      <p class="text-muted mt-1 mb-0">
+          Allowed file types: PDF, JPG, PNG. Maximum file size: 5 MB.
+      </p>
     <p id="travelSelectedFile" class="choosing-business-type-text text-muted mb-0 mt-2">
       @if(!empty($deductions->attach['travel_expenses']['travel_file']))
         <a href="{{ asset('storage/'.$deductions->attach['travel_expenses']['travel_file']) }}" target="_blank" class="btn btn-outline-success">

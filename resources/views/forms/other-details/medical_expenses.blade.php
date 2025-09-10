@@ -52,6 +52,9 @@
             <button type="button" class="btn btn_add" id="medical_expense_file_trigger">
                 <img src="{{ asset('img/icons/plus.png') }}" alt="plus"> Choose file
             </button>
+            <p class="text-muted mt-1 mb-0">
+                Allowed file types: PDF, JPG, PNG. Maximum file size: 5 MB.
+            </p>
             <p id="medical_expense_file_name" class="choosing-business-type-text text-muted mb-0 mt-2">
                 @if(!empty($others->attach['medical_expense_file']))
                     <a href="{{ Storage::disk('public')->url($others->attach['medical_expense_file']) }}" target="_blank">
@@ -65,14 +68,3 @@
     </div>
 <section>
 
-<script>
-    const medFileInput = document.getElementById("medical_expense_file");
-    const medFileTrigger = document.getElementById("medical_expense_file_trigger");
-    const medFileNameDisplay = document.getElementById("medical_expense_file_name");
-
-    medFileTrigger.addEventListener("click", () => medFileInput.click());
-
-    medFileInput.addEventListener("change", () => {
-        medFileNameDisplay.textContent = medFileInput.files[0]?.name || "No file chosen";
-    });
-</script>

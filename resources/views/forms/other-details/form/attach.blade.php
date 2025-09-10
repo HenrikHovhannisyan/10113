@@ -16,7 +16,7 @@
                        name="additional_questions"
                        class="form-control border-dark"
                        placeholder="..."
-                       value="{{ old('additional_questions', $others->attach['additional_questions'] ?? '') }}">
+                       value="{{ old('additional_questions', $others->additional_questions ?? '') }}">
             </div>
 
             <!-- File Uploads -->
@@ -24,11 +24,13 @@
                 <label class="choosing-business-type-text d-block mb-2">
                     Attach any other files or receipts
                 </label>
-
                 <input type="file" name="additional_file[]" id="additional_file" class="d-none" multiple />
                 <button type="button" class="btn btn_add" id="additional_file_trigger">
                     <img src="{{ asset('img/icons/plus.png') }}" alt="plus"> Choose file
                 </button>
+                <p class="text-muted mt-1 mb-0">
+                    Allowed file types: PDF, JPG, PNG. Maximum file size: 5 MB.
+                </p>
 
                 <div id="additional_file_name" class="choosing-business-type-text text-muted mb-0 mt-2">
                     @if(!empty($others->attach['additional_file']))

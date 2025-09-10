@@ -7,9 +7,16 @@ use Illuminate\Http\Request;
 use App\Models\TaxReturn;
 use App\Models\Forms\Income;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class IncomeController extends Controller
 {
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     private function saveIncome(Request $request, $id = null)
     {
         $taxReturn = TaxReturn::where('user_id', auth()->id())->first();
@@ -21,45 +28,56 @@ class IncomeController extends Controller
             ], 404);
         }
 
-        $existing = $id ? Income::findOrFail($id) : null;
-
-        // Prepare all data fields
-        $fields = [
-            'salary',
-            'interests',
-            'dividends',
-            'government_allowances',
-            'government_pensions',
-            'capital_gains',
-            'managed_funds',
-            'termination_payments',
-            'rent',
-            'partnerships',
-            'annuities',
-            'superannuation',
-            'super_lump_sums',
-            'ess',
-            'personal_services',
-            'business_income',
-            'business_losses',
-            'foreign_income',
-            'other_income'
+        $rules = [
+            'salary'                => 'nullable|array',
+            'interests'             => 'nullable|array',
+            'dividends'             => 'nullable|array',
+            'government_allowances' => 'nullable|array',
+            'government_pensions'   => 'nullable|array',
+            'capital_gains'         => 'nullable|array',
+            'capital_gains.cgt_attachment' => 'nullable|file|mimes:pdf,jpg,png|max:5120', // 5MB
+            'managed_funds'         => 'nullable|array',
+            'managed_fund_files.*'  => 'nullable|file|mimes:pdf,jpg,png|max:5120', // 5MB
+            'termination_payments'  => 'nullable|array',
+            'termination_payments.*.etp_files.*' => 'nullable|file|mimes:pdf,jpg,png|max:5120', // 5MB
+            'rent'                  => 'nullable|array',
+            'rent.*.rent_files.*'   => 'nullable|file|mimes:pdf,jpg,png|max:5120', // 5MB
+            'partnerships'          => 'nullable|array',
+            'annuities'             => 'nullable|array',
+            'superannuation'        => 'nullable|array',
+            'super_lump_sums'       => 'nullable|array',
+            'ess'                   => 'nullable|array',
+            'personal_services'     => 'nullable|array',
+            'business_income'       => 'nullable|array',
+            'business_losses'       => 'nullable|array',
+            'foreign_income'        => 'nullable|array',
+            'other_income'          => 'nullable|array',
         ];
 
-        $data = [];
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation errors',
+                'errors'  => $validator->errors()
+            ], 422);
+        }
+
+        $validated = $validator->validated();
+
+        $existing = $id ? Income::findOrFail($id) : null;
+
+        // Prepare data: keep old values if not provided
+        $fields = array_keys($rules);
+        $data   = [];
         foreach ($fields as $field) {
-            $data[$field] = $request->input($field, $existing->$field ?? []);
+            $data[$field] = $validated[$field] ?? ($existing->$field ?? null);
         }
 
-        // Handle "attach" section (files)
-        $attach = [];
+        // Handle attach (files)
+        $attach = $existing ? ($existing->attach ?? []) : [];
 
-        // Keep existing attach data if updating
-        if ($existing) {
-            $attach = $existing->attach ?? [];
-        }
-
-        // Handle file uploads for different sections
         $this->handleCapitalGainsFiles($request, $attach);
         $this->handleManagedFundsFiles($request, $attach);
         $this->handleTerminationPaymentsFiles($request, $attach);
@@ -70,20 +88,28 @@ class IncomeController extends Controller
         if ($existing) {
             $existing->update($data);
             $message = 'Income data updated successfully!';
+            $incomeId = $existing->id;
         } else {
             $income = Income::create(array_merge($data, [
                 'tax_return_id' => $taxReturn->id
             ]));
             $message = 'Income data saved successfully!';
+            $incomeId = $income->id;
         }
 
         return response()->json([
             'success'  => true,
             'message'  => $message,
-            'incomeId' => $existing->id ?? $income->id
+            'incomeId' => $incomeId
         ]);
     }
 
+
+    /**
+     * @param Request $request
+     * @param array $attach
+     * @return void
+     */
     private function handleCapitalGainsFiles(Request $request, array &$attach)
     {
         if ($request->hasFile('capital_gains.cgt_attachment')) {
@@ -98,6 +124,12 @@ class IncomeController extends Controller
         }
     }
 
+
+    /**
+     * @param Request $request
+     * @param array $attach
+     * @return void
+     */
     private function handleManagedFundsFiles(Request $request, array &$attach)
     {
         if ($request->hasFile('managed_fund_files')) {
@@ -118,6 +150,12 @@ class IncomeController extends Controller
         }
     }
 
+
+    /**
+     * @param Request $request
+     * @param array $attach
+     * @return void
+     */
     private function handleTerminationPaymentsFiles(Request $request, array &$attach)
     {
         $etpFiles = $request->file('termination_payments', []);
@@ -141,6 +179,12 @@ class IncomeController extends Controller
         }
     }
 
+
+    /**
+     * @param Request $request
+     * @param array $attach
+     * @return void
+     */
     private function handleRentFiles(Request $request, array &$attach)
     {
         $rentFiles = $request->file('rent', []);
@@ -164,11 +208,21 @@ class IncomeController extends Controller
         }
     }
 
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(Request $request)
     {
         return $this->saveIncome($request);
     }
 
+    /**
+     * @param Request $request
+     * @param string $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(Request $request, string $id)
     {
         return $this->saveIncome($request, $id);

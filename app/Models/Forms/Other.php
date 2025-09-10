@@ -18,6 +18,7 @@ class Other extends Model
     protected $fillable = [
         'attach',
         'any_dependent_children',
+        'additional_questions',
         'income_tests',
         'mls',
         'tax_return_id',

@@ -65,20 +65,20 @@
                     </select>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <input type="text" name="capital_gains[rollover_other_detail]" id="rolloverOtherInput" 
+                    <input type="text" name="capital_gains[rollover_other_detail]" id="rolloverOtherInput"
                         class="form-control border-dark" placeholder="Specify other exemption"
                         value="{{ $capitalGains['rollover_other_detail'] ?? '' }}"
                         {{ (isset($capitalGains['rollover_code']) && $capitalGains['rollover_code'] === 'other') ? '' : 'disabled' }}>
                 </div>
                 <div class="col-md-6 mb-3">
                     <p class="choosing-business-type-text">Credit for foreign resident capital gains withholding amounts</p>
-                    <input type="number" step="0.01" name="capital_gains[foreign_credit]" 
+                    <input type="number" step="0.01" name="capital_gains[foreign_credit]"
                         class="form-control border-dark" placeholder="00.00$"
                         value="{{ $capitalGains['foreign_credit'] ?? '' }}">
                 </div>
             </div>
         </div>
-        
+
         <p class="choosing-business-type-text">
             <strong>Capital Gains or Losses Excluding Managed Funds</strong>
         </p>
@@ -86,28 +86,28 @@
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <p class="choosing-business-type-text">Total Capital Gain eligible for discount</p>
-                    <input type="number" step="0.01" name="capital_gains[gain_discount_eligible]" 
+                    <input type="number" step="0.01" name="capital_gains[gain_discount_eligible]"
                         class="form-control border-dark" placeholder="00.00$"
                         value="{{ $capitalGains['gain_discount_eligible'] ?? '' }}">
                 </div>
 
                 <div class="col-md-6 mb-3">
                     <p class="choosing-business-type-text">Total Capital Gain not eligible for discount</p>
-                    <input type="number" step="0.01" name="capital_gains[gain_not_discounted]" 
+                    <input type="number" step="0.01" name="capital_gains[gain_not_discounted]"
                         class="form-control border-dark" placeholder="00.00$"
                         value="{{ $capitalGains['gain_not_discounted'] ?? '' }}">
                 </div>
 
                 <div class="col-md-6 mb-3">
                     <p class="choosing-business-type-text">Total current year Capital Losses</p>
-                    <input type="number" step="0.01" name="capital_gains[current_year_losses]" 
+                    <input type="number" step="0.01" name="capital_gains[current_year_losses]"
                         class="form-control border-dark" placeholder="00.00$"
                         value="{{ $capitalGains['current_year_losses'] ?? '' }}">
                 </div>
 
                 <div class="col-md-6 mb-3">
                     <p class="choosing-business-type-text">Total prior year Capital Losses</p>
-                    <input type="number" step="0.01" name="capital_gains[prior_year_losses]" 
+                    <input type="number" step="0.01" name="capital_gains[prior_year_losses]"
                         class="form-control border-dark" placeholder="00.00$"
                         value="{{ $capitalGains['prior_year_losses'] ?? '' }}">
                 </div>
@@ -133,12 +133,12 @@
                 <div class="row">
                     <p class="choosing-business-type-text">Shares in companies listed on an Australian securities exchange</p>
                     <div class="col-md-6 mb-3">
-                        <input type="number" name="capital_gains[cg_listed_shares_gain]" 
+                        <input type="number" name="capital_gains[cg_listed_shares_gain]"
                             class="form-control border-dark" placeholder="Capital gain"
                             value="{{ $capitalGains['cg_listed_shares_gain'] ?? '' }}">
                     </div>
                     <div class="col-md-6 mb-3">
-                        <input type="number" name="capital_gains[cg_listed_shares_loss]" 
+                        <input type="number" name="capital_gains[cg_listed_shares_loss]"
                             class="form-control border-dark" placeholder="Capital loss"
                             value="{{ $capitalGains['cg_listed_shares_loss'] ?? '' }}">
                     </div>
@@ -157,6 +157,9 @@
                     <img src="{{ asset('img/icons/plus.png') }}" alt="plus">
                     Choose file
                 </button>
+                <p class="text-muted mt-1 mb-0">
+                    Allowed file types: PDF, JPG, PNG. Maximum file size: 5 MB.
+                </p>
             </div>
             <div class="col-md-6 mb-3">
                 <p id="managedFundName" class="choosing-business-type-text text-muted mb-0">

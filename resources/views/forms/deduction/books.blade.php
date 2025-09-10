@@ -81,6 +81,9 @@
     <button type="button" class="btn btn_add" id="triggerBooksFile">
       <img src="{{ asset('img/icons/plus.png') }}" alt="plus"> Choose file
     </button>
+      <p class="text-muted mt-1 mb-0">
+          Allowed file types: PDF, JPG, PNG. Maximum file size: 5 MB.
+      </p>
     <p id="booksFileName" class="choosing-business-type-text text-muted mt-2 mb-0">
       @if(!empty($deductions->attach['books']['books_file']))
         <a href="{{ asset('storage/'.$deductions->attach['books']['books_file']) }}" target="_blank" class="btn btn-outline-success">

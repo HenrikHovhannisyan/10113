@@ -88,15 +88,18 @@
                 </div>
                 <div class="row mb-3 align-items-end">
                     <div class="col-md-6 mb-3">
-                        <input 
-                            type="file" 
-                            name="termination_payments[{{ $i }}][etp_files][]" 
-                            class="d-none etpFileInput" 
+                        <input
+                            type="file"
+                            name="termination_payments[{{ $i }}][etp_files][]"
+                            class="d-none etpFileInput"
                             multiple
                         >
                         <button type="button" class="btn btn_add triggerETPFile">
                             <img src="{{ asset('img/icons/plus.png') }}" alt="plus"> Choose files
                         </button>
+                        <p class="text-muted mt-1 mb-0">
+                            Allowed file types: PDF, JPG, PNG. Maximum file size: 5 MB.
+                        </p>
                     </div>
                     <div class="col-md-6 mb-3">
                         <p class="choosing-business-type-text text-muted mb-0 etpFileName">
@@ -161,10 +164,10 @@ document.addEventListener("DOMContentLoaded", function () {
         tempDiv.innerHTML = template;
         const newBlock = tempDiv.firstElementChild;
 
-        clearBlockValues(newBlock); 
+        clearBlockValues(newBlock);
         etpContainer.appendChild(newBlock);
         refreshIndices();
-        attachFileTriggers(newBlock);
+        // attachFileTriggers(newBlock);
     });
 
     btnDelete.addEventListener("click", () => {
@@ -174,26 +177,26 @@ document.addEventListener("DOMContentLoaded", function () {
             refreshIndices();
         }
     });
-function attachFileTriggers(context = etpContainer) {
-    context.querySelectorAll(".triggerETPFile").forEach(btn => {
-        btn.onclick = () => btn.previousElementSibling.click();
-    });
+// function attachFileTriggers(context = etpContainer) {
+//     context.querySelectorAll(".triggerETPFile").forEach(btn => {
+//         btn.onclick = () => btn.previousElementSibling.click();
+//     });
+//
+//     context.querySelectorAll(".etpFileInput").forEach(input => {
+//         input.onchange = () => {
+//             const display = input.closest(".row").querySelector(".etpFileName");
+//             if (input.files.length) {
+//                 const names = Array.from(input.files).map(f => f.name).join(", ");
+//                 display.textContent = names;
+//             } else {
+//                 display.textContent = "No files chosen";
+//             }
+//         };
+//     });
+// }
 
-    context.querySelectorAll(".etpFileInput").forEach(input => {
-        input.onchange = () => {
-            const display = input.closest(".row").querySelector(".etpFileName");
-            if (input.files.length) {
-                const names = Array.from(input.files).map(f => f.name).join(", ");
-                display.textContent = names;
-            } else {
-                display.textContent = "No files chosen";
-            }
-        };
-    });
-}
 
-
-    attachFileTriggers();
+    // attachFileTriggers();
 });
 </script>
 

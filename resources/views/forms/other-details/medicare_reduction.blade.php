@@ -49,6 +49,9 @@
     <button type="button" class="btn btn_add" id="medicare_certificate_trigger">
         <img src="{{ asset('img/icons/plus.png') }}" alt="plus"> Choose file
     </button>
+        <p class="text-muted mt-1 mb-0">
+            Allowed file types: PDF, JPG, PNG. Maximum file size: 5 MB.
+        </p>
         <p id="medicare_certificate_name" class="choosing-business-type-text text-muted mb-0 mt-2">
             @if(!empty($others->attach['medicare_certificate']))
                 <a href="{{ Storage::disk('public')->url($others->attach['medicare_certificate']) }}" target="_blank">

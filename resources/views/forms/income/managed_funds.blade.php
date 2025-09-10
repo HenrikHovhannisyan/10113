@@ -3,11 +3,11 @@
         <h4 class="form_title">Managed Funds</h4>
         <img src="{{ asset('img/icons/help.png') }}" alt="Help">
     </div>
-    
+
     <p class="choosing-business-type-text mb-3">
         Managed Fund investments NEED to be included on your tax return.
     </p>
-    
+
     <div class="grin_box_border">
         <div id="managedFundContainer">
             @php
@@ -80,6 +80,9 @@
                     <img src="{{ asset('img/icons/plus.png') }}" alt="plus">
                     Choose file
                 </button>
+                <p class="text-muted mt-1 mb-0">
+                    Allowed file types: PDF, JPG, PNG. Maximum file size: 5 MB.
+                </p>
             </div>
             <div class="col-md-6 mb-3">
                 <p id="selectedFileName" class="choosing-business-type-text text-muted mb-0">

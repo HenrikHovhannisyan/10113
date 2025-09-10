@@ -36,11 +36,20 @@ class TaxReturnController extends Controller
      */
     public function create()
     {
+        $check = TaxReturn::where('user_id', auth()->id())
+            ->where('form_status', 'incomplete')
+            ->exists();
+
+        if($check) {
+            return redirect()->route('tax-returns.index')->with('error', 'You already have an incomplete tax return, please complete it.');
+        }
+
         $taxReturn = TaxReturn::create([
             'user_id' => auth()->id(),
             'form_status' => 'incomplete',
             'payment_status' => 'unpaid',
         ]);
+
         return view('pages.tax-returns.create', compact('taxReturn'));
     }
 
@@ -65,6 +74,10 @@ class TaxReturnController extends Controller
      */
     public function edit(TaxReturn $taxReturn)
     {
+        if($taxReturn->user_id !== auth()->id()) {
+            abort(404);
+        }
+
         $basicInfo = $taxReturn->basicInfo()->first();
         $incomes = $taxReturn->income()->first();
         $deductions = $taxReturn->deduction()->first();

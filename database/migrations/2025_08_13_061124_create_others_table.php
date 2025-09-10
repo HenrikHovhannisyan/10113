@@ -19,6 +19,7 @@ return new class extends Migration
 
             $table->json('attach')->nullable();
             $table->string('any_dependent_children')->nullable();
+            $table->string('additional_questions')->nullable();
             $table->json('income_tests')->nullable();
             $table->json('mls')->nullable();
             $table->json('spouse_details')->nullable(); // Spouse Details

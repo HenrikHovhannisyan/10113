@@ -7,6 +7,7 @@ use App\Models\Forms\Other;
 use Illuminate\Http\Request;
 use App\Models\TaxReturn;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class OtherController extends Controller
 {
@@ -29,9 +30,48 @@ class OtherController extends Controller
         }
 
 
+        $rules = [
+            'any_dependent_children'               => 'nullable|string|max:255',
+            'additional_questions'                 => 'nullable|string|max:255',
+            'income_tests'                         => 'nullable|array',
+            'mls'                                  => 'nullable|array',
+            'spouse_details'                       => 'nullable|array',
+            'private_health_insurance'             => 'nullable|array',
+            'zone_overseas_forces_offset'          => 'nullable|array',
+            'seniors_offset'                       => 'nullable|array',
+            'medicare_reduction_exemption'         => 'nullable|array',
+            'part_year_tax_free_threshold'         => 'nullable|array',
+            'medical_expenses_offset'               => 'nullable|array',
+            'under_18'                             => 'nullable|array',
+            'working_holiday_maker_net_income'     => 'nullable|array',
+            'superannuation_income_stream_offset'  => 'nullable|array',
+            'superannuation_contributions_spouse'  => 'nullable|array',
+            'tax_losses_earlier_income_years'      => 'nullable|array',
+            'dependent_invalid_and_carer'          => 'nullable|array',
+            'superannuation_co_contribution'       => 'nullable|array',
+            'other_tax_offsets_refundable'         => 'nullable|array',
+
+            // Files validation with max size 5MB
+            'additional_file.*'                     => 'nullable|file|mimes:pdf,jpg,png|max:5120',
+            'private_health_insurance.*.*'         => 'nullable|file|mimes:pdf,jpg,png|max:5120',
+            'medicare_certificate'                 => 'nullable|file|mimes:pdf,jpg,png|max:5120',
+            'medical_expense_file'                 => 'nullable|file|mimes:pdf,jpg,png|max:5120',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation errors',
+                'errors'  => $validator->errors()
+            ], 422);
+        }
+
         $data = [
             'zone_overseas_forces_offset' => $request->input('zone_overseas_forces_offset', null),
             'any_dependent_children' => $request->input('any_dependent_children', null),
+            'additional_questions' => $request->input('additional_questions', null),
             'income_tests' => $request->input('income_tests',  null),
             'mls' => $request->input('mls', null),
             'seniors_offset' => $request->input('seniors_offset', null),
